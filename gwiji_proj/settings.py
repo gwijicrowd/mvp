@@ -107,9 +107,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'gwiji_app/static'),]
-STATIC_ROOT = os.path.join(BASE_DIR, 'gwiji_proj/staticfiles')
+STATIC_URL = '/static/'
+#STATICFILES_DIRS = [os.path.join(BASE_DIR, 'gwiji_app/static'),]
+#STATIC_ROOT = os.path.join(BASE_DIR, 'gwiji_proj/staticfiles')
+STATIC_ROOT = 'home/gwijicrowd/mvp/gwiji_app/static'
 
 
 MEDIA_URL = '/media/'
