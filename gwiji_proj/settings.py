@@ -110,7 +110,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 #STATICFILES_DIRS = [os.path.join(BASE_DIR, 'gwiji_app/static'),]
 #STATIC_ROOT = os.path.join(BASE_DIR, 'gwiji_proj/staticfiles')
-STATIC_ROOT = 'home/gwijicrowd/mvp/static'
+STATIC_ROOT = 'gwiji_app/static'
 
 
 MEDIA_URL = '/media/'
