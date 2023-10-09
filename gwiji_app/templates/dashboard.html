@@ -1,0 +1,354 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block submain %}
+<section class="dashboard__section">
+    <div class="sideheader__container">
+        <a href="/feeds" class="sideheader__item feeds {% block feeds-sidebar %}{% endblock %}">
+            
+            <i class='bx bx-podcast'></i>
+            <p>Feeds</p>
+        </a>
+        <a href="/browse" class="sideheader__item {% block browse-sidebar %}{% endblock %}">
+            <i class='bx bxl-blogger' ></i>
+            <p>Browse</p>
+        </a>
+        <a href="/following" class="sideheader__item {% block following-sidebar %}{% endblock %}">
+            
+            <i class='bx bx-plus-medical'></i>
+            <p>Following</p>
+        </a>
+        <a href="/manage_campaigns" class="sideheader__item {% block manage_campaigns-sidebar %}{% endblock %}">
+            <i class='bx bx-edit'></i>
+            <p>My Campaigns</p>
+        </a>
+        <a href="/financials" class="sideheader__item {% block financials-sidebar %}{% endblock %}">
+            <i class='bx bx-news'></i>
+            <p>Financials</p>
+        </a>
+        <a href="/notifications" class="sideheader__item {% block notifications-sidebar %}{% endblock %}">
+            <i class='bx bxs-bell' ></i>
+            <p>Notifications</p>
+        </a>   
+        <a href="/profile" class="sideheader__item {% block profile-sidebar %}{% endblock %}">
+            <i class='bx bxs-user-detail'></i>
+            <p>My Profile</p>
+        </a>
+    </div> 
+    <div class="dashboard">
+        <div class="dashboard__container">
+            {% block dashaboard %}{% endblock %}
+        </div>
+        <div class="communities__container big-screen">
+            <div class="community-post__feed__container">
+              
+                <div class="community-post__feed-top">
+                    <div class="community-post__feed-top__header">
+                        <span class="user-profile-avatar">
+                            {% if profile.avatar %}
+                            <img src="{{profile.avatar.url }}" alt="">
+                            {% else %}
+                            <img src="{% static 'images/user.png'%}" alt="">
+                            {% endif %}
+                        </span>
+                        <span class="post__placeholder-text"><textarea id="post__text" placeholder="Tell the community what you want..."></textarea>
+                        </span>
+                    </div>
+                    <div class="post__image-preview">
+                        <img  id="image-preview" src="" alt="">
+                    </div>
+                    <div class="community-post__feed__buttons">
+                        <span>
+                            <select name="campaigns" id="post-feed-campaign-select" class="post-feed-campaign-select" >
+                                <option value="none">Select a Campaign</option>
+                                {% for campaign in my_campaigns %}
+                                <option value="{{campaign.title}}">{{campaign.title}}</option>
+                                {% endfor %}
+                            </select>
+                        </span>
+                        <div id="emoji-picker" class="emoji-picker" style="display: none;"></div>
+                        <i class='bx bx-smile'></i>
+                        <div class="" data-field="post-image">
+                            <label for="post-image" class="edit-label"><i class='bx bxs-image-add'></i></label>
+                            <input type="file" id="post-image" accept="image/*" name="post-image" style="font-size: 0; display: none;">
+                        </div>
+                        
+                        <button id="post__btn" class="post__feed" >Post</button>
+                    </div>
+                </div>
+            </div>
+            <div class="community__posts-container">
+                {% if posts %}
+                    {% for post in posts %}
+                    <div class="community__posts-item">
+                        <div class="community__posts-item_header">
+                            <div class="community__posts-item_header-left">
+                                {% if post.profile.avatar  %}
+                                <span class="community__post-avatar"><img src="{{ post.profile.avatar.url }}" alt="">
+                                </span>
+                                {% else %}
+                                <span class="community__post-avatar"><img src="{% static 'images/user.png'%}" alt="">
+                                </span>
+                                {% endif %}
+                                <span class="community__post-name">
+                                    <span class="community__post-display-name">{{post.profile.display_name}}</span>
+                                    <span class="community__post-badge"><i class='bx bxs-badge-check'></i></span>
+                                    <span class="community__post-username">@{{post.profile.user}}</span>
+                                    <span class="community__post-symbol">·</span>
+                                    <span class="community__post-time time" data-post-timestamp="{{ post.post_date | date:'U' }}">{{ post.post_date }} ago</span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="community__posts-item_body">
+                            <p> 
+                                {% if post.campaign %}
+                                <a class="community__posts-item_campaign-tag" href="{% url 'campaigns' post.campaign.id %}"> 
+                                    #{{post.campaign.title}}        
+                                </a>
+                                {% endif %}
+                                {{post.post_text}} 
+                            </p>
+                            {% if post.post_image  %}
+                            <span>
+                                <img src="{{ post.post_image.url }}" alt="">
+                            </span>     
+                            {% endif %}
+                        </div>
+                        <div class="community__posts-item_footer">
+                            {% if profile in post.likes.all %}
+                            <i id="post-like" data-post-id="{{ post.id }}" class='bx bxs-heart like' >{{post.no_post_likes}}</i>
+                            {% else %}
+                            <i id="post-like" data-post-id="{{ post.id }}" class='bx bx-heart like' >{{post.no_post_likes}}</i>
+                            {% endif %}
+                            <i class='bx bx-comment-detail'>{{post.no_post_comments}}</i>
+                          
+                        </div>
+                        <div class="community__posts-item_comment">
+                            <input class="post-comment-text" data-post-id="{{ post.id }}" type="text" placeholder="Comment..">
+                            <button class="post-comment-btn" data-post-id="{{ post.id }}"><i class='bx bxs-send'></i></button>
+                       </div>
+                        <div class="community__posts-item_comment-box">
+                            {% if post.comments.all %}
+                            {% for comment in post.comments.all reversed%}
+                            <div class="community__posts-item_header-left comment__head">
+                                {% if comment.comment_author.avatar  %}
+                                <span class="community__post-avatar"><img src="{{ comment.comment_author.avatar.url }}" alt="">
+                                </span>
+                                {% else %}
+                                <span class="community__post-avatar"><img src="{% static 'images/user.png'%}" alt="">
+                                </span>
+                                {% endif %}
+                                <div class="">
+                                    <span class="community__post-name">
+                                        <span class="community__post-display-name">{{comment.comment_author.display_name}}</span>
+                                        <span class="community__post-badge"><i class='bx bxs-badge-check'></i></span>
+                                        <span class="community__post-username">@{{comment.comment_author.user}}</span>
+                                        <span class="community__post-symbol">·</span>
+                                        <span class="community__post-time time" data-post-timestamp="{{ comment.comment_date | date:'U' }}">{{ comment.comment_date }} ago</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <span class="post__comment-text">
+                                <p> 
+                                    {{comment.comment_text}}
+                                </p>
+                            </span>
+                            {%  endfor %}
+                            {% else %}
+                            <div class="post__no-comments">
+                                <span>No comments yet.</span>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="community__no-posts">
+                        <h1>No Posts Yet. </h1>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+ <!-- Include the emoji-picker-element library -->
+ <script type="module" src="https://cdn.jsdelivr.net/npm/emoji-picker-element@latest/index.js"></script>
+
+ <script>
+    if ( window.history.replaceState ) {
+        window.history.replaceState( null, null, window.location.href );
+    }
+</script>
+
+<script>
+    const viewCommentButtons = document.querySelectorAll('.bx-comment-detail');
+
+    viewCommentButtons.forEach(function (viewCommentButton) {
+        viewCommentButton.addEventListener("click", function () {
+            // Find the common ancestor element
+            const commonAncestor = this.closest('.community__posts-item_footer');
+            
+            if (commonAncestor) {
+                // Find the corresponding comment container
+                const commentContainer = commonAncestor.nextElementSibling.nextElementSibling;
+
+                // Toggle the comment container's visibility
+                if (commentContainer) {
+                    if (commentContainer.style.display === 'none' || commentContainer.style.display === '') {
+                        commentContainer.style.display = 'block';
+                    } else {
+                        commentContainer.style.display = 'none';
+                    }
+                }
+            }
+        });
+    });
+</script>
+
+<script>
+    // Add a click event listener to all comment buttons
+    const commentBtns = document.querySelectorAll('.post-comment-btn');
+
+    commentBtns.forEach(function (commentBtn) {
+        commentBtn.addEventListener("click", function () {
+            const commentText = this.previousElementSibling; // Get the input element before the button
+            const commentTextValue = commentText.value;
+            var postId = this.dataset.postId; // Get the postId from the button's data attribute
+            // Store the current scroll position in localStorage
+            localStorage.setItem('scrollPosition', window.scrollY);
+
+            const formData = new FormData();
+            formData.append('text', commentTextValue);
+            $.ajax({
+                url: '/comment/' + postId + '/',
+                method: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    window.location.reload()
+                   
+                },
+                error: function (xhr, status, error) {
+                    if (xhr.status === 400) {
+                        console.log("Comment unsuccessful");
+                    } else {
+                        console.log("Error:", status, error);
+                    }
+                }
+            });
+        });
+    });
+    // Restore the scroll position after the page has loaded
+    window.addEventListener('load', function () {
+        const scrollPosition = localStorage.getItem('scrollPosition');
+        if (scrollPosition) {
+            window.scrollTo(0, scrollPosition);
+            localStorage.removeItem('scrollPosition'); // Remove the stored scroll position
+        }
+    });
+</script>
+
+<script>
+    const postText = document.getElementById('post__text');
+    const postBtn = document.getElementById('post__btn');
+    const postCampaign = document.getElementById('post-feed-campaign-select');
+    const postImage = document.getElementById('post-image');
+
+    // JavaScript function to send the selected sentiment to the Django backend
+    postBtn.addEventListener("click", function () {
+        const postTextValue = postText.value;
+        const postCampaignValue = postCampaign.value;
+
+        // Create a FormData object to send both text and image
+        const formData = new FormData();
+        formData.append('text', postTextValue);
+        formData.append('campaign', postCampaignValue);
+        formData.append('image', postImage.files[0]);
+
+        $.ajax({
+            url: 'post/',
+            method: 'POST',
+            data: formData, // Use the FormData object
+            processData: false, // Don't process the data
+            contentType: false, // Don't set content type (automatically set for FormData)
+            success: function (response) {
+                if (response.message === 'success') {
+                    // Redirect or perform other actions for a successful login
+                    console.log("Posted successfully");
+                    window.location.reload()
+                } else {
+                    console.log("Unexpected response:", response);
+                }
+            },
+            error: function (xhr, status, error) {
+                if (xhr.status === 400) {
+                    console.log("Post unsuccessful");
+                } else {
+                    console.log("Error:", status, error);
+                }
+            }
+        });
+    });
+</script>
+
+<script>
+    // Function to toggle the emoji picker visibility
+    function toggleEmojiPicker() {
+        const emojiPicker = document.getElementById('emoji-picker');
+        emojiPicker.style.display = emojiPicker.style.display === 'block' ? 'none' : 'block';
+    }
+
+  // Function to insert the selected emoji into the post text field
+function insertEmoji(emojiObject) {
+    console.log('Received emojiObject:', emojiObject);
+
+    const postText = document.getElementById('post__text'); // Replace with your post text field ID
+    const emoji = emojiObject.unicode;
+    console.log('Selected emoji:', emoji);
+
+    postText.value += emoji; // Append the selected emoji to the current text
+    toggleEmojiPicker(); // Hide the emoji picker
+}
+
+
+    // Add a click event listener to the smile icon to show/hide the emoji picker
+    const smileIcon = document.querySelector('.bx-smile'); // Replace with the correct selector
+    smileIcon.addEventListener('click', toggleEmojiPicker);
+
+    // Initialize the emoji picker
+    const emojiPicker = document.getElementById('emoji-picker');
+    emojiPicker.innerHTML = '<emoji-picker></emoji-picker>';
+    emojiPicker.addEventListener('emoji-click', (event) => {
+        insertEmoji(event.detail.emoji);
+    });
+</script>
+
+<script>
+    // Function to handle file input change and update image preview
+    function handleFileInputChange(inputElement, previewElement) {
+        const fileInput = inputElement;
+        const previewImage = previewElement;
+ 
+        fileInput.addEventListener("change", function () {
+            const file = fileInput.files[0];
+            const imagePreview = document.querySelector('.post__image-preview');
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    imagePreview.style.display = "block";
+                    previewImage.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    }
+ 
+ 
+    // Initialize image preview for profile photo
+    const imageInput = document.getElementById("post-image");
+    const imagePreview = document.getElementById("image-preview");
+    handleFileInputChange(imageInput, imagePreview);
+ </script>
+
+
+{% endblock %}

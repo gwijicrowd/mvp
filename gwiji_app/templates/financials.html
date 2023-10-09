@@ -1,0 +1,129 @@
+{% extends 'dashboard.html' %}
+{% load static %}
+{% block dashaboard %}
+
+<div class="financials">
+   <div class="financials__header">
+      <h1>My Financials</h1>
+      <div class="financials__header-containers">
+         <div class="financials__header-entrepreneur-container">
+            <p>As a visionary <span>founder</span>, you've received <span>{{investors_count}}</span> investments amounting to <span>${{investors_worth}}</span> for the sale of <span>{{investors_shares}}</span> shares. This support from <span>{{investors_profiles_count}}</span> investors underscores the confidence in your inspiring journey and business.</p>
+         </div>
+         <div class="financials__header-investor-container">
+            <p>As a strategic <span>investor</span>, your <span>{{investments_count}}</span> investments, valued at <span>${{investments_worth}}</span>, have been spread across <span>{{investments_companies_count}}</span> companies, securing <span>{{investments_shares}}</span> shares and contributing significantly to fostering innovation and growth in the african entrepreneurial landscape.</p>
+         </div>
+      </div>
+   </div>
+   <div class="financials__body">
+      <div class="entrepreneur__table">
+         <div class="">
+            <h4>Founder Cap Table</h4>
+         </div>
+         <table>
+            <thead>
+               <tr>
+                  <th><i class='bx bxs-file-doc' ></i></th>
+                  <th>Shareholder</th>
+                  <th>Campaign </th>
+                  <th>Project</th>
+                  <th>Shares (Volume)</th>       
+                  <th>Share Price (Buying)</th>
+                  <th>Share Price (Current)</th>
+                  <th>Total value (Buying)</th>
+                  <th>Total value (Current)</th>
+                  <th>Date</th>
+               </tr>
+            </thead>
+            <tbody id="entrepreneur-id">
+               {% if investors %}
+               {% for investor in investors reversed %}
+               <tr>
+                  <td>
+                     {% if investor.document != '' %}
+
+                        <a href="{{investor.document.url}}" id="investor-download-link-{{ investor.id }}">
+                           <i class='bx bxs-download'></i>
+                        </a>
+                     {% else %}
+                     <i class='bx bxs-download disabled'></i>
+                     {% endif %}
+                  </td>
+                  <td>{{ investor.profile.display_name }}{{investment.document.url}}</td>
+                  <td>{{ investor.campaign }}</td>
+                  <td>{{ investor.campaign.project }}</td>
+                  <td>{{ investor.total_shares }} shares</td>
+                  <td>${{ investor.sharesperdollar_buying  }}</td>
+                  <td>${{ investor.sharesperdollar_current }}</td>
+                  <td>${{ investor.total_value_buying }}</td>
+                  <td>${{ investor.total_value_current }}</td>
+                  <td>{{ investor.date.date }}</td>
+               </tr>
+               {% endfor %}
+               {% endif %}
+            </tbody>
+         </table>
+         {% if not investors %}
+               <p>You have not received any investments, click  <a href="/manage_campaigns">here</a> to create your first campaign and post about it.</p>
+         {% endif %}
+      </div>
+      <div class="investor__table">
+         <div class="">
+            <h4>Investor Cap Table</h4>
+         </div>
+         <table>
+            <thead>
+               <tr>
+                  <th><i class='bx bxs-file-doc' ></i></th>
+                  <th>Campaign </th>
+                  <th>Project</th>
+                  <th>Shares (Volume)</th>       
+                  <th>Share Price (Buying)</th>
+                  <th>Share Price (Current)</th>
+                  <th>Total value (Buying)</th>
+                  <th>Total value (Current)</th>
+                  <th>Date</th>
+               </tr>
+            </thead>
+            <tbody id="investor-table">
+               {% for investment in my_investments reversed %}
+               <tr>
+                  <td>
+                     {% if investment.document != '' %}
+                     
+                        <a href="{{investment.document.url}}" id="investment-download-link-{{ investment.id }}">
+                           <i class='bx bxs-download'></i>
+                        </a>
+                     
+                     {% else %}
+                     <i class='bx bxs-download disabled'></i>
+                     {% endif %}
+                  </td>
+                  <td>{{ investment.campaign }}</td>
+                  <td>{{ investment.campaign.project }}</td>
+                  <td>{{ investment.total_shares }} shares</td>
+                  <td>${{ investment.sharesperdollar_buying  }}</td>
+                  <td>${{ investment.sharesperdollar_current }}</td>
+                  <td>${{ investment.total_value_buying }}</td>
+                  <td>${{ investment.total_value_current }}</td>
+                  <td>{{ investment.date.date }}</td>
+
+               </tr>
+               {% endfor %}
+            </tbody>
+         </table>
+         {% if not investors %}
+               <p>You have not made any investments, click <a href="/">here</a> to browse active campaigns and make an investment.</p>
+         {% endif %}
+         
+      </div>
+     
+   </div>
+ 
+</div>
+
+   
+{% endblock %}
+
+{% block financials-sidebar %}
+active
+{% endblock %}

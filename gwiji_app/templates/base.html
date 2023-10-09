@@ -1,0 +1,1254 @@
+{% block content %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gwiji - Empowering Dreams, Fueling Innovation in Africa</title>
+    <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
+    <!-- Main stylesheet -->
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <!--=============== BOXICONS ===============-->
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"/>
+    <!-- Include the emoji-picker-element library -->
+ <script type="module" src="https://cdn.jsdelivr.net/npm/emoji-picker-element@latest/index.js"></script>
+</head>
+<body>
+  <div class="campaign__details-body-packs-board-invest-container">
+    <div class="campaign__details-body-packs-board-invest-agreement">
+      <h1>Crowdfunding Agreement</h1>
+      
+      <p>This Crowdfunding Agreement ("Agreement") is entered into between:</p>
+      
+      <p><strong>1. The Campaign Organizer:</strong></p>
+      <p>{{ campaign.author  }}, hereinafter referred to as the "Campaign Organizer,"</p>
+      
+      <p>And</p>
+      
+      <p><strong>2. The African Establishment Company or Startup:</strong></p>
+      <p>{{ campaign.project }}, an African establishment company or startup incorporated in Africa, hereinafter referred to as the "African Company,"</p>
+      
+      <p><strong>3. The Crowdfunding Platform:</strong></p>
+      <p>Gwiji, an African crowdfunding platform, hereinafter referred to as the "Platform," which serves as the legal binder through which the crowdfunding happens.</p>
+      
+      <p>In consideration of the mutual covenants contained herein, the Campaign Organizer, the African Company, and the Platform (collectively referred to as the "Parties") hereby agree as follows:</p>
+      
+      <h2>1. Crowdfunding Campaign</h2>
+      <p>1.1 The Campaign Organizer is conducting a crowdfunding campaign under the name "{{campaign.title}}" (the "Campaign") on the Gwiji platform.</p>
+      
+      <h2>2. Purpose of the Campaign</h2>
+      <p>2.1 The purpose of the Campaign is to raise funds to support the development, production, or realization of the Project as described in the Campaign details.</p>
+      
+      <h2>3. Contribution</h2>
+      <p>3.1 By participating in this Campaign, you ("Backer") agree to contribute funds to the Campaign Organizer in accordance with the reward or funding tier you have selected. Each dollar contributed represents <strong><span class="sharesper__dollar"></span></strong> shares.</p>
+      
+      <h2>4. Backer Rewards</h2>
+      <p>4.1 The Backer may be eligible to receive <strong><span class="shares_volume"></span></strong> shares for each dollar contributed, totaling $<span class="investment_amount"></span>, as specified in the Campaign, subject to successful funding and the Campaign's terms and conditions.</p>
+      
+      <h2>5. Risks and Disclaimers</h2>
+      <p>5.1 Backers acknowledge that crowdfunding investments involve risks, and the success of the Project is not guaranteed. Backers should carefully read all information provided in the Campaign before making a contribution.</p>
+      
+      <h2>6. Refunds and Cancellations</h2>
+      <p>6.1 The Campaign Organizer reserves the right to cancel the Campaign or refuse contributions at their discretion. Backers should refer to the Campaign for information regarding refunds and cancellation policies.</p>
+      
+      <h2>7. Governing Law</h2>
+      <p>7.1 This Agreement shall be governed by and construed in accordance with the laws of [Your Jurisdiction].</p>
+      
+      <h2>8. Entire Agreement</h2>
+      <p>8.1 This Agreement constitutes the entire agreement between the Parties and supersedes all prior agreements, understandings, or representations, whether written or oral.</p>
+      
+      <h2>9. Acceptance of Terms</h2>
+      <p>9.1 By clicking the "I agree to these terms and conditions of this Agreement and agree to be bound by them" checkbox below and proceeding to payment, you acknowledge that you have read and understood the terms and conditions of this Agreement and agree to be bound by them.</p>
+      
+      <!-- Checkbox for agreeing to the terms -->
+      <div class="form-check">
+          <input type="checkbox" class="form-check-input" id="agreementCheckbox">
+          <label class="form-check-label" for="agreementCheckbox">I agree to these terms and conditions of this Agreement and agree to be bound by them.</label>
+      </div>
+      
+      <!-- Button to proceed to payment (initially disabled) -->
+      <div class="proceed-to-payment">
+          <button data-authenticated="true" type="button" class="btn btn-primary disabled" id="proceedToPaymentButton" disabled>Proceed to Payment</button>
+      </div>
+      
+      <div class="go-back">
+          <p><i class='bx bx-left-arrow-alt' ></i> Go back</p>
+      </div>
+  
+     
+  </div>
+</div>
+    <section class="authentication__section">
+        <div class="authentication__container">
+          <div class="authentication__icon">
+            <i id="close-authentication" class='bx bx-x'></i>
+          </div>
+            <div class="authentication__header">
+              <div class="authentication__header-container">
+                <div class="authentication__header-item">
+                  <h2><a href="#login">Log In</a></h2>
+                </div>
+                <div class="authentication__header-item active">
+                  <h2><a href="#signup">Sign Up</a></h2>
+                </div>
+              </div>
+               
+            </div>
+            <div class="authentication__body">
+              <div class="login__container-body">
+                <div class="login__container-item">
+                    <label for="login__email">Email Address</label>
+                    <input id="login__email" type="email" placeholder="Enter your email address....">
+                </div>
+                <div class="login__container-item password">
+                  <label for="login__password">
+                    <span>Password</span>
+                    <span>
+                      <a href="#forgotpassword">
+                        Forgot Password?
+                      </a>
+                    </span>
+                  </label>
+                  <input  id="login__password" class="login__password" type="password" placeholder="Enter your password....">
+                  <span class="show__password ">
+                    <i class='bx bxs-show'></i>
+                    <i class='bx bxs-hide'></i>
+                  </span>
+                </div>
+                <div class="login__container-item error__message" id="login-error__message">
+              
+                </div>
+                <div class="login__container-item login">
+                  <button id="login__btn">Login</button>
+                </div>
+                
+              </div>
+              <div class="signup__container-body">
+                <div class="login__container-item">
+                  <label for="signup__first-name">First Name</label>
+                  <input id="signup__first-name" type="text" placeholder="Enter your first name....">
+                </div>
+                <div class="login__container-item">
+                    <label for="signup__last-name">Last Name</label>
+                    <input id="signup__last-name" type="text" placeholder="Enter your last name....">
+                </div>
+                <div class="login__container-item">
+                  <label for="signup__username">Username</label>
+                  <input id="signup__username" type="text" placeholder="Enter your username....">
+                </div>
+                <div class="login__container-item">
+                    <label for="signup__email">Email Address</label>
+                    <input id="signup__email" type="email" placeholder="Enter your email address....">
+                </div>
+
+                <div class="login__container-item password">
+                  <label for="signup__password">
+                    Password
+                    </span>
+                  </label>
+                  <input id="signup__password" class="login__password" type="password" placeholder="Enter your password....">
+                  <span class="show__password ">
+                    <i class='bx bxs-show'></i>
+                    <i class='bx bxs-hide'></i>
+                  </span>
+                </div>
+                <div class="login__container-item password">
+                  <label for="login__password">
+                    Confirm Password
+                    </span>
+                  </label>
+                  <input id="signup__confirm-password" class="login__password" type="password" placeholder="Confirm your password....">
+                  <span class="show__password ">
+                    <i class='bx bxs-show'></i>
+                    <i class='bx bxs-hide'></i>
+                  </span>
+                </div>
+                <div class="login__container-item marketing">
+                  <input type="checkbox" name="" id="marketing__checkbox">
+                  <span>I agree to receive marketing updates from Gwiji.</span>
+                </div>
+                <div class="login__container-item error__message" id="signup-error__message" >
+                  
+                </div>
+                <div class="login__container-item login">
+                  <button id="signup__btn"> Create an account</button>
+                </div>
+
+               
+
+                <div class="login__container-item">
+                  <p class="signup__agreement">By proceeding, you agree to Gwiji’s <br> <span>Terms of Use</span> & <span>Privacy Policy.</span></p>
+                </div>
+              </div>
+             
+            </div>
+        </div>
+      </section>
+    <section class="hero__section">     
+        <div class="banner">
+            <div class="banner__assets-items">
+                {% for campaign in campaigns %}
+                <div class="banner__assets-item">
+                    <span class="banner__project-name">
+                        <p>
+                            {{ campaign.title }} - 
+                        </p>
+                    </span>
+                    <span class="banner__project-current-raise">
+                        $<p class="current-raise">{{ campaign.current_raise }}</p>
+                    </span>
+                    <span>
+                        of 
+                    </span>
+                    <span class="banner__project-total-raised">
+                        $<p class="total-raised">{{ campaign.target }}</p>
+                    </span>
+                   
+                </div>
+                {% endfor %}
+               
+            </div>
+        </div>
+
+        <header class="hero__section-header">
+            <div class="header__logo">
+                <a href="/">
+                    <img src="{% static 'images/logo-orange.png' %}" alt="">
+                </a>
+            </div>
+            <div class="header__menu">
+                <div class="header__menu-items">
+                    <div class="header__menu-item">
+                        <a href="/#Tech and Innovations" onclick="activateFilter('Tech and Innovations')">
+                            Tech & Innovation
+                        </a>
+                    </div>
+                    <div class="header__menu-item">    
+                        <a href="/#Creative Works" onclick="activateFilter('Creative Works')">
+                            Creative Works
+                        </a> 
+                    </div>
+                    <div class="header__menu-item">
+                        <a href="/#Fashion and Wearables" onclick="activateFilter('Fashion and Wearables')">
+                            Fashion and Wearables
+                        </a> 
+                    </div>
+                    <div class="header__menu-item">
+                        <a href="/#Health and Fitness" onclick="activateFilter('Health and Fitness')">
+                            Health & Fitness
+                        </a>
+                    </div>
+                    <div class="header__menu-item">
+                        <a href="/#Energy and Green Tech" onclick="activateFilter('Energy and Green Tech')" >
+                            Energy & Green Tech
+                        </a>
+                  </div>
+                </div>
+            </div>
+            <div class="header__buttons">
+              
+                {% if not user.is_authenticated %}
+                 <a href="#search-input"><i class='bx bx-search'></i></a>
+                <p> | </p>
+                <p><a href="#signup">Start a Campaign</a> </p>
+                <p> | </p>
+                <p><a href="#signup">Invest Now</a></p>
+                {% else %}
+                <div class="profile__icon">
+                    <div class="header__profile-tab">
+                        <div class="profile__tab header__menu-item">
+                            {% if profile.avatar %}
+                            <img src="{{profile.avatar.url}}" alt="">
+                            {% else %}
+                            <img src="{% static 'images/user.png' %}" alt="">
+                            {% endif %}
+                           <div class="header__submenu">
+                            <div class="arrow">
+                            </div>
+                            <div class="profile__tab-links">
+                              <a href="/profile">
+                                My Profile
+                              </a>
+                              <a href="/feeds">
+                                My Feeds
+                              </a>
+                              <a href="/notifications">
+                                My Notifications
+                              </a>
+                              <a href="/logout">
+                                Sign Out
+                              </a>
+                            </div>
+                        </div>
+                        </div> 
+                        <a href="/notifications"><i class='bx bxs-bell'></i></a>
+                      </div>
+                      <p><a href="/logout">Sign Out</a></p>
+                </div>
+                {% endif %}
+                <div  id="header-menu-icon" class="header__menu-icon">
+                  <i class='bx bx-menu'></i>
+                </div>
+            </div>
+            <div class="header__menu-collapse" id="header__menu-collapse">
+              <div class="header__menu-collapse-icon">
+                  <i class='bx bx-x' ></i>
+              </div>
+              <div class="header__menu-collapse-items">
+                <div class="header__collapse-menu-item">
+                    <div class="header__collapse-menu-item-title">
+                        <a href="/#Tech and Innovations" onclick="activateFilter('Tech and Innovations')">
+                          Tech & Innovation
+                        </a>
+                    </div>
+                </div>
+                <div class="header__collapse-menu-item">
+                    <div class="header__collapse-menu-item-title">
+                      <a href="/#Creative Works" onclick="activateFilter('Creative Works')">
+                          Creative Works
+                      </a> 
+                    </div>
+                </div>
+                <div class="header__collapse-menu-item">
+                    <div class="header__collapse-menu-item-title">
+                      <a href="/#Fashion and Wearables" onclick="activateFilter('Fashion and Wearables')">
+                        Fashion and Wearables
+                    </a> 
+                    </div>
+                </div>
+                <div class="header__collapse-menu-item">
+                    <div class="header__collapse-menu-item-title">
+                      <a href="/#Health and Fitness" onclick="activateFilter('Health and Fitness')">
+                        Health & Fitness
+                    </a>
+                    </div>
+                </div>
+                <div class="header__collapse-menu-item">
+                  <div class="header__collapse-menu-item-title">
+                    <a href="/#Energy and Green Tech" onclick="activateFilter('Energy and Green Tech')" >
+                      Energy & Green Tech
+                  </a>
+                  </div>
+                </div>
+              </div>
+
+              {% if not user.is_authenticated %}
+              <div class="header__menu-collapse-buttons">
+                  <button> <a href="/#login">Log In</a></button>
+                  <button><a href="/#signup">Sign Up</a></button>
+              </div>
+              {% else %}
+              <div class="profile__tab-links">
+                <a href="/profile">
+                  My Profile
+                </a>
+                <a href="/feeds">
+                  My Feeds
+                </a>
+                <a href="/notifications">
+                  My Notifications
+                </a>
+                <a href="/logout">
+                  Sign Out
+                </a>
+              </div>
+              {% endif %}
+          </div>
+
+        </header>
+
+        {% block main %} {% endblock %}
+    </section>
+   
+
+    <section class="submain__section">
+        {% block submain %} {% endblock %}
+    </section>
+
+    <footer class="footer">
+        <div class="footer-container">
+          <div class="footer__top">
+            <div>
+              <img src="{% static 'images/logo-white.png'%}" alt="">
+            </div>
+            <div class="footer-left footer-item">
+              <div class="contact-content" id="join-waitlist">
+                <h3 class="contact-title">For enquiries!</h3>
+                <form action="" class="contact-form">
+                  <div class="contact-form-div">
+                    <label for="" class="contact-form-tag">Names</label>
+                    <input
+                      type="text"
+                      placeholder="Insert your name"
+                      class="contact-form-input"
+                    />
+                  </div>
+                  <div class="contact-form-div">
+                    <label for="" class="contact-form-tag">E-mail</label>
+                    <input
+                      type="email"
+                      placeholder="Insert your email"
+                      class="contact-form-input"
+                    />
+                  </div>
+                  <div class="contact-form-div">
+                    <label for="" class="contact-form-tag">Message</label>
+                    <input
+                      type="text"
+                      placeholder="What do you want to enquire about? "
+                      class="contact-form-input"
+                    />
+                  </div>
+                  <button class="contact-button">Send Message</button>
+                </form>
+              </div>
+            </div>
+            <div class="footer-right footer-item">
+             
+              <div class="footer__sections">
+                <div class="footer__section">
+                  <div class="footer__section-header">
+                      <h6>Browse</h6>
+                  </div>
+                  <div class="footer__section-links">
+                    {% for choice in category_choices %}
+                      <a href="/#{{choice}}" onclick="activateFilter('{{choice}}')">
+                        {{choice}}
+                      </a>
+                    {% endfor %}
+                     
+                  </div>
+                </div>
+        
+                <div class="footer__section">
+                  <div class="footer__section-header">
+                      <h6>Company</h6>
+                  </div>
+                  <div class="footer__section-links">
+                      <a href="/company#about-us">
+                          About Us
+                      </a>
+                      <a href="/company#our-team">
+                          Our Team
+                      </a>
+                      <a href="/company#our-partners">
+                        Our  Partners
+                       </a>
+                      <a href="/company#our-careers">
+                          Our Careers
+                      </a>
+                      <a href="/company#our-updates">
+                       Our Updates
+                      </a>
+                      <a href="/company#contact-us">
+                        Contact Us
+                      </a>
+                  </div>
+                </div>
+                <div class="footer__section">
+                    <div class="footer__section-header">
+                        <h6>Learn</h6>
+                    </div>
+                    <div class="footer__section-links">
+                        <a href="/learn#whats-trending">
+                            What's Trending
+                        </a>
+                        <a href="/learn#events">
+                            Events
+                        </a>
+                
+                        <a href="/learn#research">
+                          Research & Analysis
+                        </a>
+                    </div>
+                  </div>
+               
+              </div>
+            </div>  
+          </div>
+          <div class="footer__bottom">
+            <div class="footer__copyright">
+                &#169; Gwiji 2023. All rights reserved.
+            </div>
+            <div class="footer__social-media">
+                <i class='bx bxl-facebook-circle' ></i>
+                <i class='bx bxl-twitter' ></i>
+                <i class='bx bxl-instagram-alt' ></i>
+                <i class='bx bxl-linkedin-square' ></i>
+                <i class='bx bxl-gmail' ></i>
+            </div>
+        </div>
+        </div>
+       
+    </footer>
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+    
+{% if not request.user.is_authenticated %}
+<script>
+    $(document).ready(function () {
+        // Attach a click event handler to all buttons with the data-authenticated attribute
+        $('button[data-authenticated="true"]').on('click', function (event) {
+            // Prevent the default action of the button
+            event.preventDefault();
+
+            // Check if the user is authenticated and redirect to the login page
+            window.location.href = '#login';  // Replace with your login URL
+
+            // Return false to ensure the default action is not executed
+            return false;
+        });
+    });
+</script>
+{% endif %}
+
+<script>
+  const toggleButton = document.querySelector(".header__menu-icon");
+  const menuBar = document.querySelector(".header__menu-collapse");
+  const removeMenuBar = document.querySelector(".header__menu-collapse-icon");
+
+  toggleButton.addEventListener("click", function () {
+    if (menuBar.classList.contains("active")) {
+      menuBar.classList.remove("active");
+    } else {
+      menuBar.classList.add("active");
+    }
+  });
+  removeMenuBar.addEventListener("click", function () {
+    menuBar.classList.remove("active");
+  });
+
+</script>
+    
+<script>
+    // Get all <p> elements with the "total-raised" and "current-raise" classes
+    var totalRaisedElements = document.querySelectorAll(".total-raised");
+    var currentRaiseElements = document.querySelectorAll(".current-raise");
+
+    // Function to format a number with commas
+    function formatNumberWithCommas(number) {
+        return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    // Loop through each <p> element and update its content with formatted numbers
+    totalRaisedElements.forEach(function (element) {
+        var value = parseFloat(element.textContent);
+        if (!isNaN(value)) {
+            element.textContent = formatNumberWithCommas(value);
+        }
+    });
+
+    currentRaiseElements.forEach(function (element) {
+        var value = parseFloat(element.textContent);
+        if (!isNaN(value)) {
+            element.textContent = formatNumberWithCommas(value);
+        }
+    });
+</script>
+
+<script>
+    var slidesPerView = window.innerWidth > 768 ? 3 : 1; // Adjust the breakpoint (768) as needed
+    var swiper = new Swiper(".mySwiper", {
+        slidesPerView: slidesPerView,
+        spaceBetween: 30,
+        autoplay: {
+            delay: 2500,
+            disableOnInteraction: false,
+        },
+        pagination: {
+            el: ".swiper-pagination",
+            clickable: true,
+        },
+    });
+</script>
+
+<script>
+    function activateFilter(filterId) {
+        // Scroll to the campaigns container
+        const campaignsContainer = document.querySelector('.campaign__container-results');
+        campaignsContainer.scrollIntoView({ behavior: 'smooth' });
+
+        // Activate the specified category filter by simulating a click
+        const categoryButton = document.getElementById(filterId);
+        if (categoryButton) {
+            categoryButton.click();
+        }
+    }
+</script>
+
+<script>
+    const passwordInputs = document.querySelectorAll(".login__password");
+    const showPasswordBtns = document.querySelectorAll(".show__password");
+
+    showPasswordBtns.forEach((showPasswordBtn, index) => {
+        showPasswordBtn.addEventListener("click", () => {
+            if (passwordInputs[index].type === "password") {
+                passwordInputs[index].type = "text";
+                showPasswordBtn.classList.add("active");
+            } else {
+                passwordInputs[index].type = "password";
+                showPasswordBtn.classList.remove("active");
+            }
+        });
+    });
+
+
+
+</script>
+
+<script>
+      // Get the authentication container and its child elements
+      const closeBtn = document.getElementById('close-authentication')
+      const authenticationSection = document.querySelector(".authentication__section");
+      const loginContainer = authenticationSection.querySelector(".login__container-body");
+      const signupContainer = authenticationSection.querySelector(".signup__container-body");
+      const loginHeader = authenticationSection.querySelector(".authentication__header-item:first-child");
+      const signupHeader = authenticationSection.querySelector(".authentication__header-item:last-child");
+
+  
+      // Function to show the authentication container
+      function showAuthenticationContainer() {
+          authenticationSection.style.display = "flex";
+      }
+  
+      // Function to hide the authentication container
+      function hideAuthenticationContainer() {
+          authenticationSection.style.display = "none";
+      }
+  
+      // Function to show the login container
+      function showLoginContainer() {
+          showAuthenticationContainer();
+          loginContainer.style.display = "block";
+          signupContainer.style.display = "none";
+          loginHeader.classList.add("active");
+          signupHeader.classList.remove("active");
+      }
+  
+      // Function to show the signup container
+      function showSignupContainer() {
+          showAuthenticationContainer();
+          loginContainer.style.display = "none";
+          signupContainer.style.display = "block";
+          loginHeader.classList.remove("active");
+          signupHeader.classList.add("active");
+      }
+  
+      // Hide the authentication container initially
+      hideAuthenticationContainer();
+  
+      // Initial page load based on the URL hash
+      if (window.location.hash === "#login") {
+          showLoginContainer();
+      } else if (window.location.hash === "#signup") {
+          showSignupContainer();
+      }
+  
+      // Listen for changes in the URL hash (e.g., when the user clicks a link)
+      window.addEventListener("hashchange", () => {
+          if (window.location.hash === "#login") {
+              showLoginContainer();
+          } else if (window.location.hash === "#signup") {
+              showSignupContainer();
+          }
+      });
+
+      
+
+
+      closeBtn.addEventListener("click", function () {
+          window.location.href = "/";
+      });
+</script>
+
+ <script>
+    const emailLoginRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const emailLogin = document.getElementById('login__email');
+    const passwordLogin = document.getElementById('login__password');
+    const loginBtn = document.getElementById('login__btn');
+    const cLogErrorMessage = document.getElementById('login-error__message');
+
+    // To disable the button
+    
+
+    loginBtn.addEventListener("click", function () {
+        const emailValue = emailLogin.value;
+        const passwordValue = passwordLogin.value;
+
+        if (!emailLoginRegex.test(emailValue)) {
+            cLogErrorMessage.style.display = 'block';
+            cLogErrorMessage.textContent = "Invalid email address";
+            console.log("Invalid email format");
+        } else {
+          $.ajax({
+            url: 'login',
+            method: 'POST',
+            data: {
+                email: emailValue,
+                password: passwordValue,
+            },
+            success: function (response) {
+                if (response.message === 'success') {
+                    // Redirect or perform other actions for a successful login
+                    console.log("Logged in successfully");
+                    window.location.href = "/";
+                    
+                } else {
+                   
+                    console.log("Unexpected response:", response);
+                    cLogErrorMessage.style.display = 'block';
+                    cLogErrorMessage.textContent = 'An error occured, please try again.';
+                }
+            },
+            error: function (xhr, status, error) {
+                if (xhr.status === 400) {
+                    cLogErrorMessage.style.display = 'block';
+                    cLogErrorMessage.textContent = xhr.responseJSON.error;
+                    console.log("Invalid login credentials");
+                } else {
+
+                    cLogErrorMessage.style.display = 'block';
+                    cLogErrorMessage.textContent = 'An error occured, please try again.';
+                    console.log("Error:", status, error);
+                }
+            }
+        });
+        }
+
+       
+    });
+       function areLoginFieldsEmpty() {
+           const emailValue = emailLogin.value.trim(); // Trim to remove leading/trailing spaces
+           const passwordValue = passwordLogin.value.trim();
+           return emailValue === '' || passwordValue === '';
+           
+       }
+
+       // Function to enable or disable the login button based on field values
+       function toggleLoginButton() {
+        if (areLoginFieldsEmpty()) {
+          loginBtn.classList.add('disabled');
+        }
+        else {
+          loginBtn.classList.remove('disabled');
+        }
+            
+       }
+
+       // Add event listeners to the email and password fields
+       emailLogin.addEventListener('input', toggleLoginButton);
+       passwordLogin.addEventListener('input', toggleLoginButton);
+
+       // Initial check to disable the button if fields are empty on page load
+       toggleLoginButton();
+
+ </script>
+
+ <script>
+  // Regular expression for email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const emailSignup = document.getElementById('signup__email');
+    const usernameSignup = document.getElementById('signup__username');
+    const firstNameSignup = document.getElementById('signup__first-name');
+    const lastNameSignup = document.getElementById('signup__last-name');
+    const passwordSignup = document.getElementById('signup__password');
+    const confirmPasswordSignup = document.getElementById('signup__confirm-password');
+    const signupBtn = document.getElementById('signup__btn');
+    const cSignErrorMessage = document.getElementById('signup-error__message');
+    const marketCheckbox = document.getElementById('marketing__checkbox');
+
+    signupBtn.addEventListener("click", function () {
+        const emailSignupValue = emailSignup.value;
+        const usernameSignupValue = usernameSignup.value;
+        const fisrtNameSignupValue = firstNameSignup.value;
+        const lastNameSignupValue = lastNameSignup.value;
+        const passwordSignupValue = passwordSignup.value;
+        const confirmPasswordSignupValue = confirmPasswordSignup.value;
+
+            // Check if the email is in a valid format
+        if (!emailRegex.test(emailSignupValue)) {
+            cSignErrorMessage.style.display = 'block';
+            cSignErrorMessage.textContent = "Invalid email address";
+            console.log("Invalid email format");
+        } else if (passwordSignupValue !== confirmPasswordSignupValue) {
+            cSignErrorMessage.style.display = 'block';
+            cSignErrorMessage.textContent = "Passwords do not match";
+            console.log("Passwords do not match");
+        } else if (passwordSignupValue == '' || confirmPasswordSignupValue == '') {
+            cSignErrorMessage.style.display = 'block';
+            cSignErrorMessage.textContent = "Please Input Passwords";
+            console.log("Please Input Passwords");
+        } else {
+          $.ajax({
+            url: 'signup',
+            method: 'POST',
+            data: { 
+              email: emailSignupValue, 
+              username: usernameSignupValue,
+              password: passwordSignupValue,
+              first_name: fisrtNameSignupValue,
+              last_name: lastNameSignupValue
+
+            },
+            success: function (response) {
+                if (response.message === 'success') {
+                    // Redirect or perform other actions for a successful login
+                    console.log("Signed Up successfully");
+                    window.location.href = "/";
+                    
+                } else {
+                   
+                    console.log("Unexpected response:", response);
+                    cSignErrorMessage.style.display = 'block';
+                    cSignErrorMessage.textContent = 'An error occured, please try again.';
+                }
+            },
+            error: function (xhr, status, error) {
+                if (xhr.status === 400) {
+                    cSignErrorMessage.style.display = 'block';
+                    cSignErrorMessage.textContent = xhr.responseJSON.error;
+                    console.log("User already exists.");
+                } else {
+
+                    cSignErrorMessage.style.display = 'block';
+                    cSignErrorMessage.textContent = 'An error occured, please try again.';
+                    console.log("Error:", status, error);
+                }
+            }
+          });
+        }
+        
+      });
+
+      function areSignupFieldsEmpty() {
+          const emailSignupValue = emailSignup.value.trim();
+          const passwordSignupValue = passwordSignup.value.trim();
+          const usernameSignupValue = usernameSignup.value.trim();
+          const firstNameSignupValue = firstNameSignup.value.trim();
+          const lastNameSignupValue = lastNameSignup.value.trim();
+          const confirmPasswordSignupValue = confirmPasswordSignup.value.trim();
+
+          return !marketCheckbox.checked || emailSignupValue === '' || passwordSignupValue === '' || confirmPasswordSignupValue === ''  || usernameSignupValue === ''  || firstNameSignupValue === ''  || lastNameSignupValue === '';
+      }
+
+
+       // Function to enable or disable the login button based on field values
+       function toggleSignupButton() {
+        if (areSignupFieldsEmpty()) {
+          signupBtn.classList.add('disabled');
+        }
+        else {
+          signupBtn.classList.remove('disabled');
+        }
+            
+       }
+
+       // Add event listeners to the email and password fields
+       emailSignup.addEventListener('input', toggleSignupButton);
+       passwordSignup.addEventListener('input', toggleSignupButton);
+       confirmPasswordSignup.addEventListener('input', toggleSignupButton);
+       marketCheckbox.addEventListener('click', toggleSignupButton);
+
+       // Initial check to disable the button if fields are empty on page load
+       toggleSignupButton();
+ </script>
+
+<script>
+  // Add a click event listener to the heart icons
+  $(document).on('click', 'i.follow, i.follow', function () {
+      // Get the campaign ID from the data attribute
+      var campaignId = $(this).data('campaign-id');
+      
+      // Toggle the heart icon's class
+      $(this).toggleClass('bx-heart bxs-heart');
+
+      // Send an AJAX request to your Django view
+      $.ajax({
+          url: '/follow_campaign/' + campaignId + '/', // Replace with your Django view URL
+          type: 'POST', // You can also use 'GET' depending on your view
+          data: {
+              'campaign_id': campaignId,
+              'action': 'follow_or_unfollow', // You can define your own action parameter
+          },
+          success: function (data) {
+              // Handle the response if needed
+              console.log('Follow/unfollow successful');
+             
+          },
+          error: function (xhr, textStatus, errorThrown) {
+              // Handle errors if needed
+              console.error('Error:', errorThrown);
+          }
+      });
+  });
+</script>
+
+<script>
+  // Add a click event listener to the heart icons
+  $(document).on('click', 'button.follow, button.follow', function () {
+      // Get the campaign ID from the data attribute
+      var campaignId = $(this).data('campaign-id');
+      
+      // Toggle the heart icon's class
+      $(this).toggleClass('campaigns__follow-btn ');
+
+      var currentElement = this;
+      // Send an AJAX request to your Django view
+      $.ajax({
+          url: '/follow_campaign/' + campaignId + '/', // Replace with your Django view URL
+          type: 'POST', // You can also use 'GET' depending on your view
+          data: {
+              'campaign_id': campaignId,
+              'action': 'follow_or_unfollow', // You can define your own action parameter
+          },
+          success: function (data) {
+              // Handle the response if needed
+              console.log('Follow/unfollow successful');
+              $(currentElement).html(data.message);
+             
+             
+          },
+          error: function (xhr, textStatus, errorThrown) {
+              // Handle errors if needed
+              console.error('Error:', errorThrown);
+          }
+      });
+  });
+</script>
+
+<script>
+  // Add a click event listener to the heart icons
+  $(document).on('click', 'i.like, i.like', function () {
+      // Get the campaign ID from the data attribute
+      var postId = $(this).data('post-id');
+      
+      // Toggle the heart icon's class
+      $(this).toggleClass('bx-heart bxs-heart');
+
+      // Store a reference to the current 'this' for use inside the AJAX success function
+      var currentElement = this;
+
+      // Send an AJAX request to your Django view
+      $.ajax({
+          url: '/like_post/' + postId + '/', // Replace with your Django view URL
+          type: 'POST', // You can also use 'GET' depending on your view
+          data: {
+              'campaign_id': postId,
+              'action': 'like_or_unlike', // You can define your own action parameter
+          },
+          success: function (data) {
+              // Handle the response if needed
+              console.log('like/unlike');
+              console.log(data.message);
+              
+              // Update the content of the current element with the received message
+              $(currentElement).html(data.message);
+          },
+          error: function (xhr, textStatus, errorThrown) {
+              // Handle errors if needed
+              console.error('Error:', errorThrown);
+          }
+      });
+  });
+</script>
+
+<script>
+  function updateRelativeTime() {
+      const timeElements = document.querySelectorAll('.time');
+      const now = Math.floor(Date.now() / 1000); // Current time in seconds
+
+      timeElements.forEach((timeElement) => {
+          const postTimestamp = parseInt(timeElement.getAttribute('data-post-timestamp'));
+          const timeDifference = now - postTimestamp;
+          const postDate = new Date(postTimestamp * 1000);
+          const nowDate = new Date(now * 1000);
+
+          const postYear = postDate.getFullYear();
+          const postMonth = postDate.getMonth();
+          const postDay = postDate.getDate();
+
+          const nowYear = nowDate.getFullYear();
+
+          if (nowYear === postYear) {
+            if (timeDifference < 60) {
+              // Less than a minute
+              timeElement.textContent = timeDifference + ' seconds ago';
+              } else if (timeDifference < 3600) {
+              // Less than an hour
+              timeElement.textContent = Math.floor(timeDifference / 60) + ' minutes ago';
+              } else if (timeDifference < 86400) {
+              // Less than a day
+              timeElement.textContent = Math.floor(timeDifference / 3600) + ' hours ago';
+              } else {
+              // More than a day, show the full date
+              const date = new Date(postTimestamp * 1000);
+              const formattedDate = date.toLocaleDateString('en-US', {
+                  month: 'short',
+                  day: 'numeric',
+              });
+              timeElement.textContent = formattedDate;
+              }
+          } else {
+              // Different year, display month and year
+              timeElement.textContent = postDate.toLocaleDateString('en-US', {
+                  year: 'numeric',
+                  month: 'short',
+              });
+          }
+
+   
+      });
+  }
+
+  // Call the function initially to format existing timestamps
+  updateRelativeTime();
+
+  // You can also set an interval to periodically update the timestamps
+  setInterval(updateRelativeTime, 60000); // Update every minute
+
+</script>
+
+<script>
+  if ( window.history.replaceState ) {
+      window.history.replaceState( null, null, window.location.href );
+  }
+</script>
+
+<script>
+  const viewCommentButtons = document.querySelectorAll('.bx-comment-detail');
+
+  viewCommentButtons.forEach(function (viewCommentButton) {
+      viewCommentButton.addEventListener("click", function () {
+          // Find the common ancestor element
+          const commonAncestor = this.closest('.community__posts-item_footer');
+          
+          if (commonAncestor) {
+              // Find the corresponding comment container
+              const commentContainer = commonAncestor.nextElementSibling.nextElementSibling;
+
+              // Toggle the comment container's visibility
+              if (commentContainer) {
+                  if (commentContainer.style.display === 'none' || commentContainer.style.display === '') {
+                      commentContainer.style.display = 'block';
+                  } else {
+                      commentContainer.style.display = 'none';
+                  }
+              }
+          }
+      });
+  });
+</script>
+
+<script>
+  // Add a click event listener to all comment buttons
+  const commentBtns = document.querySelectorAll('.post-comment-btn');
+
+  commentBtns.forEach(function (commentBtn) {
+      commentBtn.addEventListener("click", function () {
+          const commentText = this.previousElementSibling; // Get the input element before the button
+          const commentTextValue = commentText.value;
+          var postId = this.dataset.postId; // Get the postId from the button's data attribute
+          // Store the current scroll position in localStorage
+          localStorage.setItem('scrollPosition', window.scrollY);
+
+          const formData = new FormData();
+          formData.append('text', commentTextValue);
+          $.ajax({
+              url: '/comment/' + postId + '/',
+              method: 'POST',
+              data: formData,
+              processData: false,
+              contentType: false,
+              success: function (response) {
+                  window.location.reload()
+                 
+              },
+              error: function (xhr, status, error) {
+                  if (xhr.status === 400) {
+                      console.log("Comment unsuccessful");
+                  } else {
+                      console.log("Error:", status, error);
+                  }
+              }
+          });
+      });
+  });
+  // Restore the scroll position after the page has loaded
+  window.addEventListener('load', function () {
+      const scrollPosition = localStorage.getItem('scrollPosition');
+      if (scrollPosition) {
+          window.scrollTo(0, scrollPosition);
+          localStorage.removeItem('scrollPosition'); // Remove the stored scroll position
+      }
+  });
+</script>
+
+<script>
+  // Function to toggle the emoji picker visibility
+  function toggleEmojiPicker() {
+      const emojiPicker = document.getElementById('emoji-picker');
+      emojiPicker.style.display = emojiPicker.style.display === 'block' ? 'none' : 'block';
+  }
+
+// Function to insert the selected emoji into the post text field
+function insertEmoji(emojiObject) {
+  console.log('Received emojiObject:', emojiObject);
+
+  const postText = document.getElementById('post__text'); // Replace with your post text field ID
+  const emoji = emojiObject.unicode;
+  console.log('Selected emoji:', emoji);
+
+  postText.value += emoji; // Append the selected emoji to the current text
+  toggleEmojiPicker(); // Hide the emoji picker
+}
+
+
+  // Add a click event listener to the smile icon to show/hide the emoji picker
+  const smileIcon = document.querySelector('.bx-smile'); // Replace with the correct selector
+  smileIcon.addEventListener('click', toggleEmojiPicker);
+
+  // Initialize the emoji picker
+  const emojiPicker = document.getElementById('emoji-picker');
+  emojiPicker.innerHTML = '<emoji-picker></emoji-picker>';
+  emojiPicker.addEventListener('emoji-click', (event) => {
+      insertEmoji(event.detail.emoji);
+  });
+</script>
+
+<script>
+  // Function to handle file input change and update image preview
+  function handleFileInputChange(inputElement, previewElement) {
+      const fileInput = inputElement;
+      const previewImage = previewElement;
+
+      fileInput.addEventListener("change", function () {
+          const file = fileInput.files[0];
+          const imagePreview = document.querySelector('.post__image-preview');
+          if (file) {
+              const reader = new FileReader();
+              reader.onload = function (e) {
+                  imagePreview.style.display = "block";
+                  previewImage.src = e.target.result;
+              };
+              reader.readAsDataURL(file);
+          }
+      });
+  }
+
+
+  // Initialize image preview for profile photo
+  const imageInput = document.getElementById("post-image");
+  const imagePreview = document.getElementById("image-preview");
+  handleFileInputChange(imageInput, imagePreview);
+</script>
+    
+<script>
+  // Get references to all invest buttons and the go back button
+  const investButtons = document.querySelectorAll(".campaign__details-body-packs-board-invest-btn");
+  const goBackButton = document.querySelector(".go-back");
+  const agreementContent = $(".campaign__details-body-packs-board-invest-agreement").html(); // Get the HTML content
+
+  // Get a reference to the invest container
+  const investContainer = document.querySelector(".campaign__details-body-packs-board-invest-container");
+  const sharesContainer = document.querySelector(".shares_volume");
+  const amountContainer = document.querySelector(".investment_amount");
+  const sharesperDollarContainer = document.querySelector(".sharesper__dollar");
+
+  // Function to display the share count and amount in the invest container
+  function displayInvestmentInfo(shares, amount, sharesperdollar) {
+    sharesContainer.innerHTML = `
+        ${shares}
+      `;
+    amountContainer.innerHTML = `
+      ${amount}
+    `;
+
+    sharesperDollarContainer.innerHTML = `
+      ${sharesperdollar}
+    `;
+  }
+
+  // Add a click event listener to each invest button
+  investButtons.forEach(function(button) {
+      button.addEventListener("click", function() {
+          // Get the data attributes from the clicked button
+          const shares = this.parentElement.getAttribute("data-shares");
+          const amount = this.parentElement.getAttribute("data-amount");
+          const sharesperdollar = this.parentElement.getAttribute("data-dollar");
+          
+          // Display the investment information in the container
+          displayInvestmentInfo(shares, amount, sharesperdollar);
+          
+          // Set the invest container as active (visible)
+          investContainer.classList.add("active");
+      });
+  });
+
+  // Add a click event listener to the "Proceed to Payment" button
+  const proceedToPaymentButton = document.getElementById('proceedToPaymentButton');
+  proceedToPaymentButton.addEventListener('click', function() {
+    // Get the shares and amount values from the containers
+    const shares = sharesContainer.textContent;
+    const amount = amountContainer.textContent;
+    const sharesperdollar =  sharesperDollarContainer.textContent;
+
+    $.ajax({
+            url: 'process_payment',
+            method: 'POST',
+            data: { 
+              shares: shares,
+              amount: amount,
+              sharesperdollar: sharesperdollar,
+              agreementContent: agreementContent
+
+            },
+            success: function (response) {
+              window.location.href = "/financials";
+              
+            },
+            error: function (xhr, status, error) {
+                if (xhr.status === 400) {
+                    cSignErrorMessage.style.display = 'block';
+                    cSignErrorMessage.textContent = xhr.responseJSON.error;
+                    console.log("User already exists.");
+                } else {
+
+                    cSignErrorMessage.style.display = 'block';
+                    cSignErrorMessage.textContent = 'An error occured, please try again.';
+                    console.log("Error:", status, error);
+                }
+            }
+          });
+
+
+  });
+
+  
+  // Add a click event listener to the go back button
+  goBackButton.addEventListener("click", function() {
+      // Deactivate (hide) the invest container
+      investContainer.classList.remove("active");
+      window.location.reload();
+  });
+</script>
+<script>
+  // Enable the button when the checkbox is checked
+  document.getElementById('agreementCheckbox').addEventListener('change', function() {
+      const paymentBtn = document.getElementById('proceedToPaymentButton');
+      if (this.checked) {
+          paymentBtn.classList.remove("disabled");
+          paymentBtn.removeAttribute("disabled");
+      } else {
+          paymentBtn.classList.add("disabled");
+          paymentBtn.setAttribute("disabled", "disabled");
+      }
+  });
+</script>
+
+</body>
+</html>
+
+{% endblock content %}

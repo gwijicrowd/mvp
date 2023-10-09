@@ -1,0 +1,39 @@
+{% extends 'dashboard.html' %}
+{% load static %}
+{% block dashaboard %}
+
+<div class="notifications__container">
+    <div class="notifications__container-header">
+        <i class='bx bxs-notification' ></i>
+        <h1>Notifications</h1>
+    </div>
+    <div class="notifications__container-body">
+        {% if notifications %}
+        <div class="notifications__items">
+            {% for notification in notifications %}
+            <div class="notification__item {% if notification.read %}read{% endif %}">
+                <div class="notification__time time" data-post-timestamp="{{ notification.time | date:'U' }}">
+                    {{ notification.time }}
+                </div>
+                <div class="notification__text">
+                    <p>{{ notification.text }}</p>
+                </div>
+                <div class="notification__icon">
+                    <i class='bx bxs-bell-ring' ></i>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="notifications__container-no-notification">
+            <p>You do not have any notifications yet. </p>
+        </div>
+        {% endif %}
+    </div>
+ </div>
+
+{% endblock %}
+
+{% block notifications-sidebar %}
+active
+{% endblock %}

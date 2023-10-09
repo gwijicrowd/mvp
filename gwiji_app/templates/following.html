@@ -1,0 +1,121 @@
+{% extends 'dashboard.html' %}
+{% load static %}
+{% block dashaboard %}
+
+<div class="following__container">
+    <div class="following__container-header">
+        <h1>Campaigns you are following...</h1>
+    </div>
+    <div class="following__container-body">
+        {% if followed_campaigns %}
+            {% for campaign in followed_campaigns %}
+            <div class="browse__campaign-item " data-category="{{ campaign.project.category }}">
+                
+                {% if campaign.campaign_picture  %}
+                <div class="browse__campaign-item-top">
+                    <a href="{% url 'campaigns' campaign.id %}">
+                        <img src="{{ campaign.campaign_picture.url }}" alt="{{ campaign.campaign_picture.url }}">
+                    </a>
+                </div>
+                {% else %}
+                <div class="browse__campaign-item-top">
+                    <img src="{% static 'images/project.jpeg' %}" alt="">
+                </div>
+                {% endif %}
+                <div class="browse__campaign-item-bottom">
+                    <div class="browse__campaign-item-bottom-top">
+                        <p class="browse__campaign-category">
+                            <span>{{campaign.project.category}}</span>
+                            <span>
+                                {% if campaign in followed_campaigns %}
+                                    <i class='bx bxs-heart follow' data-user-id="{{ user.id }}" data-campaign-id="{{ campaign.id }}"></i>
+                                {% else %}
+                                    <i class='bx bx-heart follow' data-user-id="{{ user.id }}" data-campaign-id="{{ campaign.id }}"></i>
+                                {% endif %}
+                            </span>                            
+                        </p>
+                       
+                            <a href="{% url 'campaigns' campaign.id %}">
+                                <h3 class="browse__campaign-title">
+                                    {{campaign.title}}
+                                </h3>
+                            </a>
+                           
+                        
+                        <p class="browse__campaign-description">
+                            {{campaign.subtitle}}
+                        </p>
+                    </div>
+                    <div class="browse__campaign-item-bottom-bottom">
+                        <div class="browse__campaign-fund-container">
+                            <div class="browse__campaign-fund-subcontainer">
+                                
+                                <span class="browse__campaign-current-raise">
+                                    $<p class="current-raise">{{ campaign.current_raise }}</p>
+                                </span>
+                                <span>
+                                    of 
+                                </span>
+                                <span class="browse__campaign-total-raised">
+                                    $<p class="total-raised">{{ campaign.target }}</p>
+                                </span>
+                                <span>raised.</span>
+                            </div>
+                            <div>
+                                <span class="browse__campaign-progress">
+                                    {{ campaign.percentage_raised }}%
+                                </span>
+                            </div>
+                            
+                        </div>
+                        <div class="browse__campaign-progress-bar">
+                            <progress class="browse__campaign-progress" value="{{ campaign.percentage_raised }}" max="100"></progress>
+                        </div>
+                        <div class="browse__campaign-campaign-time">
+                            <i class='bx bx-time-five'></i>
+                            <p id="campaign-time-left-{{ campaign.id }}">Calculating...</p>
+                            <script>
+                                // Get the campaign start and end dates as JavaScript Date objects
+                                var startDate = new Date("{{ campaign.date_start|date:'Y-m-d H:i:s' }}");
+                                var endDate = new Date("{{ campaign.date_end|date:'Y-m-d H:i:s' }}");
+    
+                                // Calculate the time difference in milliseconds
+                                var timeDifference = endDate - new Date();
+    
+                                // Calculate the number of days and hours left
+                                var daysLeft = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+                                var hoursLeft = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    
+                                // Get the element to display the time left
+                                var timeLeftElement = document.getElementById("campaign-time-left-{{ campaign.id }}");
+    
+                                // Display the time left
+                                if (daysLeft > 0) {
+                                    timeLeftElement.textContent = daysLeft + " day(s) left";
+                                } else if (hoursLeft > 0) {
+                                    timeLeftElement.textContent = hoursLeft + " hour(s) left";
+                                } else {
+                                    timeLeftElement.textContent = "Less than 1 hour left";
+                                }
+                            </script>
+                        </div>
+                    </div>
+    
+    
+                </div>
+            
+            </div>
+            {% endfor %}
+        {% else %}
+        <div class="following__container-no-campaign">
+            <p>You are not following any campaign, click  <a href="/browse">here</a> to browse amd discover campaigns of your interest.</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}
+
+{% block following-sidebar %}
+active
+{% endblock %}

@@ -1,0 +1,606 @@
+{% extends 'dashboard.html' %}
+{% load static %}
+{% block dashaboard %}
+
+<div class="profile__container">
+   <div class="profile__container-header">
+      <h1>My Profile</h1>
+   </div>
+   <div class="profile__container-body">
+      <div class="profile__header">
+         <form id="profile-form" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+         <div class="profile__header-banner">
+             {% if profile.cover_photo %}
+             <img  id="cover-preview" src="{{ profile.cover_photo.url }}" alt="">
+             {% else %}
+             <img  id="cover-preview" src="{% static 'images/default-cover.png' %}" alt="">
+             {% endif %}
+        
+           <div class="edit-icon profile-cover-photo-edit" data-field="cover">
+               <label for="cover-input" class="edit-label"></label>
+               <input type="file" id="cover-input" accept="image/*"  name="cover">
+         </div>
+         </div>
+         <div class="profile__header-sub-banner">
+            <div class="profile__photo">
+               <div class="profile__header-dp">
+                  {% if profile.avatar %}
+                  <img id="avatar-preview" src="{{ profile.avatar.url }}" alt="">
+                  {% else %}
+                  <img  id="avatar-preview" src="{% static 'images/default-dp.jpg' %}" alt="">
+                  {% endif %}
+                  <div class="edit-icon profile-photo-edit" data-field="dp">
+                     <label for="dp-input" class="edit-label"></i></label>
+                     <input type="file" id="dp-input" accept="image/*"  name="avatar">
+                 </div>
+              </div>
+            </div>
+             
+     
+             <div class="profile__header-names">
+                 <div class="profile__header-display-name">
+                     <h3>{{ profile.display_name }} <i class='bx bxs-badge-check'></i></h3>
+                 </div>
+                 <div class="profile__header-username">
+                     <p>@{{ profile.username }}</p>
+                 </div>
+                 <div class="profile__header-names-footer">
+                     <div class="profile__header-following-followers">
+                         <div class="profile__header-following">
+                             <span>
+                                 {{ investors_count }}
+                             </span>
+                             investors.
+                         </div>
+                         <div class="profile__header-followers">
+                             <span>
+                                 {{ investments_count }}
+                             </span>
+                             investments
+                         </div>
+                     </div>
+                     <div class="profile__header-edit-profile">
+                        <button id="edit-profile-btn" type="button">Edit Profile</button>
+                        <button type="submit" class="hidden" id="save-profile-btn">Save Profile</button>
+                     </div>
+                 </div>
+             </div>
+         </div>
+         <div class="profile__header-about">
+             <div class="profile__header-about-text">
+               {% if profile.bio %}
+                 <p id="bio-text">{{ profile.bio }}</p>
+               {% else %}
+               <p id="bio-text">Enter Profile Bio</p>
+               {% endif %}
+                 <div class="edit-icon" data-field="bio"><i class='bx bxs-edit'></i></div>
+             </div>
+             <div class="profile__header-about-footer">
+                 <div class="profile__header-about-link">
+                     <i class='bx bx-current-location'></i>
+                     {% if profile.location %}
+                     <p id="location-text">{{ profile.location }}</p>
+                     {% else %}
+                     <p id="location-text">Enter Your Location (City, Country)</p>
+                     {% endif %}
+                     <div class="edit-icon" data-field="location"><i class='bx bxs-edit'></i></div>
+                 </div>
+                 <div class="profile__header-about-joined">
+                     <p>Joined</p>
+                     <p class="" >{{ profile.date_joined.date  }}</p>
+                 </div>
+             </div>
+         </div>
+      </form>
+     </div>
+     
+      <div class="profile__body">
+         <div class="profile__body-item">
+            <div class="profile__body-header">
+               <a href="/manage_campaigns">
+                  <h2>Campaigns
+                     <i class='bx bx-edit' > 
+                     </i>
+                  </a>
+               </h2>
+               </a>
+               
+            </div>
+            <div class="profile__body-companies ">
+               {% if my_campaigns %}
+                  {% for campaign in my_campaigns %}
+                     <div class="profile__body-companies-item campaign__details-header">
+                        <div class="campaigns__details-header-left">
+                           <a href="{% url 'campaigns' campaign.id %}">
+                              {% if campaign.campaign_picture %}
+                              <img src="{{ campaign.campaign_picture.url }}" alt="">
+                              {% else %}
+                              <img src="{% static 'images/project.png'%}" alt="">
+                              {% endif %}
+                           </a>
+                           
+                        </div>
+                        <div class="campaigns__details-header-right">
+                           <div class="campaigns__details-header-right-category">
+                              <p>- {{ campaign.project.category }}</p>
+                              <p class="campaigns__details-header-right-links">
+                                    <a href="https://facebook.com"><i class='bx bxl-facebook-circle'></i></a>
+                                    <a href="https://twitter.com"><i class='bx bxl-twitter' ></i></a>
+                                    <a href="https://linkedin.com"><i class='bx bxl-linkedin-square' ></i></a>
+                                    <a href="https://{{campaign.project.website}}"><i class='bx bx-link' ></i></a>
+                              </p>
+                           </div>
+                           <div class="campaigns__details-header-right-title">
+                              <a href="{% url 'campaigns' campaign.id %}">
+                                 <h1>{{campaign.title}} - {{campaign.project.name}}</h1>
+                              </a>
+                              
+                           </div>
+                           <div class="campaigns__details-header-right-description">
+                              <p>{{campaign.subtitle}}</p>
+                           </div>            
+                          
+                           <div class="campaigns__details-header-right-tracker">
+                              <div class="campaigns__details-header-right-fund-container">
+                                    <div class="campaigns__details-header-right-fund-subcontainer">
+                                       <span class="campaigns__details-header-right-current-raise">
+                                          $<p class="current-raise">{{ campaign.current_raise }}</p>
+                                       </span>
+                                       <span>
+                                          of 
+                                       </span>
+                                       <span class="campaigns__details-header-right-total-raised">
+                                          $<p class="total-raised">{{ campaign.target }}</p>
+                                       </span>
+                                       <span>raised.</span>
+                                    </div>
+                                    <div>
+                                       <span class="campaigns__details-header-right-progress">
+                                          {{ campaign.percentage_raised }}%
+                                       </span>
+                                    </div>
+                              </div>
+                              <div class="campaigns__details-header-right-progress-bar">
+                                    <progress class="campaigns__details-header-right-progress" value="{{ campaign.percentage_raised }}" max="100"></progress>
+                              </div>
+                              <div class="campaigns__details-header-right-campaign-time">
+                                    <i class='bx bx-time-five'></i>
+                                    <p id="campaign-time-left-{{ campaign.id }}">Calculating...</p>
+                                    <script>
+                                       // Get the campaign start and end dates as JavaScript Date objects
+                                       var startDate = new Date("{{ campaign.date_start|date:'Y-m-d H:i:s' }}");
+                                       var endDate = new Date("{{ campaign.date_end|date:'Y-m-d H:i:s' }}");
+            
+                                       // Calculate the time difference in milliseconds
+                                       var timeDifference = endDate - new Date();
+            
+                                       // Calculate the number of days and hours left
+                                       var daysLeft = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+                                       var hoursLeft = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            
+                                       // Get the element to display the time left
+                                       var timeLeftElement = document.getElementById("campaign-time-left-{{ campaign.id }}");
+            
+                                       // Display the time left
+                                       if (daysLeft > 0) {
+                                          timeLeftElement.textContent = daysLeft + " day(s) left";
+                                       } else if (hoursLeft > 0) {
+                                          timeLeftElement.textContent = hoursLeft + " hour(s) left";
+                                       } else {
+                                          timeLeftElement.textContent = "Less than 1 hour left";
+                                       }
+                                    </script>
+                              </div>
+                           </div>
+                           
+                        </div>
+                  </div>
+                  {% endfor %}
+               {% else %}
+                  <div class=" profile__body-companies-item profile__body-companies-item-no-content">
+                     <p>You have no company to display, click <a href="">here</a> to add your company. </p>
+                  </div>
+               {% endif %}
+              
+            </div>
+         </div>
+         <div class="profile__body-item">
+            <div class="profile__body-header">
+               <h2>Investments</h2>
+            </div>
+            <div class="profile__body-companies">
+               {% if investments %}
+                     {% for investment in unique_investments %}
+                     <div class="profile__body-companies-item campaign__details-header">
+                        <div class="campaigns__details-header-left">
+                           <a href="{% url 'campaigns' investment.campaign.id %}">
+                              <img src="{{ investment.campaign.campaign_picture.url }}" alt="">
+                           </a>
+                        </div>
+                        <div class="campaigns__details-header-right">
+                           <div class="campaigns__details-header-right-category">
+                              <p>- {{ investment.campaign.project.category }}</p>
+                              <p class="campaigns__details-header-right-links">
+                                    <a href="https://facebook.com"><i class='bx bxl-facebook-circle'></i></a>
+                                    <a href="https://twitter.com"><i class='bx bxl-twitter' ></i></a>
+                                    <a href="https://linkedin.com"><i class='bx bxl-linkedin-square' ></i></a>
+                                    <a href="https://{{campaign.project.website}}"><i class='bx bx-link' ></i></a>
+                              </p>
+                           </div>
+                           <div class="campaigns__details-header-right-title">
+                              <a href="{% url 'campaigns' investment.campaign.id %}">
+                                 <h1>{{investment.campaign.title}} - {{investment.campaign.project.name}}</h1>
+                              </a>
+                              
+                           </div>
+                           <div class="campaigns__details-header-right-description">
+                              <p>{{investment.campaign.subtitle}}</p>
+                           </div>            
+                          
+                           <div class="campaigns__details-header-right-tracker">
+                              <div class="campaigns__details-header-right-fund-container">
+                                    <div class="campaigns__details-header-right-fund-subcontainer">
+                                       <span class="campaigns__details-header-right-current-raise">
+                                          $<p class="current-raise">{{ investment.campaign.current_raise }}</p>
+                                       </span>
+                                       <span>
+                                          of 
+                                       </span>
+                                       <span class="campaigns__details-header-right-total-raised">
+                                          $<p class="total-raised">{{ investment.campaign.target }}</p>
+                                       </span>
+                                       <span>raised.</span>
+                                    </div>
+                                    <div>
+                                       <span class="campaigns__details-header-right-progress">
+                                          {{ investment.campaign.percentage_raised }}%
+                                       </span>
+                                    </div>
+                              </div>
+                              <div class="campaigns__details-header-right-progress-bar">
+                                    <progress class="campaigns__details-header-right-progress" value="{{ investment.campaign.percentage_raised }}" max="100"></progress>
+                              </div>
+                              <div class="campaigns__details-header-right-campaign-time">
+                                    <i class='bx bx-time-five'></i>
+                                    <p id="investment-campaign-time-left-{{ investment.campaign.id }}">Calculating...</p>
+                                    <script>
+                                       // Get the campaign start and end dates as JavaScript Date objects
+                                       var startDate = new Date("{{ investment.campaign.date_start|date:'Y-m-d H:i:s' }}");
+                                       var endDate = new Date("{{ investment.campaign.date_end|date:'Y-m-d H:i:s' }}");
+            
+                                       // Calculate the time difference in milliseconds
+                                       var timeDifference = endDate - new Date();
+            
+                                       // Calculate the number of days and hours left
+                                       var daysLeft = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+                                       var hoursLeft = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            
+                                       // Get the element to display the time left
+                                       var timeLeftElement = document.getElementById("investment-campaign-time-left-{{ investment.campaign.id }}");
+            
+                                       // Display the time left
+                                       if (daysLeft > 0) {
+                                          timeLeftElement.textContent = daysLeft + " day(s) left";
+                                       } else if (hoursLeft > 0) {
+                                          timeLeftElement.textContent = hoursLeft + " hour(s) left";
+                                       } else {
+                                          timeLeftElement.textContent = "Less than 1 hour left";
+                                       }
+                                    </script>
+                              </div>
+                           </div>
+                           
+                        </div>
+                  </div>
+               {% endfor %}
+                  {% else %}
+                  <div class="profile__body-companies-item-no-content">
+                     <p>You have no investments to display, click <a href="/browse">here</a> to browse campaigns. </p>
+                  </div>
+                  {% endif %}
+
+
+              
+            </div>
+         </div>
+         <div class="profile__body-item">
+            <div class="profile__body-header">
+               <h2>Activities</h2>
+            </div>
+            <div class="community-posts-container">
+                  {% if posts %}
+                  {% for post in my_posts %}
+                  <div class="community__posts-item">
+                     <div class="profile__activity">
+                        <i class='bx bx-shape-circle' ></i>
+                        <p>You posted</p>
+                     </div>
+                      <div class="community__posts-item_header">
+                          <div class="community__posts-item_header-left">
+                              {% if post.profile.avatar  %}
+                              <span class="community__post-avatar"><img src="{{ post.profile.avatar.url }}" alt="">
+                              </span>
+                              {% else %}
+                              <span class="community__post-avatar"><img src="{% static 'images/user.png'%}" alt="">
+                              </span>
+                              {% endif %}
+                              <span class="community__post-name">
+                                  <span class="community__post-display-name">{{post.profile.display_name}}</span>
+                                  <span class="community__post-badge"><i class='bx bxs-badge-check'></i></span>
+                                  <span class="community__post-username">@{{post.profile.user}}</span>
+                                  <span class="community__post-symbol">·</span>
+                                  <span class="community__post-time time" data-post-timestamp="{{ post.post_date | date:'U' }}">{{ post.post_date }} ago</span>
+                              </span>
+                          </div>
+                      </div>
+                      <div class="community__posts-item_body">
+                          <p> 
+                           {% if post.campaign %}
+                           <a class="community__posts-item_campaign-tag" href="{% url 'campaigns' post.campaign.id %}"> 
+                               #{{post.campaign.title}}        
+                           </a>
+                           {% endif %}
+                              {{post.post_text}} 
+                          </p>
+                          {% if post.post_image  %}
+                          <span>
+                              <img src="{{ post.post_image.url }}" alt="">
+                          </span>     
+                          {% endif %}
+                      </div>
+                      <div class="community__posts-item_footer">
+                        {% if profile in post.likes.all %}
+                        <i id="post-like" data-post-id="{{ post.id }}" class='bx bxs-heart like' >{{post.no_post_likes}}</i>
+                        {% else %}
+                        <i id="post-like" data-post-id="{{ post.id }}" class='bx bx-heart like' >{{post.no_post_likes}}</i>
+                        {% endif %}
+                        <i class='bx bx-comment-detail'>{{post.no_post_comments}}</i>
+                      
+                    </div>
+                    <div class="community__posts-item_comment">
+                     <input class="post-comment-text" data-post-id="{{ post.id }}" type="text" placeholder="Comment..">
+                     <button class="post-comment-btn" data-post-id="{{ post.id }}"><i class='bx bxs-send'></i></button>
+                </div>
+                 <div class="community__posts-item_comment-box">
+                     {% if post.comments.all %}
+                     {% for comment in post.comments.all reversed%}
+                     <div class="community__posts-item_header-left comment__head">
+                         {% if comment.comment_author.avatar  %}
+                         <span class="community__post-avatar"><img src="{{ comment.comment_author.avatar.url }}" alt="">
+                         </span>
+                         {% else %}
+                         <span class="community__post-avatar"><img src="{% static 'images/user.png'%}" alt="">
+                         </span>
+                         {% endif %}
+                         <div class="">
+                             <span class="community__post-name">
+                                 <span class="community__post-display-name">{{comment.comment_author.display_name}}</span>
+                                 <span class="community__post-badge"><i class='bx bxs-badge-check'></i></span>
+                                 <span class="community__post-username">@{{comment.comment_author.user}}</span>
+                                 <span class="community__post-symbol">·</span>
+                                 <span class="community__post-time time" data-post-timestamp="{{ comment.comment_date | date:'U' }}">{{ comment.comment_date }} ago</span>
+                             </span>
+                         </div>
+                     </div>
+                     <span class="post__comment-text">
+                         <p> 
+                             {{comment.comment_text}}
+                         </p>
+                     </span>
+                     {%  endfor %}
+                     {% else %}
+                     <div class="post__no-comments">
+                         <span>No comments yet.</span>
+                     </div>
+                     {% endif %}
+                 </div>
+                      
+                  </div>
+                  {% endfor %}
+               
+              {% else %}
+                
+                  <div class="community__no-posts profile__body-companies-item">
+                      <h1>No Posts Yet. </h1>
+                  </div>
+              {% endif %}
+            </div>
+         </div>
+           
+           
+      </div>    
+   </div>
+</div>
+
+<div class="create-company__section">
+   <div class="create-company__container">
+      <div class="create-company__header">
+         <h3>Create Company</h3>
+         <i id="close-create-company" class='bx bx-x'></i>
+       </div>
+       <div class="create-company__body">
+            <div class="create-company__container-item">
+                <label for="company-name">Company Name</label>
+                <input id="company-name" type="text" value="{{profile.first_name}}" placeholder="Enter your email address....">
+            </div>
+            <div class="edit__container-item edit">
+              <button id="edit__btn">Create Company</button>
+            </div>
+            
+          </div>
+     
+   </div>
+</div>
+
+<script>
+    if ( window.history.replaceState ) {
+        window.history.replaceState( null, null, window.location.href );
+    }
+</script>
+<script>
+   document.addEventListener('DOMContentLoaded', function () {
+    const editProfileBtn = document.getElementById('edit-profile-btn');
+    const saveProfileBtn = document.getElementById('save-profile-btn');
+    const editIcons = document.querySelectorAll('.edit-icon');
+    const bioText = document.getElementById('bio-text');
+    const locationText = document.getElementById('location-text');
+    const dpInput = document.getElementById('dp-input');
+    const coverInput = document.getElementById('cover-input');
+    const profileForm = document.getElementById('profile-form');
+
+    let isEditing = false;
+
+    // Function to toggle edit mode
+    function toggleEditMode() {
+        isEditing = !isEditing;
+
+        if (isEditing) {
+            editProfileBtn.style.display = 'none';
+            saveProfileBtn.style.display = 'inline-block';
+
+            // Enable editing for bio and location
+            bioText.contentEditable = true;
+            locationText.contentEditable = true;
+            
+            // Show edit icons
+            editIcons.forEach(icon => {
+                icon.style.display = 'flex';
+            });
+        } else {
+            editProfileBtn.style.display = 'inline-block';
+            saveProfileBtn.style.display = 'none';
+
+            // Disable editing for bio and location
+            bioText.contentEditable = false;
+            locationText.contentEditable = false;
+            
+            // Hide edit icons
+            editIcons.forEach(icon => {
+                icon.style.display = 'none';
+            });
+        }
+    }
+
+    editProfileBtn.addEventListener('click', toggleEditMode);
+
+    // Handle click on edit icons
+    editIcons.forEach(icon => {
+        icon.addEventListener('click', function () {
+            // Handle editing of specific fields based on the data-field attribute
+            const field = icon.getAttribute('data-field');
+            if (field === 'bio') {
+                // Handle bio editing
+                // You can implement your logic for updating the bio here
+                console.log('Editing bio...');
+            } else if (field === 'location') {
+                // Handle location editing
+                // You can implement your logic for updating the location here
+                console.log('Editing location...');
+            } else if (field === 'dp') {
+                // Handle dp (display picture) editing
+                // Trigger the file input click event
+            } else if (field === 'cover') {
+                // Handle cover photo editing
+                // Trigger the file input click event
+            }
+        });
+    });
+
+    // Handle file input changes
+    dpInput.addEventListener('change', function () {
+        // Handle dp (display picture) file selection
+        // You can implement your logic for uploading the display picture here
+        console.log('Selected display picture file:', dpInput.files[0]);
+    });
+
+    coverInput.addEventListener('change', function () {
+        // Handle cover photo file selection
+        // You can implement your logic for uploading the cover photo here
+        console.log('Selected cover photo file:', coverInput.files[0]);
+    });
+
+    // Handle form submission for saving profile changes
+// ... (previous code)
+
+// Handle form submission for saving profile changes
+profileForm.addEventListener('submit', function (e) {
+    e.preventDefault(); // Prevent the default form submission
+
+    // Collect the updated data from the editable fields
+    const updatedBio = bioText.textContent;
+    const updatedLocation = locationText.textContent;
+
+    // Create a FormData object to send data including image files
+    const formData = new FormData();
+    formData.append('bio', updatedBio);
+    formData.append('location', updatedLocation);
+
+    // Append the image files if they have changed
+    if (dpInput.files[0]) {
+        formData.append('avatar', dpInput.files[0]);
+    }
+    if (coverInput.files[0]) {
+        formData.append('cover', coverInput.files[0]);
+    }
+
+    // Use AJAX to send the FormData to the server for saving
+    $.ajax({
+        url: 'save_profile', // Replace with the URL to your Django view for saving the profile
+        type: 'POST',
+        data: formData,
+        processData: false, // Important: Prevent jQuery from processing the data
+        contentType: false, // Important: Set the content type to false
+        success: function (response) {
+            // Handle the success response from the server
+            console.log('Profile changes saved successfully');
+            // Update the profile data displayed on the page if needed
+            toggleEditMode(); // Exit edit mode
+            window.location.href('/')
+        },
+        error: function (xhr, textStatus, errorThrown) {
+            // Handle errors if needed
+            console.error('Error:', errorThrown);
+        }
+    });
+});
+
+});
+
+</script>
+<script>
+   // Function to handle file input change and update image preview
+   function handleFileInputChange(inputElement, previewElement) {
+       const fileInput = inputElement;
+       const previewImage = previewElement;
+
+       fileInput.addEventListener("change", function () {
+           const file = fileInput.files[0];
+
+           if (file) {
+               const reader = new FileReader();
+               reader.onload = function (e) {
+                   previewImage.src = e.target.result;
+               };
+               reader.readAsDataURL(file);
+           }
+       });
+   }
+
+   // Initialize image preview for cover photo
+   const coverInput = document.getElementById("cover-input");
+   const coverPreview = document.getElementById("cover-preview");
+   handleFileInputChange(coverInput, coverPreview);
+
+   // Initialize image preview for profile photo
+   const avatarInput = document.getElementById("dp-input");
+   const avatarPreview = document.getElementById("avatar-preview");
+   handleFileInputChange(avatarInput, avatarPreview);
+</script>
+
+
+{% endblock %}
+
+{% block profile-sidebar %}
+active
+{% endblock %}

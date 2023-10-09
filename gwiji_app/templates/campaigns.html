@@ -1,0 +1,1005 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block submain %} 
+
+<div class="campaigns-details__section">
+    <div class="campaigns-details">
+        <div class="campaign__details-header">
+            <div class="campaign__details-header-container">
+                <div class="campaigns__details-header-left">
+                    <div class="campaigns__details-header-left-image">
+                        {% if campaign.campaign_picture %}
+                           <img src="{{ campaign.campaign_picture.url }}" alt="">
+                           {% else %}
+                           <img src="{% static 'images/project.png'%}" alt="">
+                           {% endif %}
+                    </div>
+                </div>
+                <div class="campaigns__details-header-right">
+                    <div class="campaigns__details-header-right-category">
+                        <p>- {{ campaign.project.category }}</p>
+                        <p class="campaigns__details-header-right-links">
+                            <a href="https://facebook.com"><i class='bx bxl-facebook-circle'></i></a>
+                            <a href="https://twitter.com"><i class='bx bxl-twitter' ></i></a>
+                            <a href="https://linkedin.com"><i class='bx bxl-linkedin-square' ></i></a>
+                            <a href="https://{{campaign.project.website}}"><i class='bx bx-link' ></i></a>
+                        </p>
+                    </div>
+                    <div class="campaigns__details-header-right-title">
+                        <h1>{{campaign.title}} - {{campaign.project.name}}</h1>
+                    </div>
+                    <div class="campaigns__details-header-right-description">
+                        <p>{{campaign.description}}</p>
+                    </div>
+
+                    <div class="campaigns__details-header-right-author">
+                        {% if campaign.author.avatar %} 
+                            <div class="campaigns__details-header-right-author-avatar">
+                                <img src="{{campaign.author.avatar.url}} " alt="">
+                            </div>
+                        {% else %}
+                            <div class="campaigns__details-header-right-author-avatar">
+                                <img src="{% static 'images/user.png'%}" alt="">
+                            </div>
+                        {% endif %}
+                        <div class="campaigns__details-header-right-author-info">
+                            <div class="campaigns__details-header-right-author-info-name">
+                                <p>{{campaign.author.display_name}}</p>
+                            </div>
+                            <div class="campaigns__details-header-right-author-info-bio">
+                                <p>{{campaign.author.bio}}</p>
+                            </div>
+                            <div class="campaigns__details-header-right-author-info-location">
+                                <p>{{campaign.author.location }} </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="campaigns__details-header-right-tracker">
+                        <div class="campaigns__details-header-right-fund-container">
+                            <div class="campaigns__details-header-right-fund-subcontainer">
+                                <span class="campaigns__details-header-right-current-raise">
+                                    $<p class="current-raise">{{ campaign.current_raise }}</p>
+                                </span>
+                                <span>
+                                    of 
+                                </span>
+                                <span class="campaigns__details-header-right-total-raised">
+                                    $<p class="total-raised">{{ campaign.target }}</p>
+                                </span>
+                                <span>raised.</span>
+                            </div>
+                            <div>
+                                <span class="campaigns__details-header-right-progress">
+                                    {{ campaign.percentage_raised }}%
+                                </span>
+                            </div>
+                        </div>
+                        <div class="campaigns__details-header-right-progress-bar">
+                            <progress class="campaigns__details-header-right-progress" value="{{ campaign.percentage_raised }}" max="100"></progress>
+                        </div>
+                        <div class="campaigns__details-header-right-campaign-time">
+                            <i class='bx bx-time-five'></i>
+                            <p id="campaign-time-left-{{ campaign.id }}">Calculating...</p>
+                            <script>
+                                // Get the campaign start and end dates as JavaScript Date objects
+                                var startDate = new Date("{{ campaign.date_start|date:'Y-m-d H:i:s' }}");
+                                var endDate = new Date("{{ campaign.date_end|date:'Y-m-d H:i:s' }}");
+
+                                // Calculate the time difference in milliseconds
+                                var timeDifference = endDate - new Date();
+
+                                // Calculate the number of days and hours left
+                                var daysLeft = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+                                var hoursLeft = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+
+                                // Get the element to display the time left
+                                var timeLeftElement = document.getElementById("campaign-time-left-{{ campaign.id }}");
+
+                                // Display the time left
+                                if (daysLeft > 0) {
+                                    timeLeftElement.textContent = daysLeft + " day(s) left";
+                                } else if (hoursLeft > 0) {
+                                    timeLeftElement.textContent = hoursLeft + " hour(s) left";
+                                } else {
+                                    timeLeftElement.textContent = "Less than 1 hour left";
+                                }
+                            </script>
+                        </div>
+                    </div>
+                    <div class="campaigns__details-header-right-buttons">
+                        <button data-authenticated="true">
+                            <i class='bx bx-money-withdraw' ></i>
+                            <a href="#packs-content" onclick="gotoPacks()">Invest</a>
+                        </button data-authenticated="true">
+                        {% if campaign in followed_campaigns %}
+                        <button data-authenticated="true" class="campaigns__unfollow-btn follow" data-campaign-id="{{ campaign.id }}">
+                            <i class='bx bxs-heart ' data-user-id="{{ user.id }}" data-campaign-id="{{ campaign.id }}"></i> 
+                            <p>Following</p>
+                        </button data-authenticated="true">
+                        {% else %}
+                        <button data-authenticated="true" class="campaigns__follow-btn follow" data-campaign-id="{{ campaign.id }}">
+                            <i class='bx bx-heart ' data-user-id="{{ user.id }}" data-campaign-id="{{ campaign.id }}"></i> 
+                            <p>Follow</p>
+                        </button data-authenticated="true">
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="campaign__details-body">
+            <div class="campaign__details-body-left">
+                <div class="campaign__details-body-left-headers">
+                    <div class="campaign__details-body-left-headers-item active" data-target="board">
+                        <a href="" class="campaign__details-body-left-headers-item-link">
+                            <p>
+                                BOARD
+                            </p>
+                            
+                            <i class='bx bx-chalkboard'></i>
+                        </a>
+                        
+                    </div>
+                    <div class="campaign__details-body-left-headers-item" data-target="resources">
+                        <a href="" class="campaign__details-body-left-headers-item-link">
+                            
+                            <p>
+                                RESOURCES
+                            </p>
+                            <i class='bx bxs-file-doc' ></i>
+                        </a>
+                        
+                    </div>
+                    <div class="campaign__details-body-left-headers-item packs" data-target="packs">
+                        <a href="" class="campaign__details-body-left-headers-item-link">
+                            
+                            <p>
+                                PACKS
+                            </p>
+                            <i class='bx bxs-package' ></i>
+                        </a>
+                    </div>
+                    <div class="campaign__details-body-left-headers-item" data-target="roadmap">
+                        <a href="" class="campaign__details-body-left-headers-item-link">
+                            <p>
+                                ROADMAP
+                            </p>
+                            <i class='bx bx-git-pull-request'></i>
+                        </a>
+                    </div>
+                    <div class="campaign__details-body-left-headers-item" data-target="discussions">
+                        <a href="" class="campaign__details-body-left-headers-item-link">
+                            <p>
+                                DISCUSSIONS
+                            </p>
+                            <i class='bx bx-message-rounded-dots' ></i>
+                        </a>
+                    </div>
+                    <div class="campaign__details-body-left-headers-item" data-target="team">
+                        <a href="" class="campaign__details-body-left-headers-item-link">
+                            <p>
+                                TEAM
+                            </p>
+                            <i class='bx bx-group'></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="campaign__details-body-content">
+                    <div id="board-content" class="menu-content active">
+                        <div class="campaign__details-body-content-board-item">   
+                            <div class="campaign__details-body-content-board-item-questions">
+                                <h4>
+                                    Tell us the story of how your company was founded.
+                                <h4>
+                                {% if campaign.campaign_board_story %}
+                                <p>
+                                    {{campaign.campaign_board_story}}
+                                </p>
+                                {% else %}
+                                    <p>No Response.</p>
+                                {% endif %}
+                            </div>
+                            <div class="campaign__details-body-content-board-item-questions">
+                                <h4>
+                                    What challenges has your company overcome?
+                                <h4>
+                                {% if campaign.campaign_board_challenges%}
+                                <p>
+                                    {{campaign.campaign_board_challenges}}
+                                </p>
+                                {% else %}
+                                    <p>No Response.</p>
+                                {% endif %}
+                            </div>
+                            <div class="campaign__details-body-content-board-item-questions">
+                                <h4>
+                                    What makes your company unique?
+                                <h4>
+                                {% if campaign.campaign_board_unique %}
+                                <p>
+                                    {{ campaign.campaign_board_unique }}
+                                </p>
+                                {% else %}
+                                    <p>No Response.</p>
+                                {% endif %}
+                            </div>
+                            <div class="campaign__details-body-content-board-item-questions">
+                                <h4>
+                                    What impact does your company aim to create?
+                                <h4>
+                                {% if campaign.campaign_board_impact %}
+                                <p>
+                                    {{ campaign.campaign_board_impact }}
+                                </p>
+                                {% else %}
+                                    <p>No Response.</p>
+                                {% endif %}
+                            </div>
+                            <div class="campaign__details-body-content-board-item-questions">
+                                <h4>
+                                    What are your company's primary goals and objectives?
+                                <h4>
+                                {% if campaign.campaign_board_goals %}
+                                <p>
+                                    {{ campaign.campaign_board_goals }}
+                                </p>
+                                {% else %}
+                                    <p>No Response.</p>
+                                {% endif %}
+                            </div>
+
+                            <div class="campaign__details-body-content-board-item-questions">
+                                <h4>
+                                    How does your company plan to capture its target market?
+                                <h4>
+                                {% if campaign.campaign_board_market %}
+                                <p>
+                                    {{ campaign.campaign_board_market }}
+                                </p>
+                                {% else %}
+                                    <p>No Response.</p>
+                                {% endif %}
+                            </div>
+
+                            <div class="campaign__details-body-content-board-item-questions">
+                                <h4>
+                                    What is your company's growth strategy?
+                                <h4>
+                                {% if campaign.campaign_board_growth %}
+                                <p>
+                                    {{ campaign.campaign_board_growth }}
+                                </p>
+                                {% else %}
+                                    <p>No Response.</p>
+                                {% endif %}
+                            </div>
+                            <div class="campaign__details-body-content-board-item-questions">
+                                <h4>
+                                    Tell us about your core team members and their roles.
+                                <h4>
+                                {% if campaign.campaign_board_team %}
+                                <p>
+                                    {{ campaign.campaign_board_team }}
+                                </p>
+                                {% else %}
+                                    <p>No Response.</p>
+                                {% endif %}
+                            </div>
+                            <div class="campaign__details-body-content-board-item-questions">
+                                <h4>
+                                    How does your company innovate in its industry?
+                                <h4>
+                                {% if campaign.campaign_board_innovation %}
+                                <p>
+                                    {{ campaign.campaign_board_innovation }}
+                                </p>
+                                {% else %}
+                                    <p>No Response.</p>
+                                {% endif %}
+                            </div>
+                            <div class="campaign__details-body-content-board-item-questions">
+                                <h4>
+                                    What does the future hold for your company?
+                                <h4>
+                                {% if campaign.campaign_board_future %}
+                                <p>
+                                    {{ campaign.campaign_board_future }}
+                                </p>
+                                {% else %}
+                                    <p>No Response.</p>
+                                {% endif %}
+                            </div>
+                                   
+                               
+                          
+                        </div>
+                           
+                    </div>
+                    <div id="resources-content" class="menu-content ">
+                        <div class="campaign__details-body-resources-board">
+                            <div class="campaign__details-body-resources-board-item">
+                                <div class="campaign__details-body-resources-board-item-body">
+                                    {% if campaign.project.pitch_deck  %}
+                                    <div id="pitch-deck-preview-container" class="campaign__details-body-resources-board-item-body-preview-container">
+                                        <!-- The first page of the pitch deck will be displayed here -->
+                                    </div>
+                                    <div class="campaign__details-body-resources-board-item-title">
+                                        <h3>Pitch Deck</h3>
+                                        <button data-authenticated="true" id="download-pitch-deck">View</button data-authenticated="true">
+                                    </div>
+                                    {% else %}
+                                    <div class="campaign__details-body-resources-board-item-title no-doc">
+                                        <h4>No Pitch Deck Attached</h4>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="campaign__details-body-resources-board-item">
+                                <div class="campaign__details-body-resources-board-item-body">
+                                    {% if campaign.project.financials_doc  %}
+                                    <div id="financials-preview-container" class="campaign__details-body-resources-board-item-body-preview-container">
+                                        <!-- The first page of the pitch deck will be displayed here -->
+                                    </div>
+                                    <div class="campaign__details-body-resources-board-item-title">
+                                        <h3>Financials</h3>
+                                        <button data-authenticated="true" id="download-financials">View</button data-authenticated="true">
+                                    </div>
+                                    {% else %}
+                                    <div class="campaign__details-body-resources-board-item-title no-doc">
+                                        <h4>No Financials Attached</h4>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="campaign__details-body-resources-board-item">
+                                <div class="campaign__details-body-resources-board-item-body">
+                                    {% if campaign.project.legals_doc  %}
+                                    <div id="legals-preview-container" class="campaign__details-body-resources-board-item-body-preview-container">
+                                        <!-- The first page of the pitch deck will be displayed here -->
+                                    </div>
+                                    <div class="campaign__details-body-resources-board-item-title">
+                                        <h3>Legal Documents</h3>
+                                        <button data-authenticated="true" id="download-legals">View</button data-authenticated="true">
+                                    </div>
+                                    {% else %}
+                                    <div class="campaign__details-body-resources-board-item-title no-doc">
+                                        <h4>No Legal Document Attached</h4>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="campaign__details-body-resources-board-item">
+                                <div class="campaign__details-body-resources-board-item-body">
+                                    {% if campaign.project.market_research  %}
+                                    <div id="market_research-preview-container" class="campaign__details-body-resources-board-item-body-preview-container">
+                                        <!-- The first page of the pitch deck will be displayed here -->
+                                    </div>
+                                    <div class="campaign__details-body-resources-board-item-title">
+                                        <h3>Market Research</h3>
+                                        <button data-authenticated="true" id="download-market-research">View</button data-authenticated="true">
+                                    </div>
+                                    {% else %}
+                                    <div class="campaign__details-body-resources-board-item-title no-doc">
+                                        <h4>No Market Research Attached</h4>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="campaign__details-body-resources-board-item">
+                                <div class="campaign__details-body-resources-board-item-body">
+                                    {% if campaign.project.operational_doc  %}
+                                    <div id="operations-preview-container" class="campaign__details-body-resources-board-item-body-preview-container">
+                                        <!-- The first page of the pitch deck will be displayed here -->
+                                    </div>
+                                    <div class="campaign__details-body-resources-board-item-title">
+                                        <h3>Operations Documents</h3>
+                                        <button data-authenticated="true" id="download-operational-doc">View</button data-authenticated="true">
+                                    </div>
+                                    {% else %}
+                                    <div class="campaign__details-body-resources-board-item-title no-doc">
+                                        <h4>No Operations Document Attached</h4>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="packs-content" class="menu-content">
+                        <div class="campaign__details-body-packs-board">
+                            {% for tier_info in tier_info_list %}
+                                <div class="campaign__details-body-packs-board-item" data-shares="{{ tier_info.shares }}" data-amount="{{ tier_info.tier_price }}" data-dollar="{{ shareperdollar }}">
+                                    <h1>${{ tier_info.tier_price }}</h1>
+                                    <h5>TIER {{ forloop.counter }}</h5>
+                                    <p>Invest ${{ tier_info.tier_price }} and receive {{ tier_info.shares }} shares.</p>
+                                    <button data-authenticated="true" class="campaign__details-body-packs-board-invest-btn {% if campaign.status != 'Active' %} disabled {% endif %}">Invest at ${{ shareperdollar }}/share</button data-authenticated="true">
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>             
+                    <div id="roadmap-content" class="menu-content">
+                        <div class="campaign__details-body-roadmap-board">
+                            {% for stage_name in project_stages %}
+                                <div class="campaign__details-body-roadmap-board-item">
+                                    <div class="campaign__details-body-roadmap-board-item-content">
+                                        <p>Stage {{ forloop.counter }}</p>
+                                        {% if forloop.counter < current_stage_position %}
+                                            <h2>{{ stage_name }} <i class='bx bx-check-shield'></i></h2>
+                                        {% elif forloop.counter == current_stage_position %}
+                                            <h2>{{ stage_name }} <i class='bx bx-current-location' ></i></h2>
+                                        {% else %}
+                                            <h2 class="blur-text">{{ stage_name }} <i class='bx bx-dots-horizontal-rounded'></i></h2>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            {% endfor %}
+
+                        </div>
+                                                
+                    </div>
+                    <div id="discussions-content" class="menu-content">
+                        <div class="campaign__details-body-communities-board">
+                            <div class="campaign__details-body-communities-board__container">
+                                <div class="campaign__details-body-communities-board-top">
+                                    <div class="campaign__details-body-communities-board-top__header">
+                                        <span class="discussion__user-profile-avatar"><img src="{% static 'images/user.png'%}" alt=""></span>
+                                        <span class="discussion__placeholder-text"><textarea id="post__text" placeholder="Tell the community what you want..."></textarea> </span>
+                                    </div>
+                                    <div class="campaign__details-body-communities-board__buttons" data-authenticated="true">
+                                        <div class="emoji__container">
+                                            <i class='bx bx-smile'></i>
+                                            <div id="emoji-picker" class="emoji-picker" style="display: none;"></div>
+                                        </div>
+                                       
+                                        <div class="" data-field="post-image">
+                                            <label for="post-image" class="edit-label"><i class='bx bxs-image-add'></i></label>
+                                            <input type="file" id="post-image" accept="image/*" name="post-image" style="font-size: 0; display: none;">
+                                        </div>
+                                        
+                                        <button data-authenticated="true" id="post__btn" class="post__feed" >Post</button data-authenticated="true">
+                                    </div>
+                                </div>
+                                <div class="post__image-preview">
+                                    <img  id="image-preview" src="" alt="">
+                                </div>
+                                
+                            </div>
+                            <div class="campaign__details-body-communities-boards-container">
+                                {% if posts %}
+                                    {% for post in posts reversed %}
+                                    <div class="campaign__details-body-communities-boards-item">
+                                        <div class="campaign__details-body-communities-boards-item_header">
+                                            <div class="campaign__details-body-communities-board-item_header-left">
+                                                {% if post.profile.avatar  %}
+                                                <span class="campaign__details-body-communities-board-avatar">
+                                                    <img src="{{ post.profile.avatar.url }}" alt="">
+                                                </span>
+                                                {% else %}
+                                                <span class="campaign__details-body-communities-board-avatar"><img src="{% static 'images/user.png'%}" alt="">
+                                                </span>
+                                                {% endif %}
+                                                <span class="campaign__details-body-communities-board-name">
+                                                    <span class="campaign__details-body-communities-board-display-name">{{post.profile.display_name}}</span>
+                                                    <span class="campaign__details-body-communities-board-badge"><i class='bx bxs-badge-check'></i></span>
+                                                    <span class="campaign__details-body-communities-board-username">@{{post.profile.user}}</span>
+                                                    <span class="campaign__details-body-communities-board-symbol">·</span>
+                                                    <span class="campaign__details-body-communities-board-time" data-post-timestamp="{{ post.post_date | date:'U' }}">{{ post.post_date }} ago</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="campaign__details-body-communities-boards-item_body">
+                                            <p> 
+                                                {{post.post_text}} 
+                                            </p>
+                                            {% if post.post_image  %}
+                                            <span>
+                                                <img src="{{ post.post_image.url }}" alt="">
+                                            </span>     
+                                            {% endif %}
+                                        </div>
+                                        <div class="community__posts-item_footer">
+                                            {% if profile in post.likes.all %}
+                                            <i id="post-like" data-post-id="{{ post.id }}" class='bx bxs-heart like' >{{post.no_post_likes}}</i>
+                                            {% else %}
+                                            <i id="post-like" data-post-id="{{ post.id }}" class='bx bx-heart like' >{{post.no_post_likes}}</i>
+                                            {% endif %}
+                                            <i class='bx bx-comment-detail'>{{post.no_post_comments}}</i>
+                                        </div>
+                                        <div class="community__posts-item_comment">
+                                         <input class="post-comment-text" data-post-id="{{ post.id }}" type="text" placeholder="Comment..">
+                                         <button data-authenticated="true" class="post-comment-btn" data-post-id="{{ post.id }}"><i class='bx bxs-send'></i></button data-authenticated="true">
+                                    </div>
+                                     <div class="community__posts-item_comment-box">
+                                         {% if post.comments.all %}
+                                         {% for comment in post.comments.all reversed%}
+                                         <div class="community__posts-item_header-left comment__head">
+                                             {% if comment.comment_author.avatar  %}
+                                             <span class="community__post-avatar"><img src="{{ comment.comment_author.avatar.url }}" alt="">
+                                             </span>
+                                             {% else %}
+                                             <span class="community__post-avatar"><img src="{% static 'images/user.png'%}" alt="">
+                                             </span>
+                                             {% endif %}
+                                             <div class="">
+                                                 <span class="community__post-name">
+                                                     <span class="community__post-display-name">{{comment.comment_author.display_name}}</span>
+                                                     <span class="community__post-badge"><i class='bx bxs-badge-check'></i></span>
+                                                     <span class="community__post-username">@{{comment.comment_author.user}}</span>
+                                                     <span class="community__post-symbol">·</span>
+                                                     <span class="community__post-time time" data-post-timestamp="{{ comment.comment_date | date:'U' }}">{{ comment.comment_date }} ago</span>
+                                                 </span>
+                                             </div>
+                                         </div>
+                                         <span class="post__comment-text">
+                                             <p> 
+                                                 {{comment.comment_text}}
+                                             </p>
+                                         </span>
+                                         {%  endfor %}
+                                         {% else %}
+                                         <div class="post__no-comments">
+                                             <span>No comments yet.</span>
+                                         </div>
+                                         {% endif %}
+                                     </div>
+                                    </div>
+                                    {% endfor %}
+                                 
+                                {% else %}
+                                  
+                                    <div class="campaign__details-body-communities-board__no-posts">
+                                        <h1>No Posts Yet. </h1>
+                                    </div>
+                                {% endif %}
+                              
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div id="team-content" class="menu-content">
+                        <div class="campaign__details-body-team-board">
+                            <div class="campaign__details-body-team-board-header">
+                                <h3>Meet the Founding Team</h3>
+                            </div>
+                            <div class="campaign__details-body-team-board-body">
+                                {% for team in campaign.project.teams.all %}
+                                <div class="campaign__details-body-team-board-body-item">
+                                    <div class="campaign__details-body-team-board-body-item-left">
+                                        {% if team.avatar %}
+                                        <img src="{{team.avatar.url}}" alt="">
+                                        {% else %}
+                                        <img src="{% static 'images/user.png' %}" alt="">
+                                        {% endif %}
+                                    </div>
+                                    <div class="campaign__details-body-team-board-body-item-right">
+                                        <div class="campaign__details-body-team-board-body-item-right-name">
+                                            <h2>{{team.display_name}} <a href="{{team.linkedin}}">
+                                                <i class='bx bxl-linkedin-square'></i>
+                                            </a> </h2>
+                                            <h3>{{team.bio}}</h3>
+                                            <h4>{{team.location}}</h4>
+                                        </div>                 
+                                       
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                       
+                    </div>
+                </div>
+            </div>
+            
+            <div class="campaign__details-body-right">
+                <div class="campaign__details-body-right-header">
+                    <h3>
+                        Prototype 
+                    </h3>
+                </div>
+                <div class="campaign__details-body-right-content">
+                    {% if campaign.project.prototype %}
+                    <div id="pdf-container" class="campaign__details-body-right-content-prototype"></div>
+                    {% else %}
+                    <div class="campaign__details-body-right-content-no-prototype">
+                        <h4>No Prototype Attached.</h4>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf.min.js" integrity="sha512-Z8CqofpIcnJN80feS2uccz+pXWgZzeKxDsDNMD/dJ6997/LSRY+W4NmEt9acwR+Gt9OHN0kkI1CTianCwoqcjQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+{% if campaign.project.prototype %}
+    <script>
+        const pdfUrl = '{{ campaign.project.prototype.url }}';
+
+        // Reference to the PDF container element
+        const pdfContainer = document.getElementById('pdf-container');
+
+        // Asynchronously load and render the PDF
+        const loadingTask = pdfjsLib.getDocument(pdfUrl);
+        loadingTask.promise.then(pdf => {
+            // Loop through each page and render it
+            for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber++) {
+                pdf.getPage(pageNumber).then(page => {
+                    const canvas = document.createElement('canvas');
+                    pdfContainer.appendChild(canvas);
+                    const scale = 0.2; // Adjust the scale as needed
+                    const viewport = page.getViewport({ scale });
+
+                    // Set the canvas dimensions
+                    canvas.height = viewport.height;
+                    canvas.width = viewport.width;
+
+                    const context = canvas.getContext('2d');
+
+                    // Render the page on the canvas
+                    const renderContext = {
+                        canvasContext: context,
+                        viewport: viewport,
+                    };
+                    page.render(renderContext);
+                });
+            }
+        });
+    </script>
+{% endif %}
+
+<script>
+        // Get all menu items
+    const menuItems = document.querySelectorAll('.campaign__details-body-left-headers-item');
+
+    // Add click event listeners to menu items
+    menuItems.forEach(item => {
+        item.addEventListener('click', (event) => {
+            // Prevent the default link behavior
+            event.preventDefault();
+
+            // Remove the 'active' class from all menu items
+            menuItems.forEach(menuItem => {
+                menuItem.classList.remove('active');
+            });
+
+            // Add the 'active' class to the clicked menu item
+            item.classList.add('active');
+
+            // Get the target identifier from the 'data-target' attribute
+            const targetId = item.getAttribute('data-target');
+
+            // Hide all content containers
+            const contentContainers = document.querySelectorAll('.menu-content');
+            contentContainers.forEach(container => {
+                container.classList.remove('active');
+            });
+
+            // Show the content container corresponding to the clicked menu item
+            const contentToShow = document.getElementById(`${targetId}-content`);
+            contentToShow.classList.add('active');
+        });
+    });
+
+</script>
+
+{% if campaign.project.pitch_deck %}
+<script>
+    // Get the URL of the pitch deck PDF
+    const pitchDeckUrl = '{{ campaign.project.pitch_deck.url }}';
+
+    // Reference to the preview container
+    const previewContainer = document.getElementById('pitch-deck-preview-container');
+
+    // Asynchronously load and render the PDF
+    const loadingTask2 = pdfjsLib.getDocument(pitchDeckUrl);
+    loadingTask2.promise.then(pdf => {
+        // Render the first page of the PDF
+        pdf.getPage(1).then(page => {
+            const scale = 0.25; // Adjust the scale as needed
+            const viewport = page.getViewport({ scale });
+
+            // Create a canvas element for rendering
+            const canvas = document.createElement('canvas');
+            previewContainer.appendChild(canvas);
+
+            const context = canvas.getContext('2d');
+            canvas.height = viewport.height;
+            canvas.width = viewport.width;
+
+            const renderContext = {
+                canvasContext: context,
+                viewport: viewport,
+            };
+
+            // Render the first page on the canvas
+            page.render(renderContext);
+
+            // Add a download button data-authenticated="true" to download the entire PDF
+            const downloadButton = document.getElementById('download-pitch-deck');
+            downloadButton.addEventListener('click', () => {
+                // Redirect to the pitch deck PDF URL for download
+                window.location.href = pitchDeckUrl;
+            });
+        });
+    });
+
+</script>
+{% endif %}
+
+{% if campaign.project.financials_doc %}
+<script>
+    // Get the URL of the financials PDF
+    const financialsUrl = '{{ campaign.project.financials_doc.url }}';
+
+    // Reference to the preview container for financials
+    const financialsPreviewContainer = document.getElementById('financials-preview-container');
+
+    // Asynchronously load and render the PDF for financials
+    const loadingTaskFinancials = pdfjsLib.getDocument(financialsUrl);
+    loadingTaskFinancials.promise.then(pdf => {
+        // Render the first page of the PDF for financials
+        pdf.getPage(1).then(page => {
+            const scale = 0.25; // Adjust the scale as needed
+            const viewport = page.getViewport({ scale });
+
+            // Create a canvas element for rendering financials
+            const canvasFinancials = document.createElement('canvas');
+            financialsPreviewContainer.appendChild(canvasFinancials);
+
+            const contextFinancials = canvasFinancials.getContext('2d');
+            canvasFinancials.height = viewport.height;
+            canvasFinancials.width = viewport.width;
+
+            const renderContextFinancials = {
+                canvasContext: contextFinancials,
+                viewport: viewport,
+            };
+
+            // Render the first page on the canvas for financials
+            page.render(renderContextFinancials);
+
+            // Add a download button data-authenticated="true" to download the entire PDF for financials
+            const downloadFinancialsButton = document.getElementById('download-financials');
+            downloadFinancialsButton.addEventListener('click', () => {
+                // Redirect to the financials PDF URL for download
+                window.location.href = financialsUrl;
+            });
+        });
+    });
+
+</script>
+{% endif %}
+
+{% if campaign.project.legals_doc %}
+<script>
+    // Get the URL of the legal documents PDF
+    const legalsUrl = '{{ campaign.project.legals_doc.url }}';
+
+    // Reference to the preview container for legal documents
+    const legalsPreviewContainer = document.getElementById('legals-preview-container');
+
+    // Asynchronously load and render the PDF for legal documents
+    const loadingTaskLegals = pdfjsLib.getDocument(legalsUrl);
+    loadingTaskLegals.promise.then(pdf => {
+        // Render the first page of the PDF for legal documents
+        pdf.getPage(1).then(page => {
+            const scale = 0.25; // Adjust the scale as needed
+            const viewport = page.getViewport({ scale });
+
+            // Create a canvas element for rendering legal documents
+            const canvasLegals = document.createElement('canvas');
+            legalsPreviewContainer.appendChild(canvasLegals);
+
+            const contextLegals = canvasLegals.getContext('2d');
+            canvasLegals.height = viewport.height;
+            canvasLegals.width = viewport.width;
+
+            const renderContextLegals = {
+                canvasContext: contextLegals,
+                viewport: viewport,
+            };
+
+            // Render the first page on the canvas for legal documents
+            page.render(renderContextLegals);
+
+            // Add a download button data-authenticated="true" to download the entire PDF for legal documents
+            const downloadLegalsButton = document.getElementById('download-legals');
+            downloadLegalsButton.addEventListener('click', () => {
+                // Redirect to the legal documents PDF URL for download
+                window.location.href = legalsUrl;
+            });
+        });
+    });
+
+</script>
+{% endif %}
+
+{% if campaign.project.market_research %}
+<script>
+    // Get the URL of the market research PDF
+    const marketResearchUrl = '{{ campaign.project.market_research.url }}';
+
+    // Reference to the preview container for market research
+    const marketResearchPreviewContainer = document.getElementById('market_research-preview-container');
+
+    // Asynchronously load and render the PDF for market research
+    const loadingTaskMarketResearch = pdfjsLib.getDocument(marketResearchUrl);
+    loadingTaskMarketResearch.promise.then(pdf => {
+        // Render the first page of the PDF for market research
+        pdf.getPage(1).then(page => {
+            const scale = 0.25; // Adjust the scale as needed
+            const viewport = page.getViewport({ scale });
+
+            // Create a canvas element for rendering market research
+            const canvasMarketResearch = document.createElement('canvas');
+            marketResearchPreviewContainer.appendChild(canvasMarketResearch);
+
+            const contextMarketResearch = canvasMarketResearch.getContext('2d');
+            canvasMarketResearch.height = viewport.height;
+            canvasMarketResearch.width = viewport.width;
+
+            const renderContextMarketResearch = {
+                canvasContext: contextMarketResearch,
+                viewport: viewport,
+            };
+
+            // Render the first page on the canvas for market research
+            page.render(renderContextMarketResearch);
+
+            // Add a download button data-authenticated="true" to download the entire PDF for market research
+            const downloadMarketResearchButton = document.getElementById('download-market-research');
+            downloadMarketResearchButton.addEventListener('click', () => {
+                // Redirect to the market research PDF URL for download
+                window.location.href = marketResearchUrl;
+            });
+        });
+    });
+
+</script>
+{% endif %}
+
+{% if campaign.project.operational_doc %}
+<script>
+    // Get the URL of the operational documents PDF
+    const operationalDocUrl = '{{ campaign.project.operational_doc.url }}';
+
+    // Reference to the preview container for operational documents
+    const operationalDocPreviewContainer = document.getElementById('operations-preview-container');
+
+    // Asynchronously load and render the PDF for operational documents
+    const loadingTaskOperationalDoc = pdfjsLib.getDocument(operationalDocUrl);
+    loadingTaskOperationalDoc.promise.then(pdf => {
+        // Render the first page of the PDF for operational documents
+        pdf.getPage(1).then(page => {
+            const scale = 0.25; // Adjust the scale as needed
+            const viewport = page.getViewport({ scale });
+
+            // Create a canvas element for rendering operational documents
+            const canvasOperationalDoc = document.createElement('canvas');
+            operationalDocPreviewContainer.appendChild(canvasOperationalDoc);
+
+            const contextOperationalDoc = canvasOperationalDoc.getContext('2d');
+            canvasOperationalDoc.height = viewport.height;
+            canvasOperationalDoc.width = viewport.width;
+
+            const renderContextOperationalDoc = {
+                canvasContext: contextOperationalDoc,
+                viewport: viewport,
+            };
+
+            // Render the first page on the canvas for operational documents
+            page.render(renderContextOperationalDoc);
+
+            // Add a download button data-authenticated="true" to download the entire PDF for operational documents
+            const downloadOperationalDocButton = document.getElementById('download-operational-doc');
+            downloadOperationalDocButton.addEventListener('click', () => {
+                // Redirect to the operational documents PDF URL for download
+                window.location.href = operationalDocUrl;
+            });
+        });
+    });
+
+</script>
+{% endif %}
+
+<script>
+    function updateRelativeTime() {
+        const timeElements = document.querySelectorAll('.campaign__details-body-communities-board-time');
+        const now = Math.floor(Date.now() / 1000); // Current time in seconds
+
+        timeElements.forEach((timeElement) => {
+            const postTimestamp = parseInt(timeElement.getAttribute('data-post-timestamp'));
+            const timeDifference = now - postTimestamp;
+
+            if (timeDifference < 60) {
+            // Less than a minute
+            timeElement.textContent = timeDifference + ' seconds ago';
+            } else if (timeDifference < 3600) {
+            // Less than an hour
+            timeElement.textContent = Math.floor(timeDifference / 60) + ' minutes ago';
+            } else if (timeDifference < 86400) {
+            // Less than a day
+            timeElement.textContent = Math.floor(timeDifference / 3600) + ' hours ago';
+            } else {
+            // More than a day, show the full date
+            const date = new Date(postTimestamp * 1000);
+            const formattedDate = date.toLocaleDateString('en-US', {
+                month: 'short',
+                day: 'numeric',
+            });
+            timeElement.textContent = formattedDate;
+            }
+        });
+    }
+
+    // Call the function initially to format existing timestamps
+    updateRelativeTime();
+
+    // You can also set an interval to periodically update the timestamps
+    setInterval(updateRelativeTime, 60000); // Update every minute
+
+</script>
+
+<script>
+
+    function gotoPacks() {
+        // Scroll to the campaigns container
+        const packContainer = document.getElementById('packs-content');
+        packContainer.scrollIntoView({ behavior: 'smooth' });
+
+        // Activate the specified category filter by simulating a click
+        const categoryButton = document.querySelector('.packs');
+        if (categoryButton) {
+            categoryButton.click();
+        }
+    }
+   
+</script>
+
+<script>
+    const postText = document.getElementById('post__text');
+    const postBtn = document.getElementById('post__btn');
+    const postCampaign = document.getElementById('post-feed-campaign-select');
+    const postImage = document.getElementById('post-image');
+
+    // JavaScript function to send the selected sentiment to the Django backend
+    postBtn.addEventListener("click", function () {
+        const postTextValue = postText.value;
+        var campaignId = this.dataset.campaignId;
+       
+        // Create a FormData object to send both text and image
+        const formData = new FormData();
+        formData.append('text', postTextValue);
+        formData.append('image', postImage.files[0]);
+
+        console.log(formData)
+
+        $.ajax({
+            url: 'post',
+            method: 'POST',
+            data: formData, // Use the FormData object
+            processData: false, // Don't process the data
+            contentType: false, // Don't set content type (automatically set for FormData)
+            success: function (response) {
+                if (response.message === 'success') {
+                    // Redirect or perform other actions for a successful login
+                    console.log("Posted successfully");
+                    window.location.reload()
+                } else {
+                    console.log("Unexpected response:", response);
+                }
+            },
+            error: function (xhr, status, error) {
+                if (xhr.status === 400) {
+                    console.log("Post unsuccessful");
+                } else {
+                    console.log("Error:", status, error);
+                }
+            }
+        });
+    });
+</script>
+
+
+
+
+
+{% endblock %}
