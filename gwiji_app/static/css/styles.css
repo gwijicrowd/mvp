@@ -131,7 +131,7 @@ i {
     height: 80vh;
     align-items: center;
     text-align: center;
-    color: var(--white);
+    color: var(--black);
 }
 
 .error-content h1 {
