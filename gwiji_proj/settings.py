@@ -115,7 +115,7 @@ STATIC_ROOT = 'gwiji_app/static'
 
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = 'media'
+MEDIA_ROOT = 'mvp/media'
 #MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
