@@ -119,7 +119,7 @@ STATIC_URL = '/static/'
 #STATIC_ROOT = os.path.join(BASE_DIR, 'gwiji_proj/staticfiles')
 
 #For Production
-STATIC_ROOT = 'gwiji_app/static'
+STATIC_ROOT = 'gwiji_proj/staticfiles'
 
 
 MEDIA_URL = '/media/'
