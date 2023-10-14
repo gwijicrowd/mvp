@@ -14,7 +14,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-z3$1_)s#$23*#_age12-u0ha)bp&i#af!k92yhr1!(4_!$b4g1'
 
 # SECURITY WARNING: don't run with debug turned on in production!
+
+#For Developement
 #DEBUG = True
+
+#For Production
 DEBUG = False
 
 ALLOWED_HOSTS = ['*']
@@ -109,14 +113,22 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+#For Development
 #STATICFILES_DIRS = [os.path.join(BASE_DIR, 'gwiji_app/static'),]
 #STATIC_ROOT = os.path.join(BASE_DIR, 'gwiji_proj/staticfiles')
+
+#For Production
 STATIC_ROOT = 'gwiji_app/static'
 
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = 'mvp/media'
+
+#For Development
 #MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+#For Production
+MEDIA_ROOT = 'mvp/media'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

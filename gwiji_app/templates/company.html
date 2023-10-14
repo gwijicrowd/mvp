@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block submain %}
+<section class="company__section">
+    <div class="company__section-body">
+        <div class="company__item" id="about-us">
+            <div class="company__item-header">
+                <h1>About Us</h1>
+            </div>
+            <div class="company__item-body" >
+                <div class="company__item-body-item">
+                    <div class="company__item-body-item-header">
+                        <h3>Our Vision</h3>
+                    </div>
+                    <div class="company__item-body-item-description">
+                        <p>Empowering Africa Through Crowdfunding .</p>
+                    </div>
+                </div>
+                <div class="company__item-body-item">
+                    <div class="company__item-body-item-header">
+                         <h3>Our Mission</h3>
+                    </div>
+                    <div class="company__item-body-item-description">
+                        <p>Our mission is to provide accessible crowdfunding solutions and drive economic growth through investment in innovation and technology in Africa.</p>
+                    </div>
+                </div>
+                <div class="company__item-body-item">
+                    <div class="company__item-body-item-header">
+                        <h3>Why it Matters</h3>
+                    </div>
+                    <div class="company__item-body-item-description">
+                        <p>At Gwiji, we believe that by simplifying financial complexities and fostering a culture of collaboration in crowdfunding, we can create opportunities that lead to prosperity for all. We are committed to reshaping the crowdfunding landscape, making it more inclusive and equitable. Our work matters because it paves the way for a brighter financial future, where everyone has the chance to thrive through the power of collective funding.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="company__item" id="our-team">
+            <div class="company__item-header">
+                <h1>Our Team</h1>
+            </div>
+            <div class="company__item-body" >
+                <div class="company__item-body-item">
+                    <div class="company__item-body-item-header">
+                        <h3>Meet Our <br class="subtitle__break"> Executive Team</h3>
+                    </div>
+                    <div class="company__item-body-item-container">
+                        <div class="company__item-teams">
+                            <div class="company__item-team-member">
+                                <div class="company__item-team-member-image">
+                                    <img src="{% static 'images/dennis.jpeg'%}" alt="">
+                                </div>
+                                <div class="company__item-team-member-title">
+                                    <h3>Dennis Maina <a href=""><i class='bx bxl-linkedin-square'></i></a></h3>
+                                    <p>Co-founder/CEO</p>
+                                </div>
+                            </div>
+                            <div class="company__item-team-member">
+                                <div class="company__item-team-member-image">
+                                    <img src="{% static 'images/david.jpg'%}" alt="">
+                                </div>
+                                <div class="company__item-team-member-title">
+                                    <h3>David-Bobola Ojoawo <a href="https://www.linkedin.com/in/david-bobola-ojoawo-52742b1a9/" target="_blank"><i class='bx bxl-linkedin-square'></i></a></h3>
+                                    <p>Co-founder/CTO</p>
+                                </div>
+                            </div>
+        
+                            
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="company__item" id="our-careers">
+            <div class="company__item-header">
+                <h1>Our Careers</h1>
+                <h3>Join Our Global Team</h3>
+            </div>
+            <div class="company__item-body" >
+               <p>At Gwiji Crowd, we are more than just a company; we are a community built on values that drive every aspect of our work. We value innovation, constantly seeking new ways to empower traders and investors with cutting-edge tools and insights. Collaboration is at our core, as we believe that diverse minds coming together can achieve remarkable outcomes. Integrity guides our actions, ensuring that our solutions are transparent, trustworthy, and always aligned with the best interests of our users. We are committed to learning and growth, fostering an environment that encourages continuous development and exploration. At Gwiji Crowd, our values inspire us to transform the financial landscape, providing opportunities for both our team and our users to thrive.</p>
+               <div class="company__jobs-container">
+                    
+                    <h3>There are no open jobs at the moment, please check again later.</h3>
+               </div>
+            </div>
+        </div>
+        <div class="company__item" id="our-updates">
+            <div class="company__item-header">
+                <h1>Our Updates</h1>
+                <h3>Company & Product Updates</h3>
+            </div>
+            <div class="company__item-body" >
+                <div class="company__updates">
+                    <p>Gwiji Crowd is your trusted companion in the financial landscape, leveraging AI-powered analysis and sentiment insights to empower traders and investors worldwide. We're committed to simplifying complex markets, enabling confident decisions, and unlocking opportunities for financial growth.</p>
+                    <table>
+                        <tr>
+                            <td>October 2023</td>
+                            <td>Gwiji Crowd launches, introducing crowdfunding opportunities for investors.</td>
+                        </tr>
+                        <tr>
+                            <td>October 2023</td>
+                            <td>Gwiji Crowd establishes its early adopters community to drive product growth.</td>
+                        </tr>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="company__item" id="contact-us">
+            <div class="company__item-header">
+                <h1>Contact Us</h1>
+                <h3>Get in touch with us.</h3>
+            </div>
+            <div class="company__item-body" >
+               <div class="company__enquiries">
+                    <div class="company__enquiries-item">
+                        <h3>General Enquiries</h3>
+                        <p>gwijicrowd@gmail.com</p>
+                    </div>
+                    <div class="company__enquiries-item">
+                        <h3>Product Inquiries</h3>
+                        <p>gwijicrowd@gmail.com</p>
+                    </div>
+                    <div class="company__enquiries-item">
+                        <h3>Regulatory Inquiries</h3>
+                        <p>gwijicrowd@gmail.com</p>
+                    </div>
+                    <div class="company__enquiries-item">
+                        <h3>Press</h3>
+                        <p>gwijicrowd@gmail.com</p>
+                    </div>
+               </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block title %} Company - Gwiji Crowd {% endblock %}

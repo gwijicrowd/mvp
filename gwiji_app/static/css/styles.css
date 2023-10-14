@@ -8,7 +8,7 @@
     --title-color: hsl(0, 0%, 0%);
     --subtitle-color: hsl(240, 1%, 27%);
     --alternate-subtitle-color: hsl(210, 2%, 76%);
-
+    --container-color:  #f8f8f8;
     --text-color:  hsl(0, 0%, 0%);
     --alternate-text-color:  hsl(11, 71%, 51%);
     --brand-color: hsl(11, 71%, 51%);
@@ -838,12 +838,16 @@ header{
     display: flex;
     flex-direction: column;
     margin-top: 4rem;
+    height: 200vh;
+    
 }
 .campaigns-community__section h3 {
     color: var(--black);
 }
 .campaigns__container {
     padding: 2rem; 
+    overflow-y: auto;
+    
 }
 
 .campaign__container-search input{
@@ -883,6 +887,17 @@ header{
 .campaign__container-results .no-campaigns {
     text-align: center;
 }
+
+.no-campaigns {
+    justify-content: center;
+    width: 100%;
+    margin: 2rem;
+}
+
+.no-campaigns p{   
+    text-align: center;
+}
+
 .browse__campaign-item {
     width: 350px;
     height: auto;
@@ -960,6 +975,7 @@ header{
     margin: 1rem;
     padding: 1rem 0;
     position: relative;
+    overflow-y: auto;
 }
 
 .community-post__feed-top {
@@ -1092,7 +1108,7 @@ header{
     color: var(--alternate-subtitle-color);
 }
 .community__posts-item_body img {
-    width: 80%;
+    width: 50%;
 }
 
 .bxs-badge-check {
@@ -1805,6 +1821,150 @@ header{
     color: var(--blue);
 }
 
+/*-----------------------------------*\
+ * Company Page
+\*-----------------------------------*/
+.company__section {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    border-top: 1px solid var(--border-color);
+}
+
+.company__section-body {
+    width: 90vw;
+   
+}
+.company__item {
+    padding: 6rem 0rem 2rem 0rem;
+    border-bottom: 1px solid var(--border-color);
+}
+.company__item-header h1{
+    font-size: xx-large;
+    color: var(--subtitle-color);
+}
+
+.company__item-body {
+    margin: 2rem 0rem;
+}
+
+.company__item-body-item-header h3, .company__item-header h3{
+    color: var(--alternate-text-color);
+    font-size: x-large;
+   
+}
+
+.subtitle__break {
+    display: block;
+}
+
+.company__item-body-item {
+    margin: 4rem 0rem 6rem 0rem;
+}
+
+.company__item-body-item-description p {
+    font-size: xx-large;
+    margin: 1rem 0;
+}
+
+.company__item-body-item-container {
+    display: flex;
+    justify-content: center;
+    margin: 2rem 0;
+}
+
+.company__item-teams {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.company__item-team-member-image {
+    width: 400px;
+    height: 380px;
+    
+}
+
+.company__item-team-member-image img {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+}
+
+.company__item-team-member-title {
+    padding: 1rem;
+}
+
+.company__item-team-member-title i{
+    color: var(--brand-color);
+}
+
+.company__item-team-member-title p {
+    color: var(--subtitle-color);
+    font-size: small;
+}
+
+#our-partners {
+    background-color: var(--alternate-text-color);
+    padding: 2rem;
+    border-radius: 15px;
+    margin: 2rem 0rem;
+}
+
+.company__item-body-partners-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+}
+
+.company__item-body-partner {
+    width: 100px;
+    height: 30px;
+}
+
+.company__item-body-partner img{
+    width: 100%;
+    height: 100%;
+}
+.company__jobs-container {
+    padding: 2rem 0;
+}
+.company__jobs-container-item {
+    display: flex;
+    justify-content: space-between;
+    text-align: left;
+    padding: 20px;
+    background-color: var(--container-color);
+    border-radius: 10px;
+    margin-bottom: 1rem;
+}
+.company__jobs-container-item-left p {
+    color: var(--subtitle-color);
+}
+
+.company__updates table {
+    table-layout: auto;
+    width: 90vw;
+    text-align: left;
+    margin-top: 2rem;
+    
+}
+.company__updates table td {
+    padding: 1rem;
+    border: 1px solid var(--border-color);
+}
+.company__enquiries-item {
+    margin: 1rem 0rem;
+}
+.company__enquiries-item p {
+    color: var(--subtitle-color);
+}
+
+.company__enquiries {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
 
 /*-----------------------------------*\
  * Notifications Page
@@ -2284,9 +2444,6 @@ tbody i {
     border-radius: 5px;
 }
 
-.campaigns__container {
-    padding: 2rem;
-}
 .manage_campaigns__container .profile__body-header {
    display: flex;
    justify-content: space-between;
@@ -2362,13 +2519,84 @@ tbody i {
     display: none;
     border-radius: 10px;
 }
+
+/*-----------------------------------*\
+ * #HOW IT WORKS
+\*-----------------------------------*/
+/* Style the how-it-works section */
+.how-it-works__section {
+    background-color: var(--container-color);
+    padding: 50px;
+}
+.how-it-works__section i {
+    color: var(--brand-color);
+    font-size: xx-large;
+}
+
+.how-it-works__item {
+    margin-bottom: 4rem;
+}
+.how-it-works__header {
+    margin: 3rem 0;
+}
+
+.how-it-works__header span {
+    color: var(--brand-color);
+}
+/* Style the header */
+.how-it-works__header h1 {
+    text-align: center;
+    font-size: 36px;
+    color: #333;
+}
+
+/* Style the steps container */
+.how-it-works__steps {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin-top: 30px;
+}
+
+/* Style each step */
+.how-it-works__step {
+    text-align: center;
+    width: 100%;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 1rem;
+}
+
+/* Style step icons */
+.how-it-works__step-icon img {
+    width: 80px;
+    height: 80px;
+}
+
+/* Style step titles */
+.how-it-works__step h2 {
+    font-size: 24px;
+    margin-top: 15px;
+    color: #333;
+}
+
+/* Style step descriptions */
+.how-it-works__step p {
+    font-size: 16px;
+    color: #666;
+}
+
+
+
 /*-----------------------------------*\
  * #CTA
 \*-----------------------------------*/
 .cta__section {
     display: flex;
     justify-content: center;
-    background-color: var(--container-color);
+   
     padding: 4rem 1rem;
 }
 .cta__container {
@@ -2401,8 +2629,9 @@ tbody i {
 /* ================================================= */
 
 .faq__section {
-    margin-top: 4rem;
+    padding-top: 4rem;
     color: var(--text-color);
+    background-color: var(--container-color);
 }
 .faq__header {
     display: flex;
@@ -2845,6 +3074,11 @@ tbody i {
     .communities__container.big-screen {
         display: block;
     }
+    .campaigns-community__section {
+
+        height: 100vh;
+        
+    }
 
     /*-----------------------------------*\
     * #DASHBOARD PAGE
@@ -2907,6 +3141,9 @@ tbody i {
         border-left: 1px solid var(--border-color);
     }
 
+    .communities__container {
+        width: 30vw;
+    }
     .dashboard .communities__container {
         width: 30vw;
         height: 90vh;
@@ -3154,6 +3391,67 @@ tbody i {
    
       } 
 
+    
+    /*-----------------------------------*\
+    * Company Page
+    \*-----------------------------------*/
+    .company__section-body {
+        width: 70vw;
+       
+    }
+    .company__item-body-item-container {
+        display: block;
+    }
+    .company__item-teams {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .subtitle__break {
+        display: none;
+    }
+
+    .company__item-body-partners-list {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 2rem;
+    }
+    .company__item-body-partner {
+        width: 150px;
+        height: 50px;
+    }
+
+    .company__updates table {
+        table-layout: auto;
+        width: 70vw;
+    }
+
+    .company__enquiries {
+        display: flex;
+        flex-direction: row;
+    }
+
+    /*-----------------------------------*\
+    * #HOW IT WORKS
+    \*-----------------------------------*/
+
+    /* Style the steps container */
+    .how-it-works__steps {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        margin-top: 30px;
+    }
+
+    .how-it-works__step {
+        text-align: center;
+        width: 30%;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
 
 
     /* ================================================= */

@@ -273,10 +273,16 @@
             </div>
             {% endfor %}
             {% else %}
-            <p class="no-campaigns">No Campaigns to show.</p>
+            <div class="no-campaigns">
+                <p id="no-filter-campaigns">No Campaign to display.</p>
+            </div>
             {% endif %}
         </div>
+        <div class="no-campaigns">
+            <p id="no-filter-campaigns">No Campaign to display.</p>
+        </div>
     </div>
+    
 
     <div class="communities__container">
         <div class="community-post__feed__container">
@@ -392,6 +398,74 @@
     </div>
 </section>
 
+
+<section class="how-it-works__section">
+    <div class="how-it-works__item">
+        <div class="how-it-works__header">
+            <h1>
+                How it  <span>Works For Investors</span>
+            </h1>
+        </div>
+        <div class="how-it-works__steps">
+            <div class="how-it-works__step">
+                <div class="how-it-works__step-icon">
+                    <i class='bx bxs-keyboard'></i>
+                </div>
+                <h2>Discover Afrocorns</h2>
+                <p>Discover a thoughtfully curated array of promising Afrocorns, African startups with exceptional growth prospects.</p>
+            </div>
+            <div class="how-it-works__step">
+                <div class="how-it-works__step-icon">
+                    <i class='bx bx-money-withdraw'></i>
+                </div>
+                <h2>Invest Securely</h2>
+                <p>Crowdfund your chosen Afrocorn securely, becoming a proud shareholder in the future of Africa.</p>
+            </div>
+            <div class="how-it-works__step">
+                <div class="how-it-works__step-icon">
+                    <i class='bx bxs-plane-take-off'></i>
+                </div>
+                <h2>Watch Them Grow</h2>
+                <p>Support the growth of Afrocorns as they innovate and achieve milestones, together.</p>
+            </div>
+        </div>
+    </div>
+    <div class="how-it-works__item">
+        <div class="how-it-works__header">
+            <h1>
+                How it  <span>Works for Founders</span>
+            </h1>
+        </div>
+        <div class="how-it-works__steps">
+            <div class="how-it-works__step">
+                <div class="how-it-works__step-icon">
+                    <i class='bx bx-add-to-queue' ></i>
+                </div>
+                <h2>Create Your Campaign</h2>
+                <p>Start by creating a compelling crowdfunding campaign for your startup. Provide details about your project, funding goals, and rewards for backers.</p>
+            </div>
+            <div class="how-it-works__step">
+                <div class="how-it-works__step-icon">
+                    <i class='bx bxs-share-alt' ></i>
+                </div>
+                <h2>Share Your Campaign</h2>
+                <p>Spread the word about your campaign to your network and beyond. Utilize social media, email, and other marketing channels to attract potential investors.</p>
+            </div>
+            <div class="how-it-works__step">
+                <div class="how-it-works__step-icon">
+                    <i class='bx bx-user-voice'></i>
+                </div>
+                <h2>Attract Investors</h2>
+                <p>Engage with investors who believe in your vision. Answer questions, provide updates, and build a strong relationship with your backers.</p>
+            </div>
+        </div>
+    </div>
+    
+</section>
+
+
+
+
 <section class="cta__section">
     <div class="cta__container">
         <div class="cta__left-container">
@@ -400,7 +474,7 @@
                 
             </div>
             <div class="cta__description">
-               <p>Crowdfund an exciting startup of your choice and own a share of it!</p> 
+               <p>Crowdfund a promising Afrocorn of your choice and become a shareholder!</p> 
             </div>
             <div class="cta__button">
                 <a href="#login"><button>Invest Now!</button></a>
@@ -409,11 +483,13 @@
         </div>
         <div class="cta__right-container">
             <div class="cta__image-container">
-                <img src="{% static 'images/cta.png'%}" alt="">
+                <img src="{% static 'images/afrocorn.png'%}" alt="">
             </div>
         </div>
     </div>
 </section>
+
+
 
 <section class="faq__section">
     <div class="faq__header">
@@ -593,30 +669,6 @@
         });
     });
 
-</script>
-
- <script>
-    function filterCampaigns(categoryButton, category) {
-        const campaignItems = document.querySelectorAll('.browse__campaign-item');
-        const categoryButtons = document.querySelectorAll('.category__filters-item-btn');
-        console.log(category)
-        // Remove the "active" class from all category buttons
-        categoryButtons.forEach(button => {
-            button.classList.remove('active');
-        });
-
-        // Add the "active" class to the clicked category button
-        categoryButton.classList.add('active');
-
-        campaignItems.forEach(item => {
-            const itemCategory = item.getAttribute('data-category');
-            if (category === 'all' || itemCategory === category) {
-                item.style.display = 'block';
-            } else {
-                item.style.display = 'none';
-            }
-        });
-    }
 </script>
 
 <script>

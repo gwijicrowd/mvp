@@ -36,8 +36,6 @@ def process_payment(request, id):
             campaign.current_raise += int(amount)
             campaign.save()
 
-            
-             
             try:
                 text = f"{profile.display_name} from {profile.location} invested ${amount} in your '{campaign.title}' campaign🎊💰."
                 notifications = Notifications.objects.create(profile=campaign.author, text=text)
@@ -605,8 +603,6 @@ def financials(request):
     category_choices = [choice[0] for choice in Projects.CATEGORY_CHOICES]
     profile = Profile.objects.get(user=request.user)
     my_campaigns = Campaigns.objects.filter(author = profile)
-    
-
 
     investors_count = Investments.objects.filter(campaign__in=my_campaigns).count()
     investors = Investments.objects.filter(campaign__in=my_campaigns)
@@ -639,11 +635,6 @@ def financials(request):
         if invest.campaign.project not in investments_companies:
             investments_companies.append(invest.campaign.project)
             investments_companies_count += 1
-
-
-   
-
-    
 
     for investor in all_investments:
         investor.sharesperdollar_current = investor.campaign.project.shareperdollar
@@ -716,9 +707,6 @@ def profile(request):
     for investment in investments:
         if investment not in unique_investments:
             unique_investments.append(investment)
-        
-
-
     
     context = {
         'posts': posts,
@@ -732,7 +720,6 @@ def profile(request):
         'investors_count': investors_count,
         'my_campaigns': my_campaigns,
         'unique_investments': unique_investments
-
 
     }
     return render(request, 'profile.html', context)
@@ -776,3 +763,13 @@ def logout(request):
 
 
 
+@csrf_exempt
+def company(request):
+    campaigns = Campaigns.objects.filter(status="Active")
+    category_choices = [choice[0] for choice in Projects.CATEGORY_CHOICES]
+    context = {
+        'campaigns': campaigns,
+        'category_choices': category_choices
+
+        }
+    return render(request, 'company.html', context)

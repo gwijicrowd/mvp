@@ -65,7 +65,7 @@
       <!-- Checkbox for agreeing to the terms -->
       <div class="form-check">
           <input type="checkbox" class="form-check-input" id="agreementCheckbox">
-          <label class="form-check-label" for="agreementCheckbox">I agree to these terms and conditions of this Agreement and agree to be bound by them.</label>
+          <label class="form-check-label" for="agreementCheckbox">I agree to these <a href="{% static 'docs/t&c.pdf' %}" target="_blank">Terms and Conditions</a> of this Agreement and agree to be bound by them.</label>
       </div>
       
       <!-- Button to proceed to payment (initially disabled) -->
@@ -179,7 +179,7 @@
                
 
                 <div class="login__container-item">
-                  <p class="signup__agreement">By proceeding, you agree to Gwiji’s <br> <span>Terms of Use</span> & <span>Privacy Policy.</span></p>
+                  <p class="signup__agreement">By proceeding, you agree to Gwiji’s <br><span><a href="{% static 'docs/privacy-policy.pdf' %}" target="_blank">Privacy Policy.</a></span></p>
                 </div>
               </div>
              
@@ -433,9 +433,6 @@
                       <a href="/company#our-team">
                           Our Team
                       </a>
-                      <a href="/company#our-partners">
-                        Our  Partners
-                       </a>
                       <a href="/company#our-careers">
                           Our Careers
                       </a>
@@ -1247,7 +1244,46 @@ function insertEmoji(emojiObject) {
       }
   });
 </script>
+<script>
+  // Wait for the page to finish loading
+document.addEventListener('DOMContentLoaded', function() {
+  // Find the "All" category button by its ID
+  const allCategoryButton = document.getElementById('all');
 
+  // Trigger a click event on the "All" category button
+  allCategoryButton.click();
+});
+
+function filterCampaigns(categoryButton, category) {
+  const campaignItems = document.querySelectorAll('.browse__campaign-item');
+  const categoryButtons = document.querySelectorAll('.category__filters-item-btn');
+  const noCampaign = document.getElementById('no-filter-campaigns');
+  console.log(category);
+
+  // Remove the "active" class from all category buttons
+  categoryButtons.forEach(button => {
+      button.classList.remove('active');
+  });
+
+  // Add the "active" class to the clicked category button
+  categoryButton.classList.add('active');
+
+  let foundMatchingCampaign = false;
+
+  campaignItems.forEach(item => {
+      const itemCategory = item.getAttribute('data-category');
+      if (category === 'all' || itemCategory === category) {
+          item.style.display = 'block';
+          foundMatchingCampaign = true;
+      } else {
+          item.style.display = 'none';
+      }
+  });
+
+  // If no matching campaigns are found, show the "No Campaigns" message
+  noCampaign.style.display = foundMatchingCampaign ? 'none' : 'flex';
+}
+</script>
 </body>
 </html>
 
