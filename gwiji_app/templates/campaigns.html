@@ -712,12 +712,13 @@
             // Render the first page on the canvas
             page.render(renderContext);
 
-            // Add a download button data-authenticated="true" to download the entire PDF
+                        // Add a download button data-authenticated="true" to download the entire PDF
             const downloadButton = document.getElementById('download-pitch-deck');
             downloadButton.addEventListener('click', () => {
-                // Redirect to the pitch deck PDF URL for download
-                window.location.href = pitchDeckUrl;
+                // Open the pitch deck PDF URL in a new tab or window
+                window.open(pitchDeckUrl, '_blank');
             });
+
         });
     });
 
