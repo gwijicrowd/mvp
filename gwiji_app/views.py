@@ -20,6 +20,25 @@ def error_404(request, exception):
 def error_500(request):
     return render(request, '404.html', status=500)
 
+@csrf_exempt
+def verify_id(request):
+    try: 
+        if request.method == 'POST':
+            id_type = request.POST.get('id_type')
+            id_file = request.FILES.get('id_upload')
+            print(id_type)
+            print(id_file)
+            profile = Profile.objects.get(user=request.user)
+            profile.identification_doc = id_file
+            profile.identification_type = id_type
+            profile.verification_status = "Pending"
+            profile.save()
+    except:
+        pass
+    return render(request, 'index.html')
+
+       
+
 
 @csrf_exempt
 def process_payment(request, id):
@@ -267,6 +286,7 @@ def index(request):
         posts = Posts.objects.all().order_by('-id')
         campaigns = Campaigns.objects.filter(status="Active")
         category_choices = [choice[0] for choice in Projects.CATEGORY_CHOICES]
+        id_types = [choice[0] for choice in Profile.VERIFICATION_TYPE_CHOICES]
         profile = Profile.objects.get(user=request.user)
         followed_campaigns = profile.following.all
         my_campaigns = Campaigns.objects.filter(author = profile)
@@ -283,7 +303,8 @@ def index(request):
             'category_choices': category_choices,
             'profile': profile,
             'followed_campaigns': followed_campaigns,
-            'my_campaigns': my_campaigns
+            'my_campaigns': my_campaigns,
+            'id_types': id_types
         }
         return render(request, 'browse.html', context)
 

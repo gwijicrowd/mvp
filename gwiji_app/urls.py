@@ -9,7 +9,7 @@ urlpatterns = [
     path('campaigns/<int:id>/post', views.discussion_post, name='discussion_post'),
     path('campaigns/<int:id>/process_payment', views.process_payment, name='process_payment'),
     path('login', views.login, name='login'),
-    path('logout', views.logout, name='logout'),
+    path('logout/', views.logout, name='logout'),
     path('signup', views.signup, name='signup'),
     path('browse/', views.browse, name='browse'),
     path('feeds/', views.feeds, name='feeds'),
@@ -26,6 +26,7 @@ urlpatterns = [
     path('post/', views.post, name='post'),
     path('manage_campaigns/create_campaign/', views.create_campaign, name='create_campaign'),
     path('company/', views.company, name='company'),
+    path('verify_id', views.verify_id, name='verify_id'),
     
     
 ]

@@ -370,6 +370,79 @@ i {
     color: var(--brand-color);
 }
 
+/*-----------------------------------*\
+ * ID Verification Page
+\*-----------------------------------*/
+.id-verification__section {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9998;
+    overflow: hidden;
+    color: var(--white);
+    
+}
+.id-verification__icon {
+    display: flex;
+    justify-content: end;
+    margin-bottom: 1rem;
+    color: var(--white);
+}
+.id-verification__icon i {
+    font-size: xx-large;
+    text-align: right;
+    cursor: pointer;
+}
+.id-verification__container {
+   padding:2rem;
+   width: 90vw;
+   background-color: var(--brand-color);
+   z-index: 9999;
+   border-radius: 15px;
+}
+
+.id-verification__header {
+    text-align: center;
+}
+
+
+.id-verification__body {
+    padding: 2rem;
+}
+
+.id-verification__body-item {
+    margin: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.id-verification__body-item label {
+    margin: 1rem 0;
+}
+
+.id-verification__body-item select{
+   padding: 1rem;
+}
+
+.id-verification__body button {
+    border: 1px solid var(--border-color);
+    margin: 1rem;
+}
+
+.verification__status {
+    margin: 4rem;
+    text-align: center;
+}
+
+.verification__status a {
+    color: blue;
+}
+
+
 /* ================================================= */
 /* Hero Section styles */
 /* ================================================= */
@@ -688,6 +761,66 @@ header{
 
 .header__collapse-menu-item.active  .header__submenu-icons .bx-chevron-down {
     display: none;
+}
+
+.verified {
+    padding: 6px;
+    color: var(--green);
+    font-size: medium;
+    border-radius: 5px;
+}
+
+.not-verified {
+    padding: 6px;
+    color: var(--red);
+    font-size: medium;
+    border-radius: 5px;
+}
+
+.pending {
+    padding: 6px;
+    color: var(--orange);
+    font-size: medium;
+    border-radius: 5px;
+}
+
+.pending-id-container {
+    display: none;
+    position: absolute;
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-top: 10px;
+    z-index: 99999;
+    width: 300px;
+}
+
+.header__profile-tab .pending-id-container {
+    display: none;
+    position: absolute;
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-top: 10px;
+    z-index: 99999;
+    width: 300px;
+    bottom: 30px;
+}
+
+h3:hover .pending-id-container {
+    display: block;
+}
+
+.id:hover .pending-id-container {
+    display: block;
+}
+
+.community__post-badge:hover .pending-id-container {
+    display: block;
+}
+
+.pending-id-container a {
+    color: blue;
 }
 
 /* HERO SECTION */
@@ -1112,7 +1245,7 @@ header{
 }
 
 .bxs-badge-check {
-    color: var(--blue);
+    color: var(--brand-color);
 }
 
 .community__posts-item_footer {
@@ -1343,12 +1476,12 @@ header{
 }
 
 .campaign__details-body-right-content {
-    width: 20%;
+
     padding: 2rem 0;
+    height: 100vh;
+    overflow-y: auto;
 }
-.campaign__details-body-right-content-prototype {
-    width: 20%;
-}
+
 
 .campaign__details-body-right-content-no-prototype {
     white-space: nowrap;
@@ -2044,9 +2177,6 @@ header{
     border-radius: 10px;
 }
 
-.profile__header-display-name i {
-    color: var(--brand-color);
-}
 
 .profile__header-sub-banner {
     display: flex;
@@ -2955,6 +3085,15 @@ tbody i {
     .login__container-item.marketing input {
         width: 2vw;
     }
+
+    /*-----------------------------------*\
+    * ID Verification Page
+    \*-----------------------------------*/
+    .id-verification__container {
+        padding:2rem;
+        width: 50vw;
+    }
+
 
 
     /* ================================================= */

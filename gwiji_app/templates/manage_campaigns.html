@@ -112,8 +112,23 @@
       </div>
    </div>
    <div class="create_campaigns__container" id="create-campaign">
+      {% if profile.verification_status == "NotVerified" %}
+         <p class="verification__status">
+            To create a campaign, please
+            <a href="#id-verification">verify your identity</a>.
+         </p>
+      {% elif profile.verification_status == "Pending" %}
+         <p class="verification__status">
+            Sorry, you can't create a campaign at the moment.
+            Please try again later, as your ID verification is currently pending.
+         </p>
+      {% else %}
+
+      
       <div class="create_campaigns__container-header">
          <h2>Create new campaign</h2>
+         
+
       </div>
       <div class="create_campaigns__container-body">
          <div class="create_campaigns__container-body-section">
@@ -164,7 +179,7 @@
                      {% for stage in project_stages %}
                      <option value="{{ stage}}">{{ stage}}</option>
                      {% endfor %}
-                 </select>
+                  </select>
                </div>
                <div class="create_campaigns__container-body-item">
                   <label for="company-category-select">Company Category </label>
@@ -173,7 +188,7 @@
                      {% for category in category_choices %}
                      <option value="{{ category}}">{{ category}}</option>
                      {% endfor %}
-                 </select>
+                  </select>
                </div>
                <div class="create_campaigns__container-body-item">
                   <label for="company-date-start">When did you start this company? </label>
@@ -327,7 +342,7 @@
                         <input id="founding-team-name-3" type="text" placeholder="Enter gwiji username...">
                   </div>
                </div>
-              
+               
             </div>
             <div class="create_campaigns__container-body-section-questions">
                <!-- Founding Team Member 4 -->
@@ -339,7 +354,7 @@
                   </div>
                </div>
             </div>
-           
+            
          </div>
       </div>
       <div class="create_campaigns__container-footer">
@@ -348,7 +363,10 @@
       <div class="campaignError" id="campaignError">
          
       </div>
+      {% endif %}
    </div>
+   
+  
 </div>
 
 
@@ -356,7 +374,6 @@
    document.addEventListener("DOMContentLoaded", function () {
      const createCampaignBtn = document.getElementById("create-campaign");
      const campaignError = document.getElementById("campaignError");
-     campaignError
  
      createCampaignBtn.addEventListener("click", function () {
        // Gather data from Company Information section

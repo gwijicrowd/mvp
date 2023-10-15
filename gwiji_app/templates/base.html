@@ -185,7 +185,37 @@
              
             </div>
         </div>
-      </section>
+    </section>
+
+    <section class="id-verification__section" id="id-verification">
+      <div class="id-verification__container">
+        <div class="id-verification__icon">
+          <i id="close-verification" class='bx bx-x'></i>
+        </div>
+        <div class="id-verification__header">
+          <h2>Verify Your Identity</h2>
+          <p>Upload one of the following accredited identification documents for your region in PDF format. Ensure that the document is clearly scanned.</p>
+      </div>
+      <div class="id-verification__body">
+          <div class="id-verification__body-item">
+              <label for="id-type-select">Select ID Type</label>
+              <select name="id-type-select" id="id-type-select" class="id-type-select">
+                  <option value="none">Choose an ID</option>
+                  {% for id in id_types %}
+                  <option value="{{ id }}">{{ id }}</option>
+                  {% endfor %}
+              </select>
+          </div>
+          <div class="id-verification__body-item">
+              <label for="id-type-upload">Upload ID Document</label>
+              <input type="file" id="id-type-upload" accept="application/pdf" name="id-type-upload">
+          </div>
+          <button id="submit-id">Submit</button>
+      </div>
+      
+      </div>
+    </section>
+
     <section class="hero__section">     
         <div class="banner">
             <div class="banner__assets-items">
@@ -257,30 +287,28 @@
                 {% else %}
                 <div class="profile__icon">
                     <div class="header__profile-tab">
-                        <div class="profile__tab header__menu-item">
+                        <div class="profile__tab header__menu-item id">
                             {% if profile.avatar %}
                             <img src="{{profile.avatar.url}}" alt="">
                             {% else %}
                             <img src="{% static 'images/user.png' %}" alt="">
                             {% endif %}
-                           <div class="header__submenu">
-                            <div class="arrow">
-                            </div>
-                            <div class="profile__tab-links">
-                              <a href="/profile">
-                                My Profile
-                              </a>
-                              <a href="/feeds">
-                                My Feeds
-                              </a>
-                              <a href="/notifications">
-                                My Notifications
-                              </a>
-                              <a href="/logout">
-                                Sign Out
-                              </a>
-                            </div>
-                        </div>
+                            {% if profile.verification_status == "Verified"%}
+                              <i class='verified bx bxs-badge-check id'></i>
+                              <div class="pending-id-container">
+                                  <p>Your Identity is verified.</p>
+                              </div>
+                              {% elif profile.verification_status == "Pending"%}
+                              <i class='bx bxs-error-circle pending id'></i>
+                              <div class="pending-id-container">
+                                  <p>Your Identity Verification is ongoing. </p>
+                              </div>
+                              {% elif profile.verification_status == "NotVerified" %}  
+                              <i class='bx bxs-error not-verified id' ></i>
+                              <div class="pending-id-container">
+                                  <p>You have not verified your identity, please click <a href="#id-verification">here</a> to begin verification.  </p>
+                              </div>
+                            {%  endif %}
                         </div> 
                         <a href="/notifications"><i class='bx bxs-bell'></i></a>
                       </div>
@@ -501,6 +529,83 @@
 </script>
 {% endif %}
 
+
+
+<script>
+  const submitIdBtn = document.getElementById("submit-id")
+
+
+  submitIdBtn.addEventListener("click", function () {
+    const idType = document.getElementById('id-type-select').value;
+    const idFile = document.getElementById('id-type-upload').files[0];
+
+    const formData = new FormData();
+
+    formData.append("id_type", idType);
+    formData.append("id_upload", idFile)
+
+    $.ajax({
+         url: "verify_id",
+         method: "POST",
+         data: formData,
+         processData: false,
+         contentType: false,
+         success: function (response) {
+           window.location.reload()
+           if (response.message === "success") {
+             // Redirect or perform other actions for a successful campaign creation
+             console.log("Campaign created successfully");
+             hideIdVerification();
+           } else {
+             console.log("Unexpected response:", response);
+           }
+         },
+         error: function (xhr, status, error) {
+            
+         },
+       });
+  });
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+      const closeVerificationBtn = document.getElementById('close-verification');
+      const idVerificationSection = document.querySelector(".id-verification__section");
+
+      function showIdVerification() {
+          idVerificationSection.style.display = "flex";
+          // Update the URL to include the hash
+          window.location.hash = "id-verification";
+      }
+
+      function hideIdVerification() {
+          idVerificationSection.style.display = "none";
+          // Remove the hash from the URL
+          history.replaceState(null, '', window.location.pathname + window.location.search);
+      }
+
+      // Initial page load based on the URL hash
+      if (window.location.hash === "#id-verification") {
+          showIdVerification();
+      } else {
+          hideIdVerification();
+      }
+
+      closeVerificationBtn.addEventListener("click", function () {
+          hideIdVerification();
+      });
+
+      // Listen for hash change events
+      window.addEventListener("hashchange", function () {
+          if (window.location.hash === "#id-verification") {
+              showIdVerification();
+          } else {
+              hideIdVerification();
+          }
+      });
+  });
+</script>
+
 <script>
   const toggleButton = document.querySelector(".header__menu-icon");
   const menuBar = document.querySelector(".header__menu-collapse");
@@ -613,6 +718,8 @@
       // Function to hide the authentication container
       function hideAuthenticationContainer() {
           authenticationSection.style.display = "none";
+          history.replaceState(null, '', window.location.pathname + window.location.search);
+          
       }
   
       // Function to show the login container
@@ -652,11 +759,8 @@
           }
       });
 
-      
-
-
       closeBtn.addEventListener("click", function () {
-          window.location.href = "/";
+        hideAuthenticationContainer() 
       });
 </script>
 
@@ -1230,6 +1334,7 @@ function insertEmoji(emojiObject) {
       window.location.reload();
   });
 </script>
+
 <script>
   // Enable the button when the checkbox is checked
   document.getElementById('agreementCheckbox').addEventListener('change', function() {
@@ -1243,6 +1348,7 @@ function insertEmoji(emojiObject) {
       }
   });
 </script>
+
 <script>
   // Wait for the page to finish loading
 document.addEventListener('DOMContentLoaded', function() {

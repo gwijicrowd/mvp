@@ -404,7 +404,19 @@
                         </div>
                     </div>
                     <div id="packs-content" class="menu-content">
+                        {% if profile.verification_status == "NotVerified" %}
+                        <p class="verification__status">
+                           To invest in this campaign, please
+                           <a href="#id-verification">verify your identity</a>.
+                        </p>
+                     {% elif profile.verification_status == "Pending" %}
+                        <p class="verification__status">
+                           Sorry, you can't invest in this campaign at the moment.
+                           Please try again later, as your ID verification is currently pending.
+                        </p>
+                     {% else %}
                         <div class="campaign__details-body-packs-board">
+                 
                             {% for tier_info in tier_info_list %}
                                 <div class="campaign__details-body-packs-board-item" data-shares="{{ tier_info.shares }}" data-amount="{{ tier_info.tier_price }}" data-dollar="{{ shareperdollar }}">
                                     <h1>${{ tier_info.tier_price }}</h1>
@@ -413,7 +425,9 @@
                                     <button data-authenticated="true" class="campaign__details-body-packs-board-invest-btn {% if campaign.status != 'Active' %} disabled {% endif %}">Invest at ${{ shareperdollar }}/share</button data-authenticated="true">
                                 </div>
                             {% endfor %}
+                        
                         </div>
+                    {% endif%}
                     </div>             
                     <div id="roadmap-content" class="menu-content">
                         <div class="campaign__details-body-roadmap-board">
@@ -708,17 +722,14 @@
                 canvasContext: context,
                 viewport: viewport,
             };
-
             // Render the first page on the canvas
             page.render(renderContext);
-
                         // Add a download button data-authenticated="true" to download the entire PDF
             const downloadButton = document.getElementById('download-pitch-deck');
             downloadButton.addEventListener('click', () => {
                 // Open the pitch deck PDF URL in a new tab or window
                 window.open(pitchDeckUrl, '_blank');
             });
-
         });
     });
 

@@ -25,19 +25,36 @@ class Team(models.Model):
 
 
 class Profile(models.Model):
-    ENTREPRENEUR = "Entrepreneur"
-    INVESTOR = "Investor"
+    VERIFIED = 'Verified'
+    PENDING = 'Pending'
+    NOTVERIFIED = 'NotVerified'
 
-    PROFILE_CHOICES = (
-        (ENTREPRENEUR, 'Entrepreneur'),
-        (INVESTOR, 'Investor')
+    NATIONAL_ID = "National ID Card"
+    PASSPORT = "International Passport"
+    DRIVERS_LICENSE = 'Drivers License'
+    NONE = 'None'
+   
+
+    VERIFICATION_STATUS_CHOICES = (
+        (VERIFIED, 'Verified'),
+        (NOTVERIFIED, 'NotVerified'),
+        (PENDING, 'Pending')
+    )
+
+    VERIFICATION_TYPE_CHOICES= (
+        (NATIONAL_ID, 'National ID Card'),
+        (PASSPORT, 'International Passport'),
+        (DRIVERS_LICENSE, 'Drivers License'),
+        (NONE, 'None')
     )
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    profile_type = models.CharField(max_length=100, choices= PROFILE_CHOICES, default= ENTREPRENEUR)
+    verification_status = models.CharField(max_length=100, choices=VERIFICATION_STATUS_CHOICES, default=NOTVERIFIED)
     display_name = models.CharField(max_length=100)
     username = models.CharField(max_length=100)
     avatar = models.ImageField(upload_to='profile_images', blank=True, default='default-dp.jpg')
+    identification_type = models.CharField(max_length=100, choices=VERIFICATION_TYPE_CHOICES, default=NONE)
+    identification_doc = models.ImageField(upload_to='profile_identifications', blank=True, default='')
     cover_photo = models.ImageField(upload_to='profile_cover', blank=True, default='default-cover.png')
     bio = models.CharField(max_length=100, default='')
     location = models.CharField(max_length=100, default='')
