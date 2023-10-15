@@ -822,7 +822,9 @@ h3:hover .pending-id-container {
 .pending-id-container a {
     color: blue;
 }
-
+.campaign__details-body-communities-board-badge:hover .pending-id-container {
+    display: block;
+}
 /* HERO SECTION */
 
 .hero__section-body {
@@ -2618,7 +2620,7 @@ tbody i {
  }
 
  .create_campaigns__container-body-item textarea, .create_campaigns__container-body-item input,  .create_campaigns__container-body-item select {
-    padding: 6px;
+    padding: 1rem;
     border-radius: 5px;
     margin-bottom: 1rem;
     border: none;
@@ -2644,10 +2646,15 @@ tbody i {
     background-color: var(--red);
     color: var(--white);
     margin: 2rem;
-    display: flex;
+    display: none;
     justify-content: center;
     display: none;
     border-radius: 10px;
+}
+
+.required {
+    color: red;
+    font-size: medium;
 }
 
 /*-----------------------------------*\

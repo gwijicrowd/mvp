@@ -80,15 +80,17 @@ def create_campaign(request):
         company_description = request.POST.get('companyDescription')
         company_website = request.POST.get('companyWebsite')
         is_company_incorporated = request.POST.get('isCompanyIncorporated')
+        company_certificate = request.FILES.get('companyCertificate')
         company_location = request.POST.get('companyLocation')
         company_valuation = request.POST.get('companyValuation')
+        company_valuation_report = request.POST.get('companyValuationReport')
         company_total_shares = request.POST.get('companyTotalShares')
         company_stage = request.POST.get('companyStage')
         company_category = request.POST.get('companyCategory')
         company_date_start = request.POST.get('companyDateStart')
         campaign_title = request.POST.get('campaignTitle')
         campaign_subtitle = request.POST.get('campaignSubtitle')
-        #campaign_target = request.POST.get('campaignTarget')
+        campaign_target = request.POST.get('campaignTarget')
         campaign_duration = request.POST.get('campaignDuration')
         campaign_rewards = request.POST.get('campaignRewards')
         campaign_photo = request.FILES.get('campaignPhoto')
@@ -105,7 +107,6 @@ def create_campaign(request):
         pitch_deck = request.FILES.get('pitchDeck')
         prototype = request.FILES.get('prototype')
         financials = request.FILES.get('financials')
-        legals = request.FILES.get('legals')
         market_research = request.FILES.get('marketResearch')
         operations = request.FILES.get('operations')
         team_member_1_name = request.POST.get('teamMember1Name')
@@ -128,13 +129,15 @@ def create_campaign(request):
                 category=company_category,
                 website = company_website,
                 prototype = prototype,
+                incorporation_certificate = company_certificate,
+                valuation = company_valuation,
+                valuation_report = company_valuation_report,
                 pitch_deck = pitch_deck,
                 financials_doc = financials,
-                legals_doc = legals,
                 market_research = market_research,
                 operational_doc = operations,
                 shareperdollar = 1.0,
-                valuation = company_valuation,
+                
                 roadmap = company_stage,
                 date_started = company_date_start,
                 location = company_location,
@@ -178,6 +181,7 @@ def create_campaign(request):
                 campaign_picture = campaign_photo,
                 pack_type = "A",
                 target = target_raise,
+                intented_target = campaign_target,
                 date_end = datetime.now() + timedelta(days=int(campaign_duration)),
                 campaign_board_story= campaign_board_story,
                 campaign_board_challenges = campaign_board_challenges,
@@ -194,9 +198,7 @@ def create_campaign(request):
             # Return a success response
             return JsonResponse({'message': 'success'})
         except:
-            pass
-    # Handle other HTTP methods if needed
-    return JsonResponse({'status': 'error', 'message': 'There was an issue creating campaign, please check all values again.'}, status=400)
+            return JsonResponse({'status': 'error', 'message': 'There was an issue creating campaign, please check all values again.'}, status=400)
 
 @csrf_exempt
 def post(request):

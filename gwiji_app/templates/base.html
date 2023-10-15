@@ -288,7 +288,7 @@
                 <div class="profile__icon">
                     <div class="header__profile-tab">
                         <div class="profile__tab header__menu-item id">
-                            {% if profile.avatar %}
+                          {% if profile.avatar %}
                             <img src="{{profile.avatar.url}}" alt="">
                             {% else %}
                             <img src="{% static 'images/user.png' %}" alt="">
@@ -308,7 +308,7 @@
                               <div class="pending-id-container">
                                   <p>You have not verified your identity, please click <a href="#id-verification">here</a> to begin verification.  </p>
                               </div>
-                            {%  endif %}
+                          {%  endif %}
                         </div> 
                         <a href="/notifications"><i class='bx bxs-bell'></i></a>
                       </div>

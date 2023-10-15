@@ -141,40 +141,49 @@
                   <input type="file" id="company-logo" accept="image/*"  name="company-logo">
                </div>
                <div class="create_campaigns__container-body-item">
-                  <label for="company-name">Company Name </label>
-                  <input id="company-name"  type="text" placeholder="Enter company name...">
+                  <label for="company-name">Company Name <span class="required">*</span></label>
+                  <input id="company-name"  type="text" placeholder="Enter company name..." required>
                </div>
                <div class="create_campaigns__container-body-item">
-                  <label for="company-tagline">Company Tagline </label>
-                  <input id="company-tagline"  type="text" placeholder="Enter company tagline...">
+                  <label for="company-tagline">Company Tagline <span class="required">*</span> </label>
+                  <input id="company-tagline"  type="text" placeholder="Enter company tagline..." required>
                </div>
                <div class="create_campaigns__container-body-item">
-                  <label for="company-description">Company description </label>
-                  <textarea id="company-description" maxlength="1500" type="text" placeholder="Enter company description.."></textarea>
+                  <label for="company-description">Company description</label>
+                  <textarea id="company-description" maxlength="1500"  placeholder="Enter company description.."></textarea>
                </div>
                <div class="create_campaigns__container-body-item">
                   <label for="company-website">Company website </label>
                   <input id="company-website"  type="text" placeholder="Enter company's website if any..">
                </div>
-               <div class="create_campaigns__container-body-item checkox">
-                  <input id="company-"  type="checkbox" placeholder="">
-                  <label for="company-">Is your company incorporated? </label>
-               </div>
                <div class="create_campaigns__container-body-item">
-                  <label for="company-valuation">Company Valuation </label>
-                  <input id="company-valuation"  type="text" placeholder="How much is your company worth?">
-               </div>
-               <div class="create_campaigns__container-body-item">
-                  <label for="company-total-shares">Company Total Shares </label>
-                  <input id="company-total-shares"  type="text" placeholder="What is the total number of shares in the company">
-               </div>
-               <div class="create_campaigns__container-body-item">
-                  <label for="company-location">Company Location </label>
+                  <label for="company-location">Company Location <span class=" required">*</span> </label>
                   <input id="company-location"  type="text" placeholder="Where is your country incorporated (City, Country)..">
                </div>
+               <div class="create_campaigns__container-body-item checkox">
+                  <input id="company-"  type="checkbox" placeholder="" required>
+                  <label for="company-">Is your company incorporated? <span class="required">*</span> </label>
+               </div>
                <div class="create_campaigns__container-body-item">
-                  <label for="company-stage-select">Company Stage </label>
-                  <select name="company-stage-select" id="company-stage-select" class="company-stage-select" >
+                  <label for="company-certificate"> Proof of Incorporation i.e Incorporation certificate. <span class="required">*</span> </label>
+                  <input type="file" id="company-certificate" accept="application/pdf"  name="company-certificate" required>
+               </div>
+               <div class="create_campaigns__container-body-item">
+                  <label for="company-total-shares">Company Total Shares <span class="required">*</span> </label>
+                  <input id="company-total-shares"  type="number" placeholder="What is the total number of shares in the company" required>
+               </div>
+               <div class="create_campaigns__container-body-item">
+                  <label for="company-valuation">Company Valuation <span class="required">*</span></label>
+                  <input id="company-valuation"  type="number" placeholder="How much is your company worth?" required>
+               </div>
+               <div class="create_campaigns__container-body-item">
+                  <label for="company-valuation-report"> Proof of Valuation i.e Valuation Report. </label>
+                  <input type="file" id="company-valuation-report" accept="application/pdf"  name="company-valuation-report">
+               </div>
+               
+               <div class="create_campaigns__container-body-item">
+                  <label for="company-stage-select">Company Stage <span class="required">*</span> </label>
+                  <select name="company-stage-select" id="company-stage-select" class="company-stage-select" required >
                      <option value="none">Current Stage</option>
                      {% for stage in project_stages %}
                      <option value="{{ stage}}">{{ stage}}</option>
@@ -182,8 +191,8 @@
                   </select>
                </div>
                <div class="create_campaigns__container-body-item">
-                  <label for="company-category-select">Company Category </label>
-                  <select name="company-category-select" id="company-category-select" class="company-category-select" >
+                  <label for="company-category-select">Company Category  <span class="required">*</span></label>
+                  <select name="company-category-select" id="company-category-select" class="company-category-select" required >
                      <option value="none">Category</option>
                      {% for category in category_choices %}
                      <option value="{{ category}}">{{ category}}</option>
@@ -191,8 +200,8 @@
                   </select>
                </div>
                <div class="create_campaigns__container-body-item">
-                  <label for="company-date-start">When did you start this company? </label>
-                  <input id="company-date-start"  type="date" placeholder="Enter company date start..">
+                  <label for="company-date-start">When did you start this company? <span class="required">*</span</label>
+                  <input id="company-date-start"  type="date" placeholder="Enter company date start.." required>
                </div>
             </div>
          </div>
@@ -202,28 +211,28 @@
             </div>
             <div class="create_campaigns__container-body-section-questions">
                <div class="create_campaigns__container-body-item">
-                  <label for="campaign-title ">Campaign Title   </label>
-                  <input id="campaign-title"  type="text" placeholder="What's the title for your crowdfunding campaign">
+                  <label for="campaign-title ">Campaign Title  <span class="required">*</span></label>
+                  <input id="campaign-title"  type="text" placeholder="What's the title for your crowdfunding campaign" required>
                </div>
                <div class="create_campaigns__container-body-item">
-                  <label for="campaign-subtitle">Campaign Subtitle </label>
-                  <input id="campaign-subtitle"  type="text" placeholder="What's the subtitle for your crowdfunding campaign">
+                  <label for="campaign-subtitle">Campaign Subtitle <span class="required">*</span></label>
+                  <input id="campaign-subtitle"  type="text" placeholder="What's the subtitle for your crowdfunding campaign" required>
                </div>
                <div class="create_campaigns__container-body-item">
-                  <label for="campaign-photo">Campaign Photo  </label>
-                  <input type="file" id="campaign-photo" accept="images/*"  name="company-logo">
-               </div>
-               <!-- <div class="create_campaigns__container-body-item">
-                  <label for="campaign-target">Campaign Target  </label>
-                  <input type="text" id="campaign-target"  name="company-target" placeholder="How much do you want to crowdfund?">
-               </div> -->
-               <div class="create_campaigns__container-body-item">
-                  <label for="campaign-duration">Campaign Duration  </label>
-                  <input type="text" id="campaign-duration"  name="company-duration" placeholder="How many days do you want to run the campaign for?">
+                  <label for="campaign-photo">Campaign Photo  <span class="required">*</span></label>
+                  <input type="file" id="campaign-photo" accept="image/*"  name="company-logo" required>
                </div>
                <div class="create_campaigns__container-body-item">
-                  <label for="campaign-rewards">Campaign Equity Rewards  </label>
-                  <input type="text" id="campaign-rewards"  name="company-rewards" placeholder="How many percent equity are you commiting for campaign rewards?">
+                  <label for="campaign-target">Campaign Target  <span class="required">*</span> </label>
+                  <input type="number" id="campaign-target"  name="company-target" placeholder="How much do you want to raise?" required>
+               </div>
+               <div class="create_campaigns__container-body-item">
+                  <label for="campaign-duration">Campaign Duration <span class="required">*</span> </label>
+                  <input type="number" id="campaign-duration"  name="company-duration" placeholder="How many days do you want to run the campaign for?" required>
+               </div>
+               <div class="create_campaigns__container-body-item">
+                  <label for="campaign-rewards">Campaign Equity Rewards  <span class="required">*</span> </label>
+                  <input type="number" id="campaign-rewards"  name="company-rewards" placeholder="How many percent equity are you commiting for campaign rewards?" required>
                </div>
             </div>      
 
@@ -234,44 +243,44 @@
             </div>
             <div class="create_campaigns__container-body-section-questions">
                <div class="create_campaigns__container-body-item">
-                  <label for="campaign-board-story">1. Tell us the story of how your company was founded.</label>
-                  <textarea id="campaign-board-story" maxlength="1500" type="text" placeholder="Share your company's origin story..."></textarea>
+                  <label for="campaign-board-story">1. Tell us the story of how your company was founded. <span class="required">*</span></label>
+                  <textarea id="campaign-board-story" maxlength="1500"  placeholder="Share your company's origin story..." required></textarea>
                </div>
                <div class="create_campaigns__container-body-item">
-                  <label for="campaign-board-challenges">2. What challenges has your company overcome?</label>
-                  <textarea id="campaign-board-challenges"  maxlength="1500"  type="text" placeholder="Discuss challenges and how you tackled them..."></textarea>
+                  <label for="campaign-board-challenges">2. What challenges has your company overcome? <span class="required">*</span></label>
+                  <textarea id="campaign-board-challenges"  maxlength="1500" placeholder="Discuss challenges and how you tackled them..." required></textarea>
                </div>
                <div class="create_campaigns__container-body-item">
-                  <label for="campaign-board-unique">3. What makes your company unique?</label>
-                  <textarea id="campaign-board-unique"  maxlength="1500" type="text" placeholder="Highlight what sets your company apart..."></textarea>
+                  <label for="campaign-board-unique">3. What makes your company unique? <span class="required">*</span></label>
+                  <textarea id="campaign-board-unique"  maxlength="1500" placeholder="Highlight what sets your company apart..." required></textarea>
                </div>
                <div class="create_campaigns__container-body-item">
-                  <label for="campaign-board-impact">4. What impact does your company aim to create?</label>
-                  <textarea id="campaign-board-impact" maxlength="1500"  type="text" placeholder="Describe the positive impact you intend to make..."></textarea>
+                  <label for="campaign-board-impact">4. What impact does your company aim to create? <span class="required">*</span></label>
+                  <textarea id="campaign-board-impact" maxlength="1500"  placeholder="Describe the positive impact you intend to make..." required></textarea>
                </div>
                <div class="create_campaigns__container-body-item">
-                  <label for="campaign-board-goals">5. What are your company's primary goals and objectives?</label>
-                  <textarea id="campaign-board-goals"  maxlength="1500" type="text" placeholder="Share your key business goals..."></textarea>
+                  <label for="campaign-board-goals">5. What are your company's primary goals and objectives? <span class="required">*</span></label>
+                  <textarea id="campaign-board-goals"  maxlength="1500"  placeholder="Share your key business goals..." required></textarea>
                </div>
                <div class="create_campaigns__container-body-item">
-                  <label for="campaign-board-market">6. How does your company plan to capture its target market?</label>
-                  <textarea id="campaign-board-market"  maxlength="1500" type="text" placeholder="Discuss your market strategy..."></textarea>
+                  <label for="campaign-board-market">6. How does your company plan to capture its target market? <span class="required">*</span></label>
+                  <textarea id="campaign-board-market"  maxlength="1500"  placeholder="Discuss your market strategy..." required></textarea>
                </div>
                <div class="create_campaigns__container-body-item">
-                  <label for="campaign-board-growth">7. What is your company's growth strategy?</label>
-                  <textarea id="campaign-board-growth"  maxlength="1500" type="text" placeholder="Explain how you plan to expand..."></textarea>
+                  <label for="campaign-board-growth">7. What is your company's growth strategy? <span class="required">*</span></label>
+                  <textarea id="campaign-board-growth"  maxlength="1500" placeholder="Explain how you plan to expand..." required></textarea>
                </div>
                <div class="create_campaigns__container-body-item">
-                  <label for="campaign-board-team">8. Tell us about your core team members and their roles.</label>
-                  <textarea id="campaign-board-team" maxlength="1500" type="text" placeholder="Introduce your key team members..."></textarea>
+                  <label for="campaign-board-team">8. Tell us about your core team members and their roles. <span class="required">*</span></label>
+                  <textarea id="campaign-board-team" maxlength="1500"  placeholder="Introduce your key team members..." required></textarea>
                </div>
                <div class="create_campaigns__container-body-item">
-                  <label for="campaign-board-innovation">9. How does your company innovate in its industry?</label>
-                  <textarea id="campaign-board-innovation"  maxlength="1500" type="text" placeholder="Share your innovation strategies..."></textarea>
+                  <label for="campaign-board-innovation">9. How does your company innovate in its industry? <span class="required">*</span></label>
+                  <textarea id="campaign-board-innovation"  maxlength="1500"  placeholder="Share your innovation strategies..." required></textarea>
                </div>
                <div class="create_campaigns__container-body-item">
-                  <label for="campaign-board-future">10. What does the future hold for your company?</label>
-                  <textarea id="campaign-board-future"  maxlength="1500" type="text" placeholder="Discuss your company's future plans..."></textarea>
+                  <label for="campaign-board-future">10. What does the future hold for your company? <span class="required">*</span></label>
+                  <textarea id="campaign-board-future"  maxlength="1500"  placeholder="Discuss your company's future plans..." required></textarea>
                </div>
             </div>
          </div>
@@ -281,20 +290,16 @@
             </div>
             <div class="create_campaigns__container-body-section-questions">
                <div class="create_campaigns__container-body-item">
-                  <label for="company-pitch-deck ">Pitch Deck  </label>
-                  <input type="file" id="company-pitch-deck" accept="application/pdf"  name="company-logo">
+                  <label for="company-pitch-deck ">Pitch Deck   <span class="required">*</span></label>
+                  <input type="file" id="company-pitch-deck" accept="application/pdf"  name="company-logo" required>
                </div>
                <div class="create_campaigns__container-body-item">
                   <label for="company-prototype">Prototype  </label>
                   <input type="file" id="company-prototype" accept="application/pdf"  name="company-logo">
                </div>
                <div class="create_campaigns__container-body-item">
-                  <label for="company-financials">Financials  </label>
+                  <label for="company-financials">Financials </label>
                   <input type="file" id="company-financials" accept="application/pdf"  name="company-logo">
-               </div>
-               <div class="create_campaigns__container-body-item">
-                  <label for="company-legals"> Legal document i.e Incorporation certificate. </label>
-                  <input type="file" id="company-legals" accept="application/pdf"  name="company-logo">
                </div>
                <div class="create_campaigns__container-body-item">
                   <label for="company-market-research"> Market Research </label>
@@ -358,7 +363,7 @@
          </div>
       </div>
       <div class="create_campaigns__container-footer">
-         <button id="create-campaign">Create Campaign</button>
+         <button id="create-campaign-btn">Create Campaign</button>
       </div>
       <div class="campaignError" id="campaignError">
          
@@ -368,10 +373,8 @@
    
   
 </div>
-
-
 <script>
-   document.addEventListener("DOMContentLoaded", function () {
+   function createCampaign() {
      const createCampaignBtn = document.getElementById("create-campaign");
      const campaignError = document.getElementById("campaignError");
  
@@ -383,18 +386,19 @@
        const companyDescription = document.getElementById("company-description").value;
        const companyWebsite = document.getElementById("company-website").value;
        const isCompanyIncorporated = document.getElementById("company-").checked;
+       const companyCertificate = document.getElementById("company-certificate").files[0];
        const companyLocation = document.getElementById("company-location").value;
        const companyValuation = document.getElementById("company-valuation").value;
+       const companyValuationReport = document.getElementById("company-valuation-report").files[0];
        const companyTotalShares = document.getElementById("company-total-shares").value;
        const companyStage = document.getElementById("company-stage-select").value;
        const companyCategory = document.getElementById("company-category-select").value;
        const companyDateStart = document.getElementById("company-date-start").value;
-       
  
        // Gather data from Campaign Details section
        const campaignTitle = document.getElementById("campaign-title").value;
        const campaignSubtitle = document.getElementById("campaign-subtitle").value;
-       // const campaignTarget = document.getElementById("campaign-target").value;
+       const campaignTarget = document.getElementById("campaign-target").value;
        const campaignDuration = document.getElementById("campaign-duration").value;
        const campaignRewards = document.getElementById("campaign-rewards").value;
        const campaignPhoto = document.getElementById("campaign-photo").files[0];
@@ -415,7 +419,7 @@
        const pitchDeck = document.getElementById("company-pitch-deck").files[0];
        const prototype = document.getElementById("company-prototype").files[0];
        const financials = document.getElementById("company-financials").files[0];
-       const legals = document.getElementById("company-legals").files[0];
+       
        const marketResearch = document.getElementById("company-market-research").files[0];
        const operations = document.getElementById("company-operations").files[0];
  
@@ -434,7 +438,9 @@
        formData.append("companyDescription", companyDescription);
        formData.append("companyWebsite", companyWebsite);
        formData.append("isCompanyIncorporated", isCompanyIncorporated);
+       formData.append("companyCertificate", companyCertificate);
        formData.append("companyValuation", companyValuation);
+       formData.append("companyValuationReport", companyValuationReport);
        formData.append("companyTotalShares", companyTotalShares);
        formData.append("companyLocation", companyLocation);
        formData.append("companyStage", companyStage);
@@ -442,7 +448,7 @@
        formData.append("companyDateStart", companyDateStart);
        formData.append("campaignTitle", campaignTitle);
        formData.append("campaignSubtitle", campaignSubtitle);
-       //formData.append("campaignTarget", campaignTarget);
+       formData.append("campaignTarget", campaignTarget);
        formData.append("campaignDuration", campaignDuration);
        formData.append("campaignRewards", campaignRewards);
        formData.append("campaignPhoto", campaignPhoto);
@@ -459,7 +465,6 @@
        formData.append("pitchDeck", pitchDeck);
        formData.append("prototype", prototype);
        formData.append("financials", financials);
-       formData.append("legals", legals);
        formData.append("marketResearch", marketResearch);
        formData.append("operations", operations);
        formData.append("teamMember1Name", teamMember1Name);
@@ -482,25 +487,101 @@
              window.location.reload();
            } else {
              console.log("Unexpected response:", response);
-             
-           }
-         },
-         error: function (xhr, status, error) {
+             var campaignError = document.getElementById('campaignError');
+            campaignError.style.display = 'flex';
+
+            // Check if the response is valid JSON
+            var response;
+               try {
+                  response = JSON.parse(xhr.responseText);
+                  var errorMessage = response.message;
+                  campaignError.innerHTML = 'Error: ' + errorMessage;
+               } catch (e) {
+                  // If parsing the response as JSON fails, log the response for debugging
+                  console.log('Invalid JSON response from the server:', xhr.responseText);
+                  campaignError.innerHTML = 'Error: There was an issue creating campaign, please check all values again.';
+               }
+            }
+            },
+         error: function(xhr, status, error) {
             var campaignError = document.getElementById('campaignError');
             campaignError.style.display = 'flex';
 
-            // Parse the JSON response to access the error message
-            var response = JSON.parse(xhr.responseText);
-            var errorMessage = response.message;
-
-            campaignError.innerHTML = 'Error: ' + errorMessage;
+            // Check if the response is valid JSON
+            var response;
+            try {
+               response = JSON.parse(xhr.responseText);
+               var errorMessage = response.message;
+               campaignError.innerHTML = 'Error: ' + errorMessage;
+            } catch (e) {
+               // If parsing the response as JSON fails, log the response for debugging
+               console.log('Invalid JSON response from the server:', xhr.responseText);
+               campaignError.innerHTML = 'Error: There was an issue creating campaign, please check all values again.';
+            }
          },
+
 
 
        });
      });
+   };
+ </script>
+<script>
+   document.addEventListener("DOMContentLoaded", function () {
+     const createCampaignBtn = document.getElementById("create-campaign-btn");
+     const campaignError = document.getElementById("campaignError");
+ 
+     // Function to check if all required fields are filled
+     function isFormComplete() {
+       // Gather all the required input fields
+       const requiredFields = document.querySelectorAll("input[required], textarea[required], select[required]");
+
+       // Check each required field
+       for (const field of requiredFields) {
+         if (field.value.trim() === "") {
+           return false; // Field is empty, the form is not complete
+         }
+       }
+       
+       return true; // All required fields are filled, the form is complete
+     }
+ 
+     // Function to update the button state
+     function updateButtonState() {
+       if (isFormComplete()) {
+         createCampaignBtn.removeAttribute("disabled");
+         createCampaignBtn.classList.remove('disabled');
+       } else {
+         createCampaignBtn.setAttribute("disabled", "disabled");
+         createCampaignBtn.classList.add('disabled');
+       }
+     }
+ 
+     // Add an event listener to all form fields
+     const formFields = document.querySelectorAll("input, textarea, select");
+     for (const field of formFields) {
+       field.addEventListener("input", updateButtonState);
+     }
+ 
+     // Initial check for form completeness
+     updateButtonState();
+ 
+     createCampaignBtn.addEventListener("click", function () {
+       if (isFormComplete()) {
+         // Your AJAX code to send the form data to Django
+         // ...
+         createCampaign()
+       } else {
+         campaignError.style.display = 'flex';
+         campaignError.innerHTML = 'Please fill in all required fields.';
+       }
+     });
    });
  </script>
+ 
+ 
+
+
  
 
 {% endblock %}

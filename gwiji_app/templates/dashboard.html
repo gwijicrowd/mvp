@@ -109,7 +109,8 @@
                                         </div>
                                      {%  endif %}
                                     </span>
-                                    <span class="community__post-username">@{{post.profile.user}}</span>
+                                    <span class="community__post-username">@{{post.profile.username}}</span>
+                                    
                                     <span class="community__post-symbol">·</span>
                                     <span class="community__post-time time" data-post-timestamp="{{ post.post_date | date:'U' }}">{{ post.post_date }} ago</span>
                                 </span>
@@ -196,74 +197,9 @@
     }
 </script>
 
-<script>
-    const viewCommentButtons = document.querySelectorAll('.bx-comment-detail');
 
-    viewCommentButtons.forEach(function (viewCommentButton) {
-        viewCommentButton.addEventListener("click", function () {
-            // Find the common ancestor element
-            const commonAncestor = this.closest('.community__posts-item_footer');
-            
-            if (commonAncestor) {
-                // Find the corresponding comment container
-                const commentContainer = commonAncestor.nextElementSibling.nextElementSibling;
 
-                // Toggle the comment container's visibility
-                if (commentContainer) {
-                    if (commentContainer.style.display === 'none' || commentContainer.style.display === '') {
-                        commentContainer.style.display = 'block';
-                    } else {
-                        commentContainer.style.display = 'none';
-                    }
-                }
-            }
-        });
-    });
-</script>
 
-<script>
-    // Add a click event listener to all comment buttons
-    const commentBtns = document.querySelectorAll('.post-comment-btn');
-
-    commentBtns.forEach(function (commentBtn) {
-        commentBtn.addEventListener("click", function () {
-            const commentText = this.previousElementSibling; // Get the input element before the button
-            const commentTextValue = commentText.value;
-            var postId = this.dataset.postId; // Get the postId from the button's data attribute
-            // Store the current scroll position in localStorage
-            localStorage.setItem('scrollPosition', window.scrollY);
-
-            const formData = new FormData();
-            formData.append('text', commentTextValue);
-            $.ajax({
-                url: '/comment/' + postId + '/',
-                method: 'POST',
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function (response) {
-                    window.location.reload()
-                   
-                },
-                error: function (xhr, status, error) {
-                    if (xhr.status === 400) {
-                        console.log("Comment unsuccessful");
-                    } else {
-                        console.log("Error:", status, error);
-                    }
-                }
-            });
-        });
-    });
-    // Restore the scroll position after the page has loaded
-    window.addEventListener('load', function () {
-        const scrollPosition = localStorage.getItem('scrollPosition');
-        if (scrollPosition) {
-            window.scrollTo(0, scrollPosition);
-            localStorage.removeItem('scrollPosition'); // Remove the stored scroll position
-        }
-    });
-</script>
 
 <script>
     const postText = document.getElementById('post__text');
@@ -283,7 +219,7 @@
         formData.append('image', postImage.files[0]);
 
         $.ajax({
-            url: 'post/',
+            url: '/post/',
             method: 'POST',
             data: formData, // Use the FormData object
             processData: false, // Don't process the data
@@ -308,64 +244,7 @@
     });
 </script>
 
-<script>
-    // Function to toggle the emoji picker visibility
-    function toggleEmojiPicker() {
-        const emojiPicker = document.getElementById('emoji-picker');
-        emojiPicker.style.display = emojiPicker.style.display === 'block' ? 'none' : 'block';
-    }
 
-  // Function to insert the selected emoji into the post text field
-function insertEmoji(emojiObject) {
-    console.log('Received emojiObject:', emojiObject);
-
-    const postText = document.getElementById('post__text'); // Replace with your post text field ID
-    const emoji = emojiObject.unicode;
-    console.log('Selected emoji:', emoji);
-
-    postText.value += emoji; // Append the selected emoji to the current text
-    toggleEmojiPicker(); // Hide the emoji picker
-}
-
-
-    // Add a click event listener to the smile icon to show/hide the emoji picker
-    const smileIcon = document.querySelector('.bx-smile'); // Replace with the correct selector
-    smileIcon.addEventListener('click', toggleEmojiPicker);
-
-    // Initialize the emoji picker
-    const emojiPicker = document.getElementById('emoji-picker');
-    emojiPicker.innerHTML = '<emoji-picker></emoji-picker>';
-    emojiPicker.addEventListener('emoji-click', (event) => {
-        insertEmoji(event.detail.emoji);
-    });
-</script>
-
-<script>
-    // Function to handle file input change and update image preview
-    function handleFileInputChange(inputElement, previewElement) {
-        const fileInput = inputElement;
-        const previewImage = previewElement;
- 
-        fileInput.addEventListener("change", function () {
-            const file = fileInput.files[0];
-            const imagePreview = document.querySelector('.post__image-preview');
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    imagePreview.style.display = "block";
-                    previewImage.src = e.target.result;
-                };
-                reader.readAsDataURL(file);
-            }
-        });
-    }
- 
- 
-    // Initialize image preview for profile photo
-    const imageInput = document.getElementById("post-image");
-    const imagePreview = document.getElementById("image-preview");
-    handleFileInputChange(imageInput, imagePreview);
- </script>
 
 
 {% endblock %}
