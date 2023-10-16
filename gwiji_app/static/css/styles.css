@@ -462,7 +462,7 @@ i {
 }
 .banner__assets-items {
     display: flex;
-    animation: scrollBanner 100s linear infinite;
+    /* animation: scrollBanner 100s linear infinite; */
 }
 
 .banner__assets-item{
@@ -1140,7 +1140,7 @@ h3:hover .pending-id-container {
 }
 
 .post__placeholder-text textarea {
-    width: 320px;
+    width: 250px;
     padding: 1rem;
     border-radius: 10px;
     outline: none;
@@ -2158,6 +2158,22 @@ h3:hover .pending-id-container {
     width: 85vw;
     margin-left: 6px;
 }
+
+.profile__container-content {
+    display: flex;
+    justify-content: center;
+    border-top: 1px solid var(--border-color);
+    
+}
+
+.profile__container-content .profile__container {
+    display: flex;
+    justify-content: center;
+    
+
+    margin: 0 4rem;
+
+}
 .profile__container-header h1 {
     font-size: xx-large;
     padding: 2rem 0rem 1rem 0rem;
@@ -2167,6 +2183,13 @@ h3:hover .pending-id-container {
     border-bottom: 1px solid var(--border-color);
     padding-bottom: 1rem;
 }
+.profile__container-content .profile__header-banner {
+    width: 90vw;
+    height: 40vw;
+    position: relative;
+    margin-top: 2rem;
+}
+
 .profile__header-banner {
     width: 80vw;
     height: 20vw;
@@ -3288,7 +3311,7 @@ tbody i {
     }
 
     .communities__container {
-        width: 30vw;
+        width: 27vw;
     }
     .dashboard .communities__container {
         width: 30vw;
@@ -3342,6 +3365,16 @@ tbody i {
     /*-----------------------------------*\
     * My Profile Page
     \*-----------------------------------*/
+    .profile__container-content .profile__header-banner {
+        width: 60vw;
+        height: 20vw;
+        position: relative;
+        margin-top: 2rem;
+    }
+    .profile__container-content .profile__container {
+        width: 65vw;
+        background-color: var(--container-color);
+    }
     .profile__container {
         width: 55vw;
     }

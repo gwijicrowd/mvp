@@ -21,6 +21,53 @@ def error_500(request):
     return render(request, '404.html', status=500)
 
 @csrf_exempt
+def user_profile(request, id):
+    user_profile = Profile.objects.get(id=id)
+    posts = Posts.objects.all().order_by('-id')
+    campaigns = Campaigns.objects.filter(status="Active")
+    category_choices = [choice[0] for choice in Projects.CATEGORY_CHOICES]
+    profile = Profile.objects.get(user=request.user)
+    my_posts = Posts.objects.filter(profile = user_profile).order_by('-id')
+    my_projects = Projects.objects.filter(owner= user_profile)
+    investments = Investments.objects.filter(profile=user_profile)
+    investments_count = investments.count()
+
+    for campaign in campaigns:
+        current_datetime = timezone.now()  # Use Django's timezone.now() if using Django
+        if campaign.current_raise >= campaign.target or current_datetime >= campaign.date_end:
+            campaign.status = "Ended"
+            campaign.save()
+    
+    unique_investments = []
+    my_campaigns = Campaigns.objects.filter(author = user_profile)
+
+    investors_count = 0 
+    for camp in my_campaigns:
+        investors_count += Investments.objects.filter(campaign=camp).count()
+
+    for investment in investments:
+        if investment not in unique_investments:
+            unique_investments.append(investment)
+    
+    context = {
+        'posts': posts,
+        'campaigns': campaigns,
+        'category_choices': category_choices,
+        'profile': profile,
+        'my_posts': my_posts,
+        'my_projects': my_projects,
+        'investments': investments,
+        'investments_count': investments_count,
+        'investors_count': investors_count,
+        'my_campaigns': my_campaigns,
+        'unique_investments': unique_investments,
+         'user_profile': user_profile
+
+    }
+    return render(request, 'user_profile.html', context)
+
+
+@csrf_exempt
 def verify_id(request):
     try: 
         if request.method == 'POST':

@@ -7,7 +7,7 @@
         <div class="hero__section-analytics-container">
             <div class="hero__section-analytics-container-header">
                 <h1>Empower an African Entrepreneur Today!</h1>
-                <p>Discover the Future of Investment: Gwiji, Empowering You to Invest Early and Securely in African Startups with the Power of AI.</p>
+                <p>Invest Early and Securely in African Startups with the Power of Automation.</p>
             </div>
             <div class="hero__section-analytics-container-body">
                 <div class="hero__section-analytics-item">
@@ -37,7 +37,7 @@
         </div>
 
     </div>
-    <h4 class="featured-tag-title"> <i class='bx bx-star' ></i>
+    <!-- <h4 class="featured-tag-title"> <i class='bx bx-star' ></i>
         FEATURED</h4>
     <div class=" swiper mySwiper">
         <div class="hero__section-projects swiper-wrapper">
@@ -141,7 +141,7 @@
         </div>
         
     </div>
-    <div class="swiper-pagination"></div>
+    <div class="swiper-pagination"></div> -->
 
 </section>
 
@@ -288,13 +288,13 @@
         <div class="community-post__feed__container">
             <div class="community-post__feed-top">
                 <div class="community-post__feed-top__header">
-                    <span class="user-profile-avatar"><img src="{% static 'images/user.png'%}" alt=""></span>
-                    <span class="post__placeholder-text"><textarea id="post__text" type="text" placeholder="Tell the community what you want..."></textarea> </span>
+                    <span data-authenticated="true" class="user-profile-avatar"><img src="{% static 'images/user.png'%}" alt=""></span>
+                    <span data-authenticated="true" class="post__placeholder-text"><textarea id="post__text" type="text" placeholder="Tell the community what you want..."></textarea> </span>
                 </div>
                 <div class="community-post__feed__buttons">
-                    <i class='bx bx-smile'></i>
-                    <i class='bx bxs-image-add'></i>
-                    <i class='bx bxs-file-gif' ></i>
+                    <i data-authenticated="true" class='bx bx-smile'></i>
+                    <i data-authenticated="true" class='bx bxs-image-add'></i>
+                    <i data-authenticated="true" class='bx bxs-file-gif' ></i>
                     <button data-authenticated="true" id="post__btn" class="post__feed" >Post</button>
                 </div>
             </div>
@@ -356,15 +356,15 @@
                     </div>
                     <div class="community__posts-item_footer">
                         {% if profile in post.likes.all %}
-                        <i id="post-like" data-post-id="{{ post.id }}" class='bx bxs-heart like' >{{post.no_post_likes}}</i>
+                        <i data-authenticated="true" id="post-like" data-post-id="{{ post.id }}" class='bx bxs-heart like' >{{post.no_post_likes}}</i>
                         {% else %}
-                        <i id="post-like" data-post-id="{{ post.id }}" class='bx bx-heart like' >{{post.no_post_likes}}</i>
+                        <i data-authenticated="true" id="post-like" data-post-id="{{ post.id }}" class='bx bx-heart like' >{{post.no_post_likes}}</i>
                         {% endif %}
-                        <i class='bx bx-comment-detail'>{{post.no_post_comments}}</i>
+                        <i data-authenticated="true" class='bx bx-comment-detail'>{{post.no_post_comments}}</i>
                       
                     </div>
                     <div class="community__posts-item_comment">
-                        <input class="post-comment-text" data-post-id="{{ post.id }}" type="text" placeholder="Comment..">
+                        <input data-authenticated="true" class="post-comment-text" data-post-id="{{ post.id }}" type="text" placeholder="Comment..">
                         <button data-authenticated="true" class="post-comment-btn" data-post-id="{{ post.id }}"><i class='bx bxs-send'></i></button>
                    </div>
                     <div class="community__posts-item_comment-box">

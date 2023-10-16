@@ -1,0 +1,444 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block submain %} 
+<div class="profile__container-content">
+    <div class="profile__container">
+        <div class="profile__container-body">
+        <div class="profile__header">
+            <form id="profile-form" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+            <div class="profile__header-banner">
+                {% if user_profile.cover_photo %}
+                <img  id="cover-preview" src="{{ user_profile.cover_photo.url }}" alt="">
+                {% else %}
+                <img  id="cover-preview" src="{% static 'images/default-cover.png' %}" alt="">
+                {% endif %}
+            
+                <div class="edit-icon profile-cover-photo-edit" data-field="cover">
+                    <label for="cover-input" class="edit-label"></label>
+                    <input type="file" id="cover-input" accept="image/*"  name="cover">
+            </div>
+            </div>
+            <div class="profile__header-sub-banner">
+                <div class="profile__photo">
+                    <div class="profile__header-dp">
+                    {% if user_profile.avatar %}
+                    <img id="avatar-preview" src="{{ user_profile.avatar.url }}" alt="">
+                    {% else %}
+                    <img  id="avatar-preview" src="{% static 'images/default-dp.jpg' %}" alt="">
+                    {% endif %}
+                    <div class="edit-icon profile-photo-edit" data-field="dp">
+                        <label for="dp-input" class="edit-label"></i></label>
+                        <input type="file" id="dp-input" accept="image/*"  name="avatar">
+                    </div>
+                </div>
+                </div>
+                
+        
+                <div class="profile__header-names">
+                    <div class="profile__header-display-name">
+                        <h3>{{ user_profile.display_name }} 
+                            {% if user_profile.verification_status == "Verified"%}
+                                <i class=' verified bx bxs-badge-check '></i>
+                                <div class="pending-id-container">
+                                <p>Your Identity is verified.</p>
+                                </div>
+                                {% elif user_profile.verification_status == "Pending"%}
+                                <i class='bx bxs-error-circle pending'></i>
+                                <div class="pending-id-container">
+                                <p>Your Identity Verification is ongoing. </p>
+                                </div>
+                                {% elif user_profile.verification_status == "NotVerified" %}  
+                                <i class='bx bxs-error not-verified' ></i>
+                                <div class="pending-id-container">
+                                <p>You have not verified your identity, please click <a href="#id-verification">here</a> to begin verification.  </p>
+                                </div>
+                            {%  endif %}
+                        </h3>
+                    </div>
+                    <div class="profile__header-username">
+                        <p>@{{ user_profile.username }}</p>
+                    </div>
+                    <div class="profile__header-names-footer">
+                        <div class="profile__header-following-followers">
+                            <div class="profile__header-following">
+                                <span>
+                                    {{ investors_count }}
+                                </span>
+                                investors.
+                            </div>
+                            <div class="profile__header-followers">
+                                <span>
+                                    {{ investments_count }}
+                                </span>
+                                investments
+                            </div>
+                        </div>
+                       
+                    </div>
+                </div>
+            </div>
+            <div class="profile__header-about">
+                <div class="profile__header-about-text">
+                    {% if user_profile.bio %}
+                    <p id="bio-text">{{ user_profile.bio }}</p>
+                    {% else %}
+                    <p id="bio-text">I am {{user_profile.display_name }}.</p>
+                    {% endif %}
+                    <div class="edit-icon" data-field="bio"><i class='bx bxs-edit'></i></div>
+                </div>
+                <div class="profile__header-about-footer">
+                    <div class="profile__header-about-link">
+                        <i class='bx bx-current-location'></i>
+                        {% if user_profile.location %}
+                        <p id="location-text">{{ user_profile.location }}</p>
+                        {% else %}
+                        <p id="location-text">No Location.</p>
+                        {% endif %}
+                        <div class="edit-icon" data-field="location"><i class='bx bxs-edit'></i></div>
+                    </div>
+                    <div class="profile__header-about-joined">
+                        <p>Joined</p>
+                        <p class="" >{{ user_profile.date_joined.date  }}</p>
+                    </div>
+                </div>
+            </div>
+        </form>
+        </div>
+        
+        <div class="profile__body">
+            <div class="profile__body-item">
+                <div class="profile__body-header">
+                    <a href="/manage_campaigns">
+                    <h2>Campaigns
+                        <i class='bx bx-edit' > 
+                        </i>
+                    </a>
+                    </h2>
+                    </a>
+                    
+                </div>
+                <div class="profile__body-companies ">
+                    {% if my_campaigns %}
+                    {% for campaign in my_campaigns %}
+                        <div class="profile__body-companies-item campaign__details-header">
+                            <div class="campaigns__details-header-left">
+                                <a href="{% url 'campaigns' campaign.id %}">
+                                {% if campaign.campaign_picture %}
+                                <img src="{{ campaign.campaign_picture.url }}" alt="">
+                                {% else %}
+                                <img src="{% static 'images/project.png'%}" alt="">
+                                {% endif %}
+                                </a>
+                                
+                            </div>
+                            <div class="campaigns__details-header-right">
+                                <div class="campaigns__details-header-right-category">
+                                <p>- {{ campaign.project.category }}</p>
+                                <p class="campaigns__details-header-right-links">
+                                        <a href="https://facebook.com"><i class='bx bxl-facebook-circle'></i></a>
+                                        <a href="https://twitter.com"><i class='bx bxl-twitter' ></i></a>
+                                        <a href="https://linkedin.com"><i class='bx bxl-linkedin-square' ></i></a>
+                                        <a href="https://{{campaign.project.website}}"><i class='bx bx-link' ></i></a>
+                                </p>
+                                </div>
+                                <div class="campaigns__details-header-right-title">
+                                <a href="{% url 'campaigns' campaign.id %}">
+                                    <h1>{{campaign.title}} - {{campaign.project.name}}</h1>
+                                </a>
+                                
+                                </div>
+                                <div class="campaigns__details-header-right-description">
+                                <p>{{campaign.subtitle}}</p>
+                                </div>            
+                            
+                                <div class="campaigns__details-header-right-tracker">
+                                <div class="campaigns__details-header-right-fund-container">
+                                        <div class="campaigns__details-header-right-fund-subcontainer">
+                                            <span class="campaigns__details-header-right-current-raise">
+                                            $<p class="current-raise">{{ campaign.current_raise }}</p>
+                                            </span>
+                                            <span>
+                                            of 
+                                            </span>
+                                            <span class="campaigns__details-header-right-total-raised">
+                                            $<p class="total-raised">{{ campaign.target }}</p>
+                                            </span>
+                                            <span>raised.</span>
+                                        </div>
+                                        <div>
+                                            <span class="campaigns__details-header-right-progress">
+                                            {{ campaign.percentage_raised }}%
+                                            </span>
+                                        </div>
+                                </div>
+                                <div class="campaigns__details-header-right-progress-bar">
+                                        <progress class="campaigns__details-header-right-progress" value="{{ campaign.percentage_raised }}" max="100"></progress>
+                                </div>
+                                <div class="campaigns__details-header-right-campaign-time">
+                                        <i class='bx bx-time-five'></i>
+                                        <p id="campaign-time-left-{{ campaign.id }}">Calculating...</p>
+                                        <script>
+                                            // Get the campaign start and end dates as JavaScript Date objects
+                                            var startDate = new Date("{{ campaign.date_start|date:'Y-m-d H:i:s' }}");
+                                            var endDate = new Date("{{ campaign.date_end|date:'Y-m-d H:i:s' }}");
+                
+                                            // Calculate the time difference in milliseconds
+                                            var timeDifference = endDate - new Date();
+                
+                                            // Calculate the number of days and hours left
+                                            var daysLeft = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+                                            var hoursLeft = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                
+                                            // Get the element to display the time left
+                                            var timeLeftElement = document.getElementById("campaign-time-left-{{ campaign.id }}");
+                
+                                            // Display the time left
+                                            if (daysLeft > 0) {
+                                            timeLeftElement.textContent = daysLeft + " day(s) left";
+                                            } else if (hoursLeft > 0) {
+                                            timeLeftElement.textContent = hoursLeft + " hour(s) left";
+                                            } else {
+                                            timeLeftElement.textContent = "Less than 1 hour left";
+                                            }
+                                        </script>
+                                </div>
+                                </div>
+                                
+                            </div>
+                    </div>
+                    {% endfor %}
+                    {% else %}
+                    <div class=" profile__body-companies-item profile__body-companies-item-no-content">
+                        <p>This user has no company to display. </p>
+                    </div>
+                    {% endif %}
+                
+                </div>
+            </div>
+            <div class="profile__body-item">
+                <div class="profile__body-header">
+                    <h2>Investments</h2>
+                </div>
+                <div class="profile__body-companies">
+                    {% if investments %}
+                        {% for investment in unique_investments %}
+                        <div class="profile__body-companies-item campaign__details-header">
+                            <div class="campaigns__details-header-left">
+                                <a href="{% url 'campaigns' investment.campaign.id %}">
+                                <img src="{{ investment.campaign.campaign_picture.url }}" alt="">
+                                </a>
+                            </div>
+                            <div class="campaigns__details-header-right">
+                                <div class="campaigns__details-header-right-category">
+                                <p>- {{ investment.campaign.project.category }}</p>
+                                <p class="campaigns__details-header-right-links">
+                                        <a href="https://facebook.com"><i class='bx bxl-facebook-circle'></i></a>
+                                        <a href="https://twitter.com"><i class='bx bxl-twitter' ></i></a>
+                                        <a href="https://linkedin.com"><i class='bx bxl-linkedin-square' ></i></a>
+                                        <a href="https://{{campaign.project.website}}"><i class='bx bx-link' ></i></a>
+                                </p>
+                                </div>
+                                <div class="campaigns__details-header-right-title">
+                                <a href="{% url 'campaigns' investment.campaign.id %}">
+                                    <h1>{{investment.campaign.title}} - {{investment.campaign.project.name}}</h1>
+                                </a>
+                                
+                                </div>
+                                <div class="campaigns__details-header-right-description">
+                                <p>{{investment.campaign.subtitle}}</p>
+                                </div>            
+                            
+                                <div class="campaigns__details-header-right-tracker">
+                                <div class="campaigns__details-header-right-fund-container">
+                                        <div class="campaigns__details-header-right-fund-subcontainer">
+                                            <span class="campaigns__details-header-right-current-raise">
+                                            $<p class="current-raise">{{ investment.campaign.current_raise }}</p>
+                                            </span>
+                                            <span>
+                                            of 
+                                            </span>
+                                            <span class="campaigns__details-header-right-total-raised">
+                                            $<p class="total-raised">{{ investment.campaign.target }}</p>
+                                            </span>
+                                            <span>raised.</span>
+                                        </div>
+                                        <div>
+                                            <span class="campaigns__details-header-right-progress">
+                                            {{ investment.campaign.percentage_raised }}%
+                                            </span>
+                                        </div>
+                                </div>
+                                <div class="campaigns__details-header-right-progress-bar">
+                                        <progress class="campaigns__details-header-right-progress" value="{{ investment.campaign.percentage_raised }}" max="100"></progress>
+                                </div>
+                                <div class="campaigns__details-header-right-campaign-time">
+                                        <i class='bx bx-time-five'></i>
+                                        <p id="investment-campaign-time-left-{{ investment.campaign.id }}">Calculating...</p>
+                                        <script>
+                                            // Get the campaign start and end dates as JavaScript Date objects
+                                            var startDate = new Date("{{ investment.campaign.date_start|date:'Y-m-d H:i:s' }}");
+                                            var endDate = new Date("{{ investment.campaign.date_end|date:'Y-m-d H:i:s' }}");
+                
+                                            // Calculate the time difference in milliseconds
+                                            var timeDifference = endDate - new Date();
+                
+                                            // Calculate the number of days and hours left
+                                            var daysLeft = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+                                            var hoursLeft = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                
+                                            // Get the element to display the time left
+                                            var timeLeftElement = document.getElementById("investment-campaign-time-left-{{ investment.campaign.id }}");
+                
+                                            // Display the time left
+                                            if (daysLeft > 0) {
+                                            timeLeftElement.textContent = daysLeft + " day(s) left";
+                                            } else if (hoursLeft > 0) {
+                                            timeLeftElement.textContent = hoursLeft + " hour(s) left";
+                                            } else {
+                                            timeLeftElement.textContent = "Less than 1 hour left";
+                                            }
+                                        </script>
+                                </div>
+                                </div>
+                                
+                            </div>
+                    </div>
+                    {% endfor %}
+                    {% else %}
+                    <div class="profile__body-companies-item-no-content">
+                        <p>This user has no investments to display. </p>
+                    </div>
+                    {% endif %}
+    
+    
+                
+                </div>
+            </div>
+            <div class="profile__body-item">
+                <div class="profile__body-header">
+                    <h2>Activities</h2>
+                </div>
+                <div class="community-posts-container">
+                    {% if posts %}
+                    {% for post in my_posts %}
+                    <div class="community__posts-item">
+                        <div class="profile__activity">
+                            <i class='bx bx-shape-circle' ></i>
+                            <p> {{user_profile.display_name}} posted</p>
+                        </div>
+                        <div class="community__posts-item_header">
+                            <div class="community__posts-item_header-left">
+                                {% if post.profile.avatar  %}
+                                <span class="community__post-avatar"><img src="{{ post.profile.avatar.url }}" alt="">
+                                </span>
+                                {% else %}
+                                <span class="community__post-avatar"><img src="{% static 'images/user.png'%}" alt="">
+                                </span>
+                                {% endif %}
+                                <span class="community__post-name">
+                                    <span class="community__post-display-name">{{post.profile.display_name}}</span>
+                                    <span class="community__post-badge">
+                                        {% if post.profile.verification_status == "Verified"%}
+                                        <i class=' verified bx bxs-badge-check '></i>
+                                        <div class="pending-id-container">
+                                            <p>User Identity is verified.</p>
+                                        </div>
+                                        {% elif post.profile.verification_status == "Pending"%}
+                                        <i class='bx bxs-error-circle pending'></i>
+                                        <div class="pending-id-container">
+                                            <p>User Identity Verification is ongoing. </p>
+                                        </div>
+                                        {% elif post.profile.verification_status == "NotVerified" %}  
+                                        <i class='bx bxs-error not-verified' ></i>
+                                        <div class="pending-id-container">
+                                            <p>User has not verified their identity. </p>
+                                        </div>
+                                    {%  endif %}
+                                    </span>
+                                    <span class="community__post-username">@{{post.profile.username}}</span>
+                                    <span class="community__post-symbol">·</span>
+                                    <span class="community__post-time time" data-post-timestamp="{{ post.post_date | date:'U' }}">{{ post.post_date }} ago</span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="community__posts-item_body">
+                            <p> 
+                                {% if post.campaign %}
+                                <a class="community__posts-item_campaign-tag" href="{% url 'campaigns' post.campaign.id %}"> 
+                                    #{{post.campaign.title}}        
+                                </a>
+                                {% endif %}
+                                {{post.post_text}} 
+                            </p>
+                            {% if post.post_image  %}
+                            <span>
+                                <img src="{{ post.post_image.url }}" alt="">
+                            </span>     
+                            {% endif %}
+                        </div>
+                        <div class="community__posts-item_footer">
+                            {% if profile in post.likes.all %}
+                            <i id="post-like" data-post-id="{{ post.id }}" class='bx bxs-heart like' >{{post.no_post_likes}}</i>
+                            {% else %}
+                            <i id="post-like" data-post-id="{{ post.id }}" class='bx bx-heart like' >{{post.no_post_likes}}</i>
+                            {% endif %}
+                            <i class='bx bx-comment-detail'>{{post.no_post_comments}}</i>
+                        
+                        </div>
+                        <div class="community__posts-item_comment">
+                        <input class="post-comment-text" data-post-id="{{ post.id }}" type="text" placeholder="Comment..">
+                        <button class="post-comment-btn" data-post-id="{{ post.id }}"><i class='bx bxs-send'></i></button>
+                    </div>
+                    <div class="community__posts-item_comment-box">
+                        {% if post.comments.all %}
+                        {% for comment in post.comments.all reversed%}
+                        <div class="community__posts-item_header-left comment__head">
+                            {% if comment.comment_author.avatar  %}
+                            <span class="community__post-avatar"><img src="{{ comment.comment_author.avatar.url }}" alt="">
+                            </span>
+                            {% else %}
+                            <span class="community__post-avatar"><img src="{% static 'images/user.png'%}" alt="">
+                            </span>
+                            {% endif %}
+                            <div class="">
+                                <span class="community__post-name">
+                                    <span class="community__post-display-name">{{comment.comment_author.display_name}}</span>
+                                    <span class="community__post-badge"><i class='bx bxs-badge-check'></i></span>
+                                    <span class="community__post-username">@{{comment.comment_author.user}}</span>
+                                    <span class="community__post-symbol">·</span>
+                                    <span class="community__post-time time" data-post-timestamp="{{ comment.comment_date | date:'U' }}">{{ comment.comment_date }} ago</span>
+                                </span>
+                            </div>
+                        </div>
+                        <span class="post__comment-text">
+                            <p> 
+                                {{comment.comment_text}}
+                            </p>
+                        </span>
+                        {%  endfor %}
+                        {% else %}
+                        <div class="post__no-comments">
+                            <span>No comments yet.</span>
+                        </div>
+                        {% endif %}
+                    </div>
+                        
+                    </div>
+                    {% endfor %}
+                    
+                {% else %}
+                    
+                    <div class="community__no-posts profile__body-companies-item">
+                        <h1>No Posts Yet. </h1>
+                    </div>
+                {% endif %}
+                </div>
+            </div>
+                
+                
+        </div>    
+        </div>
+    </div>
+ </div>
+{%  endblock %}

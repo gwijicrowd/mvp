@@ -483,15 +483,24 @@
                                         <div class="campaign__details-body-communities-boards-item_header">
                                             <div class="campaign__details-body-communities-board-item_header-left">
                                                 {% if post.profile.avatar  %}
-                                                <span class="campaign__details-body-communities-board-avatar">
-                                                    <img src="{{ post.profile.avatar.url }}" alt="">
+                                                <span class="community__post-avatar">
+                                                    <a href="{% url 'user_profile' post.profile.id %}">
+                                                        <img src="{{ post.profile.avatar.url }}" alt="">
+                                                    </a>
                                                 </span>
                                                 {% else %}
-                                                <span class="campaign__details-body-communities-board-avatar"><img src="{% static 'images/user.png'%}" alt="">
+                                                <span class="community__post-avatar">
+                                                    <a href="{% url 'user_profile' post.profile.id %}">
+                                                        <img src="{% static 'images/user.png'%}" alt="">
+                                                    </a>
                                                 </span>
                                                 {% endif %}
                                                 <span class="campaign__details-body-communities-board-name">
-                                                    <span class="campaign__details-body-communities-board-display-name">{{post.profile.display_name}}</span>
+                                                    <span class="community__post-display-name">
+                                                        <a href="{% url 'user_profile' post.profile.id %}">
+                                                            {{post.profile.display_name}}
+                                                        </a>
+                                                    </span>
                                                     <span class="campaign__details-body-communities-board-badge">
                                                         {% if post.profile.verification_status == "Verified"%}
                                                         <i class=' verified bx bxs-badge-check '></i>

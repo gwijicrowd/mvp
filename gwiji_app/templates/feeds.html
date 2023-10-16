@@ -1,8 +1,10 @@
 {% extends 'dashboard.html' %}
 {% load static %}
 {% block dashaboard %}
+
 <div class="communities__container">
     <div class="community-post__feed__container">
+      
         <div class="community-post__feed-top">
             <div class="community-post__feed-top__header">
                 <span class="user-profile-avatar">
@@ -52,9 +54,32 @@
                         </span>
                         {% endif %}
                         <span class="community__post-name">
-                            <span class="community__post-display-name">{{post.profile.display_name}}</span>
-                            <span class="community__post-badge"><i class='bx bxs-badge-check'></i></span>
-                            <span class="community__post-username">@{{post.profile.user}}</span>
+                            <span class="community__post-display-name">
+                                <a href="{% url 'user_profile' post.profile.id %}">
+                                    {{post.profile.display_name}}
+                                </a>
+                                
+                            </span>
+                            <span class="community__post-badge">
+                                {% if post.profile.verification_status == "Verified"%}
+                                <i class=' verified bx bxs-badge-check '></i>
+                                <div class="pending-id-container">
+                                   <p>User Identity is verified.</p>
+                                </div>
+                                {% elif post.profile.verification_status == "Pending"%}
+                                <i class='bx bxs-error-circle pending'></i>
+                                <div class="pending-id-container">
+                                   <p>User Identity Verification is ongoing. </p>
+                                </div>
+                                {% elif post.profile.verification_status == "NotVerified" %}  
+                                <i class='bx bxs-error not-verified' ></i>
+                                <div class="pending-id-container">
+                                   <p>User has not verified their identity. </p>
+                                </div>
+                             {%  endif %}
+                            </span>
+                            <span class="community__post-username">@{{post.profile.username}}</span>
+                            
                             <span class="community__post-symbol">·</span>
                             <span class="community__post-time time" data-post-timestamp="{{ post.post_date | date:'U' }}">{{ post.post_date }} ago</span>
                         </span>

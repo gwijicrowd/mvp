@@ -82,15 +82,27 @@
                     <div class="community__posts-item">
                         <div class="community__posts-item_header">
                             <div class="community__posts-item_header-left">
-                                {% if post.profile.avatar  %}
-                                <span class="community__post-avatar"><img src="{{ post.profile.avatar.url }}" alt="">
-                                </span>
-                                {% else %}
-                                <span class="community__post-avatar"><img src="{% static 'images/user.png'%}" alt="">
-                                </span>
-                                {% endif %}
+                                
+                                    {% if post.profile.avatar  %}
+                                    <span class="community__post-avatar">
+                                        <a href="{% url 'user_profile' post.profile.id %}">
+                                            <img src="{{ post.profile.avatar.url }}" alt="">
+                                        </a>
+                                    </span>
+                                    {% else %}
+                                    <span class="community__post-avatar">
+                                        <a href="{% url 'user_profile' post.profile.id %}">
+                                            <img src="{% static 'images/user.png'%}" alt="">
+                                        </a>
+                                    </span>
+                                    {% endif %}
+                               
                                 <span class="community__post-name">
-                                    <span class="community__post-display-name">{{post.profile.display_name}}</span>
+                                    <span class="community__post-display-name">
+                                        <a href="{% url 'user_profile' post.profile.id %}">
+                                            {{post.profile.display_name}}
+                                        </a>
+                                    </span>
                                     <span class="community__post-badge">
                                         {% if post.profile.verification_status == "Verified"%}
                                         <i class=' verified bx bxs-badge-check '></i>
@@ -149,15 +161,26 @@
                             {% for comment in post.comments.all reversed%}
                             <div class="community__posts-item_header-left comment__head">
                                 {% if comment.comment_author.avatar  %}
-                                <span class="community__post-avatar"><img src="{{ comment.comment_author.avatar.url }}" alt="">
+                                <span class="community__post-avatar">
+                                    <a href="{% url 'user_profile' comment.comment_author.id %}">
+                                        <img src="{{ comment.comment_author.avatar.url }}" alt="">
+                                    </a>
+                                    
                                 </span>
                                 {% else %}
-                                <span class="community__post-avatar"><img src="{% static 'images/user.png'%}" alt="">
+                                <span class="community__post-avatar">
+                                    <a href="{% url 'user_profile' comment.comment_author.id %}">
+                                        <img src="{% static 'images/user.png'%}" alt="">
+                                    </a>
                                 </span>
                                 {% endif %}
                                 <div class="">
                                     <span class="community__post-name">
-                                        <span class="community__post-display-name">{{comment.comment_author.display_name}}</span>
+                                        <span class="community__post-display-name">
+                                            <a href="{% url 'user_profile' comment.comment_author.id %}">
+                                                {{comment.comment_author.display_name}}
+                                            </a>
+                                        </span>
                                         <span class="community__post-badge"><i class='bx bxs-badge-check'></i></span>
                                         <span class="community__post-username">@{{comment.comment_author.user}}</span>
                                         <span class="community__post-symbol">·</span>

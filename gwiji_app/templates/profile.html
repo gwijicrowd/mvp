@@ -336,14 +336,24 @@
                       <div class="community__posts-item_header">
                           <div class="community__posts-item_header-left">
                               {% if post.profile.avatar  %}
-                              <span class="community__post-avatar"><img src="{{ post.profile.avatar.url }}" alt="">
+                              <span class="community__post-avatar">
+                                 <a href="{% url 'user_profile' post.profile.id %}">
+                                    <img src="{{ post.profile.avatar.url }}" alt="">
+                                 </a>
                               </span>
                               {% else %}
-                              <span class="community__post-avatar"><img src="{% static 'images/user.png'%}" alt="">
+                              <span class="community__post-avatar">
+                                 <a href="{% url 'user_profile' post.profile.id %}">
+                                    <img src="{% static 'images/user.png'%}" alt="">
+                                 </a>
                               </span>
                               {% endif %}
                               <span class="community__post-name">
-                                  <span class="community__post-display-name">{{post.profile.display_name}}</span>
+                                 <span class="community__post-display-name">
+                                    <a href="{% url 'user_profile' post.profile.id %}">
+                                        {{post.profile.display_name}}
+                                    </a>
+                                </span>
                                   <span class="community__post-badge">
                                     {% if post.profile.verification_status == "Verified"%}
                                     <i class=' verified bx bxs-badge-check '></i>
@@ -447,25 +457,6 @@
    </div>
 </div>
 
-<div class="create-company__section">
-   <div class="create-company__container">
-      <div class="create-company__header">
-         <h3>Create Company</h3>
-         <i id="close-create-company" class='bx bx-x'></i>
-       </div>
-       <div class="create-company__body">
-            <div class="create-company__container-item">
-                <label for="company-name">Company Name</label>
-                <input id="company-name" type="text" value="{{profile.first_name}}" placeholder="Enter your email address....">
-            </div>
-            <div class="edit__container-item edit">
-              <button id="edit__btn">Create Company</button>
-            </div>
-            
-          </div>
-     
-   </div>
-</div>
 
 <script>
     if ( window.history.replaceState ) {
